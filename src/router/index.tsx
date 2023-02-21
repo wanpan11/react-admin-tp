@@ -1,10 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { Spin } from "antd";
 import routersObj from "./config";
-
-const Loading = () => {
-  return <div>loading...</div>;
-};
 
 const getRoutes = (routers: Routers) => {
   return routers.map(e => {
@@ -14,7 +11,7 @@ const getRoutes = (routers: Routers) => {
       <Route
         path={path}
         element={
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<Spin />}>
             <Component title={title}>
               {/* Outlet 用作子路由页面出口 */}
               {childrenList.length ? <Outlet /> : null}

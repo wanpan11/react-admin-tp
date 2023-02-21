@@ -13,11 +13,9 @@ export const routesMap = (routes: Route[]) => {
       let newTitle = "";
 
       if (parentPath) {
-        if (parentPath === "/") {
-          newPath = `${parentPath}${path === "*" ? "" : path}`;
-        } else {
-          newPath = `${parentPath}${"/" + path}`;
-        }
+        newPath = `${parentPath}${
+          path === "*" ? "" : `${parentPath !== "/" ? "/" : ""}${path}`
+        }`;
 
         newTitle = parentTitle + title;
         obj[newPath] = newTitle;

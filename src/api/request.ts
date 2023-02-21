@@ -2,7 +2,6 @@ import axios from "axios";
 
 // create an axios instance
 const request = axios.create({
-  baseURL: process.env.REACT_APP_BASEURL,
   withCredentials: false,
   timeout: 30000,
 });
@@ -20,7 +19,7 @@ request.interceptors.request.use(
 // response interceptor
 request.interceptors.response.use(
   response => {
-    return response;
+    return response.data;
   },
   error => {
     return Promise.reject(error);

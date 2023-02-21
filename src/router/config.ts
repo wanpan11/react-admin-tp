@@ -1,6 +1,6 @@
 import { lazy } from "react";
 
-const getLazyLoad = (url: string) => lazy(() => import(`@/${url}/index`));
+const getLazyLoad = (url: string) => lazy(() => import(`@src/${url}/index`));
 
 /**
  *
@@ -24,11 +24,16 @@ const routers: Routers = [
       },
       {
         path: "game",
-        title: "首页",
+        title: "",
         component: getLazyLoad("pages/game"),
         childrenList: [
           {
             path: "*",
+            title: "首页",
+            component: getLazyLoad("pages/game/home"),
+          },
+          {
+            path: "list_1",
             title: "详情页_1",
             component: getLazyLoad("pages/game/list_1"),
           },

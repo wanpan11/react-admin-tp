@@ -1,41 +1,43 @@
-import React, { useState } from "react";
-import type { MenuProps } from "antd";
-import { Layout, Menu, theme, Card } from "antd";
-import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
+import React, { useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useRequest } from "ahooks";
+import { Layout, Menu, theme, Card, Spin } from "antd";
+import { PieChartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import BreadCrumb from "@src/components/BreadCrumb";
 import routers from "@src/router/config";
 import { routesMap } from "@src/utils/index";
+import { getSiderInfoReq } from "@src/api/game";
+import MobxContext from "@src/store/context";
+import store from "@src/store/store";
 
-type MenuItem = Required<MenuProps>["items"][number];
 const { Header, Content, Footer, Sider } = Layout;
 const map = routesMap(routers);
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem {
-  return {
-    label,
-    key,
-    icon,
-    children,
-  } as MenuItem;
-}
-
-const items: MenuItem[] = [
-  getItem(<Link to="">list_1</Link>, "1", <PieChartOutlined />),
-  getItem(<Link to="list_2">list_2</Link>, "2", <DesktopOutlined />),
-];
-
-const App = ({ children }: PageProps) => {
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const { pathname } = useLocation();
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const { data, loading } = useRequest(getSiderInfoReq);
+
+  const items = useMemo(() => {
+    if (!data) return [];
+
+    const { data: arr = [] } = data;
+
+    return arr.map(e => ({
+      label: <Link to={e.path}>{e.label}</Link>,
+      key: e.id,
+      icon: <PieChartOutlined />,
+      path: e.path,
+    }));
+  }, [data]);
+
+  const defaultKey = items.filter(e => e.path === pathname)?.[0]?.key || "0";
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -52,12 +54,16 @@ const App = ({ children }: PageProps) => {
           }}
         />
 
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
+        {!loading ? (
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={[defaultKey]}
+            mode="inline"
+            items={items}
+          />
+        ) : (
+          <Spin />
+        )}
       </Sider>
 
       <Layout>
@@ -66,7 +72,9 @@ const App = ({ children }: PageProps) => {
         <Content style={{ margin: "0 16px" }}>
           <BreadCrumb routesMap={map} />
 
-          <Card>{children}</Card>
+          <MobxContext.Provider value={store}>
+            <Card>{children}</Card>
+          </MobxContext.Provider>
         </Content>
 
         <Footer style={{ textAlign: "center" }}>
@@ -77,4 +85,4 @@ const App = ({ children }: PageProps) => {
   );
 };
 
-export default App;
+export default AppLayout;

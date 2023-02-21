@@ -1,4 +1,4 @@
-require('../env/env.js')
+require("../env/env.js");
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -10,7 +10,7 @@ const dirRoot = path.resolve(__dirname, "../");
 
 const baseConfig = {
   context: path.resolve(dirRoot, "./src"),
-  entry: './main.tsx',
+  entry: "./main.tsx",
   output: {
     path: path.resolve(dirRoot, "./dist"), //必须是绝对路径
     filename: "[name]_[contenthash].js",
@@ -67,7 +67,7 @@ const baseConfig = {
   // 模块解析
   resolve: {
     alias: {
-      "@": path.resolve(dirRoot, "./src"),
+      "@src": path.resolve(dirRoot, "./src"),
     },
     extensions: [".ts", ".jsx", ".tsx", "..."], // 自动不全文件后缀
   },
@@ -81,6 +81,9 @@ const baseConfig = {
     // css 分离
     new MiniCssExtractPlugin({
       filename: "[chunkhash]_[name].css",
+    }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
     }),
   ],
 };
@@ -106,12 +109,14 @@ module.exports = (env, argv) => {
       open: true,
       port: 2000,
     };
+    baseConfig.cache = { type: "filesystem" };
     baseConfig.devServer = devServer;
     baseConfig.plugins.push(new webpack.SourceMapDevToolPlugin({}));
   }
 
   if (argv.mode === "production") {
     const optimization = {
+      usedExports: true,
       minimize: true,
       splitChunks: {
         chunks: "all",
