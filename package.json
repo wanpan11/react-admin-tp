@@ -9,7 +9,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve --config ./scripts/webpack.config.js --mode=development",
     "build": "cross-env NODE_ENV=production webpack --config ./scripts/webpack.config.js --mode=production",
-    "dev:build": "cross-env NODE_ENV=development webpack --config ./scripts/webpack.config.js --mode=development"
+    "dev:build": "cross-env NODE_ENV=development webpack --config ./scripts/webpack.config.js --mode=development",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
@@ -33,9 +34,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.3",
     "i": "^0.3.7",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
+    "lint-staged": "^13.1.2",
     "mini-css-extract-plugin": "^2.4.5",
     "mockjs": "^1.1.0",
     "prettier": "2.5.1",
@@ -59,5 +62,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write .",
+      "eslint  --fix"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
   }
 }

@@ -8,5 +8,5 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 const pathsDotenv = resolveApp("./env/.env");
 
 // 按优先级由高到低的顺序加载.env文件
-dotEnv.config({ path: `${pathsDotenv}` })
-dotEnv.config({ path: `${pathsDotenv}.${process.env.NODE_ENV}` })  
+dotEnv.config({ path: `${pathsDotenv}` });
+dotEnv.config({ path: `${pathsDotenv}.${process.env.NODE_ENV}` });
