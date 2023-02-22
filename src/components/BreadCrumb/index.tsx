@@ -3,12 +3,12 @@ import lessStyle from "./index.module.less";
 import { useLocation } from "react-router-dom";
 
 interface BreadCrumbProps {
-  routesMap: { [prop: string]: string };
+  routerMap: { [prop: string]: string };
 }
 
-const BreadCrumb = ({ routesMap }: BreadCrumbProps) => {
+const BreadCrumb = ({ routerMap }: BreadCrumbProps) => {
   const { pathname } = useLocation();
-  const title = routesMap[pathname];
+  const title = routerMap[pathname];
 
   return (
     <div className={lessStyle.bread_crumb}>

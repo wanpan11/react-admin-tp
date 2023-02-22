@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import { getRouterMap } from "@src/utils/index";
 
 const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
 
@@ -36,5 +37,7 @@ const routers: Routers = [
     ],
   },
 ];
+
+export const routerMap = getRouterMap(routers);
 
 export default routers;

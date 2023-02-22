@@ -4,8 +4,6 @@ import { useRequest } from "ahooks";
 import { Layout, Menu, theme, Card, Spin, ConfigProvider, Divider } from "antd";
 import { Link } from "react-router-dom";
 import BreadCrumb from "@src/components/BreadCrumb";
-import routers from "@src/router/config";
-import { routesMap } from "@src/utils/index";
 import { getSiderInfoReq } from "@src/api/game";
 import MobxContext from "@src/store/context";
 import store from "@src/store/store";
@@ -13,9 +11,9 @@ import styles from "./index.module.less";
 import { colorPrimary } from "@src/config/index";
 import { SiderItem } from "@src/types/index";
 import { SiderLIst } from "@src/types/api";
+import { routerMap } from "@src/router/config";
 
 const { Content, Footer, Sider, Header } = Layout;
-const map = routesMap(routers);
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -93,7 +91,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <Header style={{ padding: 0, background: colorBgContainer }}></Header>
 
           <Content style={{ margin: "0 16px" }}>
-            <BreadCrumb routesMap={map} />
+            <BreadCrumb routerMap={routerMap} />
 
             <MobxContext.Provider value={store}>
               <Card>{children}</Card>

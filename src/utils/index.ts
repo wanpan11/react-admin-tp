@@ -1,4 +1,4 @@
-export const routesMap = (routes: Route[]) => {
+export const getRouterMap = (routes: Route[]) => {
   const obj: { [prop: string]: string } = {};
 
   const getBreadCrumbConf = (
