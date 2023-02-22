@@ -17,6 +17,7 @@ const baseConfig = {
     chunkFilename: "js/[name]_[contenthash].js",
     clean: true,
     publicPath: "/",
+    assetModuleFilename: "images/[hash][ext][query]",
   },
   devtool: false,
   // loader 规则
@@ -50,17 +51,6 @@ const baseConfig = {
           ],
           plugins: ["@babel/plugin-transform-runtime"],
         },
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 8192,
-            },
-          },
-        ],
       },
     ],
   },
