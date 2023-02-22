@@ -1,6 +1,6 @@
 import { lazy } from "react";
 
-const getLazyLoad = (url: string) => lazy(() => import(`@src/${url}/index`));
+const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
 
 /**
  *
@@ -14,35 +14,24 @@ const getLazyLoad = (url: string) => lazy(() => import(`@src/${url}/index`));
 const routers: Routers = [
   {
     path: "*",
+    title: "登录",
+    component: getLazyLoad("/scene"),
+  },
+  {
+    path: "game",
     title: "",
-    component: getLazyLoad("pages"),
+    component: getLazyLoad("/game"),
     childrenList: [
       {
-        path: "*",
-        title: "类型选择",
-        component: getLazyLoad("pages/scene"),
+        path: "",
+        index: true,
+        title: "首页",
+        component: getLazyLoad("/game/home"),
       },
       {
-        path: "game",
-        title: "",
-        component: getLazyLoad("pages/game"),
-        childrenList: [
-          {
-            path: "*",
-            title: "首页",
-            component: getLazyLoad("pages/game/home"),
-          },
-          {
-            path: "list_1",
-            title: "详情页_1",
-            component: getLazyLoad("pages/game/list_1"),
-          },
-          {
-            path: "list_2",
-            title: "详情页_2",
-            component: getLazyLoad("pages/game/list_2"),
-          },
-        ],
+        path: "projectRelease",
+        title: "游戏接入/项目发行",
+        component: getLazyLoad("/game/gameAccess/projectRelease"),
       },
     ],
   },

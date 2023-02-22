@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRequest } from "ahooks";
-import { Layout, Menu, theme, Card, Spin } from "antd";
-import { PieChartOutlined } from "@ant-design/icons";
+import { Layout, Menu, theme, Card, Spin, ConfigProvider, Divider } from "antd";
 import { Link } from "react-router-dom";
 import BreadCrumb from "@src/components/BreadCrumb";
 import routers from "@src/router/config";
@@ -10,78 +9,103 @@ import { routesMap } from "@src/utils/index";
 import { getSiderInfoReq } from "@src/api/game";
 import MobxContext from "@src/store/context";
 import store from "@src/store/store";
+import styles from "./index.module.less";
+import { colorPrimary } from "@src/config/index";
+import { SiderItem } from "@src/types/index";
+import { SiderLIst } from "@src/types/api";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider, Header } = Layout;
 const map = routesMap(routers);
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-
   const { data, loading } = useRequest(getSiderInfoReq);
 
   const items = useMemo(() => {
     if (!data) return [];
 
-    const { data: arr = [] } = data;
+    const getItemsArr = (arr: SiderLIst): SiderItem[] => {
+      return arr.map(e => ({
+        label: e.children ? e.name : <Link to={e.path}>{e.name}</Link>,
+        path: e.path,
+        key: e.id,
+        children: e.children ? getItemsArr(e.children) : null,
+      }));
+    };
 
-    return arr.map(e => ({
-      label: <Link to={e.path}>{e.label}</Link>,
-      key: e.id,
-      icon: <PieChartOutlined />,
-      path: e.path,
-    }));
+    return getItemsArr(data.data);
   }, [data]);
 
-  const defaultKey = items.filter(e => e.path === pathname)?.[0]?.key || "0";
+  /* 当前路由对应的menu */
+  const defaultKey = useMemo(() => {
+    let key = "";
+    const getKey = (items: SiderItem[]): boolean => {
+      return items.some((e: SiderItem) => {
+        if (pathname === e.path) {
+          key = e.key;
+          return true;
+        }
+        if (e.children) {
+          return getKey(e.children);
+        }
+      });
+    };
+
+    getKey(items);
+
+    return key || "0";
+  }, [pathname, items]);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={value => setCollapsed(value)}
-      >
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: "rgba(255, 255, 255, 0.2)",
-          }}
-        />
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary,
+        },
+      }}
+    >
+      <Layout style={{ minHeight: "100vh" }}>
+        <Sider
+          theme="light"
+          collapsible
+          collapsed={collapsed}
+          onCollapse={value => setCollapsed(value)}
+        >
+          <h1 className={styles.title}>管理系统</h1>
+          <Divider />
 
-        {!loading ? (
-          <Menu
-            theme="dark"
-            defaultSelectedKeys={[defaultKey]}
-            mode="inline"
-            items={items}
-          />
-        ) : (
-          <Spin />
-        )}
-      </Sider>
+          {!loading ? (
+            <Menu
+              defaultSelectedKeys={[defaultKey]}
+              mode="inline"
+              items={items}
+            />
+          ) : (
+            <Spin />
+          )}
+        </Sider>
 
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        <Layout>
+          <Header style={{ padding: 0, background: colorBgContainer }}></Header>
 
-        <Content style={{ margin: "0 16px" }}>
-          <BreadCrumb routesMap={map} />
+          <Content style={{ margin: "0 16px" }}>
+            <BreadCrumb routesMap={map} />
 
-          <MobxContext.Provider value={store}>
-            <Card>{children}</Card>
-          </MobxContext.Provider>
-        </Content>
+            <MobxContext.Provider value={store}>
+              <Card>{children}</Card>
+            </MobxContext.Provider>
+          </Content>
 
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2023 Created by Ant UED
-        </Footer>
+          <Footer style={{ textAlign: "center" }}>
+            Ant Design ©2023 Created by Ant UED
+          </Footer>
+        </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
   );
 };
 

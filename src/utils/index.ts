@@ -7,19 +7,16 @@ export const routesMap = (routes: Route[]) => {
     parentTitle = ""
   ) => {
     arr.forEach(e => {
-      const { path, title, childrenList = [] } = e;
-
-      let newPath = "/";
       let newTitle = "";
+      const { path, title, childrenList = [] } = e;
+      const currentPath =
+        !path || path === "*" ? (parentPath ? "" : "/") : `/${path}`;
+      const newPath = `${
+        parentPath !== "/" ? parentPath + currentPath : currentPath
+      }`;
 
-      if (parentPath) {
-        newPath = `${parentPath}${
-          path === "*" ? "" : `${parentPath !== "/" ? "/" : ""}${path}`
-        }`;
-
-        newTitle = parentTitle + title;
-        obj[newPath] = newTitle;
-      }
+      newTitle = parentTitle + title;
+      obj[newPath] = newTitle;
 
       if (childrenList.length) {
         getBreadCrumbConf(childrenList, newPath, title ? newTitle + " / " : "");

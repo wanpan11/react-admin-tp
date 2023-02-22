@@ -14,11 +14,17 @@ declare module "*.jpg" {
 interface Route {
   path: string;
   title: string;
+  index?: true;
   component: React.LazyExoticComponent;
   childrenList?: Route[];
 }
 type Routers = Route[];
-
+interface DynamicRouteProps {
+  path?: string;
+  index: true;
+  key: string;
+  element: React.LazyExoticComponent;
+}
 interface PageProps {
   children: ReactNode;
   title: string;
