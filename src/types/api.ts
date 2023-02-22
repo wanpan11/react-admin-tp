@@ -5,6 +5,7 @@ export type List = {
 
 export type SiderLIst = {
   id: string;
-  label: string;
+  name: string;
   path: string;
+  children?: null | SiderLIst;
 }[];
