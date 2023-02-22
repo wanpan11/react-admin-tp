@@ -16,7 +16,7 @@ const routers: Routers = [
   {
     path: "*",
     title: "登录",
-    component: getLazyLoad("/scene"),
+    component: getLazyLoad("/login"),
   },
   {
     path: "game",

@@ -80,7 +80,7 @@ const baseConfig = {
     }),
     // css 分离
     new MiniCssExtractPlugin({
-      filename: "[chunkhash]_[name].css",
+      filename: "styles/[name].css",
     }),
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(process.env),
