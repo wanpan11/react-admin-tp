@@ -4,19 +4,25 @@ import styles from "./index.module.less";
 import restStyles from "@src/assets/css/reset.module.less";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
+import { loginReq } from "@src/api/game";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const onFinish = async (values: { account: string; password: string }) => {
+    const res = await loginReq(values);
+
+    console.log("res ===> ", res);
+
     navigate("game");
   };
 
   return (
     <Layout className={styles.content}>
       <Card className={styles.login_box}>
-        <h1 className={styles.title}>登录</h1>
+        <div className={styles.box}></div>
+
+        <h1 className={styles.title}>欢迎登录</h1>
 
         <Form
           name="basic"
@@ -27,7 +33,7 @@ const Login = () => {
         >
           <Form.Item
             label="账号"
-            name="username"
+            name="account"
             rules={[{ required: true, message: "请输入你的账号!" }]}
           >
             <Input
@@ -46,6 +52,8 @@ const Login = () => {
               placeholder="请输入你的密码"
             />
           </Form.Item>
+
+          <div className={styles.tips}>联系管理员</div>
 
           <Button
             type="primary"

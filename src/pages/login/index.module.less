@@ -13,10 +13,28 @@
     width: 400px;
     margin: 10% 10% 0 0;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    position: relative;
+
+    .box {
+      width: 150px;
+      height: 150px;
+      background-image: linear-gradient(to right, #4096ff 0%, #00f2fe 100%);
+      border-radius: 100%;
+      transform: translate(-140px, -100px);
+      position: absolute;
+      opacity: 0.4;
+    }
+
+    .tips {
+      color: rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      text-align: right;
+    }
   }
 
   .title {
     font-size: 24px;
+    color: rgba(0, 0, 0, 0.8);
     text-align: center;
     margin-bottom: 38px;
   }
