@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRequest } from "ahooks";
-import { Layout, Menu, theme, Card, Spin, ConfigProvider, Divider } from "antd";
+import { Layout, Menu, Card, Spin, ConfigProvider, Divider } from "antd";
 import { Link } from "react-router-dom";
 import BreadCrumb from "@src/components/BreadCrumb";
 import { getSiderInfoReq } from "@src/api/game";
@@ -18,9 +18,6 @@ const { Content, Footer, Sider, Header } = Layout;
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   const { data, loading } = useRequest(getSiderInfoReq);
 
   const items = useMemo(() => {
@@ -66,7 +63,14 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         },
       }}
     >
-      <Layout style={{ minHeight: "100vh" }}>
+      <Header
+        style={{ background: colorPrimary, width: "100%" }}
+        className={styles.header}
+      >
+        lalalal
+      </Header>
+
+      <Layout style={{}}>
         <Sider
           theme="light"
           collapsible
@@ -88,8 +92,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         </Sider>
 
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}></Header>
-
           <Content style={{ margin: "0 16px" }}>
             <BreadCrumb routerMap={routerMap} />
 

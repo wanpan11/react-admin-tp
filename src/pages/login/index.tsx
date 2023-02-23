@@ -14,14 +14,8 @@ const Login = () => {
   };
 
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-        alignItems: "center",
-        backgroundImage: "linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)",
-      }}
-    >
-      <Card className={styles.content}>
+    <Layout className={styles.content}>
+      <Card className={styles.login_box}>
         <h1 className={styles.title}>登录</h1>
 
         <Form
@@ -36,7 +30,10 @@ const Login = () => {
             name="username"
             rules={[{ required: true, message: "请输入你的账号!" }]}
           >
-            <Input className={restStyles.login_input} />
+            <Input
+              className={restStyles.login_input}
+              placeholder="请输入你的账号"
+            />
           </Form.Item>
 
           <Form.Item
@@ -44,10 +41,19 @@ const Login = () => {
             name="password"
             rules={[{ required: true, message: "请输入你的密码！" }]}
           >
-            <Input.Password className={restStyles.login_input} />
+            <Input.Password
+              className={restStyles.login_input}
+              placeholder="请输入你的密码"
+            />
           </Form.Item>
 
-          <Button type="primary" htmlType="submit" block size="large">
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            size="large"
+            className={styles.submit}
+          >
             登录
           </Button>
         </Form>
