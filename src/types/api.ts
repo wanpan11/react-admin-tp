@@ -3,9 +3,7 @@ export type List = {
   name: string;
 }[];
 
-export type SiderLIst = {
-  id: string;
-  name: string;
-  path: string;
-  children?: null | SiderLIst;
-}[];
+export type Login = {
+  account: string;
+  password: string;
+};

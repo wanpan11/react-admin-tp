@@ -1,8 +1,6 @@
 import React from "react";
 
 const list_1 = () => {
-  console.log("list_1 ===> ");
-
   return (
     <div>
       <h1>首页</h1>

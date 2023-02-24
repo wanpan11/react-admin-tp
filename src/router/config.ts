@@ -31,7 +31,7 @@ const routers: Routers = [
       },
       {
         path: "projectRelease",
-        title: "游戏接入/项目发行",
+        title: "游戏接入 / 项目发行",
         component: getLazyLoad("/game/gameAccess/projectRelease"),
       },
     ],

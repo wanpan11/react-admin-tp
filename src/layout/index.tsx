@@ -1,62 +1,82 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { useRequest } from "ahooks";
-import { Layout, Menu, theme, Card, Spin, ConfigProvider, Divider } from "antd";
-import { Link } from "react-router-dom";
+// import { useRequest } from "ahooks";
+import { Layout, Menu, Card, ConfigProvider } from "antd";
 import BreadCrumb from "@src/components/BreadCrumb";
-import { getSiderInfoReq } from "@src/api/game";
+import { Link } from "react-router-dom";
+// import { getSiderInfoReq } from "@src/api/game";
 import MobxContext from "@src/store/context";
 import store from "@src/store/store";
-import styles from "./index.module.less";
 import { colorPrimary } from "@src/config/index";
-import { SiderItem } from "@src/types/index";
-import { SiderLIst } from "@src/types/api";
 import { routerMap } from "@src/router/config";
+import MenuHeader from "./header";
+import { tabInfo } from "@src/config/index";
+import { TabInfo, MenuItem } from "@src/types/index";
 
-const { Content, Footer, Sider, Header } = Layout;
+const { Content, /* Footer */ Sider } = Layout;
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-  const { data, loading } = useRequest(getSiderInfoReq);
+  // const { data, loading } = useRequest(getSiderInfoReq);
 
-  const items = useMemo(() => {
-    if (!data) return [];
+  // /* 当前路由对应的menu */
+  // const defaultKey = useMemo(() => {
+  //   let key = "";
+  //   const getKey = (items: SiderItem[]): boolean => {
+  //     return items.some((e: SiderItem) => {
+  //       if (pathname === e.path) {
+  //         key = e.key;
+  //         return true;
+  //       }
+  //       if (e.children) {
+  //         return getKey(e.children);
+  //       }
+  //     });
+  //   };
 
-    const getItemsArr = (arr: SiderLIst): SiderItem[] => {
-      return arr.map(e => ({
-        label: e.children ? e.name : <Link to={e.path}>{e.name}</Link>,
-        path: e.path,
-        key: e.id,
-        children: e.children ? getItemsArr(e.children) : null,
-      }));
-    };
+  //   getKey(items);
 
-    return getItemsArr(data.data);
-  }, [data]);
+  //   return key || "0";
+  // }, [pathname, items]);
 
-  /* 当前路由对应的menu */
-  const defaultKey = useMemo(() => {
-    let key = "";
-    const getKey = (items: SiderItem[]): boolean => {
-      return items.some((e: SiderItem) => {
-        if (pathname === e.path) {
-          key = e.key;
-          return true;
-        }
-        if (e.children) {
-          return getKey(e.children);
+  const { topKey, leftKey } = useMemo(() => {
+    let topKey = "";
+    let leftKey = "";
+
+    const getItemsArr = (arr: TabInfo[], parentKay: string): boolean => {
+      return arr.some((e: TabInfo) => {
+        const { childrenList, index, path, id } = e;
+
+        if (childrenList) {
+          return getItemsArr(childrenList, id);
+        } else {
+          topKey = parentKay || id;
+          leftKey = parentKay ? id : "";
+          return index ? pathname === path : ~pathname.indexOf(path);
         }
       });
     };
+    getItemsArr(tabInfo, "");
 
-    getKey(items);
+    return { topKey, leftKey };
+  }, [pathname]);
 
-    return key || "0";
-  }, [pathname, items]);
+  const items = useMemo(() => {
+    if (!topKey) return [];
+
+    const getItemsArr = (arr: TabInfo[]): MenuItem[] => {
+      return arr.map(e => ({
+        label: e.childrenList ? e.name : <Link to={e.path}>{e.name}</Link>,
+        path: e.path,
+        key: e.id,
+        children: e.childrenList ? getItemsArr(e.childrenList) : null,
+      }));
+    };
+
+    return getItemsArr(
+      tabInfo.filter(e => e.id === topKey)?.[0]?.childrenList || []
+    );
+  }, [topKey]);
 
   return (
     <ConfigProvider
@@ -66,30 +86,18 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         },
       }}
     >
-      <Layout style={{ minHeight: "100vh" }}>
-        <Sider
-          theme="light"
-          collapsible
-          collapsed={collapsed}
-          onCollapse={value => setCollapsed(value)}
-        >
-          <h1 className={styles.title}>管理系统</h1>
-          <Divider />
+      <MenuHeader currentTab={topKey}></MenuHeader>
 
-          {!loading ? (
-            <Menu
-              defaultSelectedKeys={[defaultKey]}
-              mode="inline"
-              items={items}
-            />
-          ) : (
-            <Spin />
-          )}
-        </Sider>
+      <Layout style={{ minHeight: "calc(100vh - 58px)" }}>
+        {leftKey ? (
+          <Sider theme="light">
+            <div style={{ height: "28px" }}></div>
+
+            <Menu defaultSelectedKeys={[leftKey]} mode="inline" items={items} />
+          </Sider>
+        ) : null}
 
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }}></Header>
-
           <Content style={{ margin: "0 16px" }}>
             <BreadCrumb routerMap={routerMap} />
 
@@ -98,9 +106,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             </MobxContext.Provider>
           </Content>
 
-          <Footer style={{ textAlign: "center" }}>
+          {/* <Footer style={{ textAlign: "center" }}>
             Ant Design ©2023 Created by Ant UED
-          </Footer>
+          </Footer> */}
         </Layout>
       </Layout>
     </ConfigProvider>
