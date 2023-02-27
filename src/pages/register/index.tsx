@@ -5,26 +5,36 @@ import restStyles from "@src/assets/css/reset.module.less";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { loginReq } from "@src/api/game";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
+  const [from] = Form.useForm();
 
+  console.log("from ===> ", from);
   const onFinish = async (values: { account: string; password: string }) => {
     const res = await loginReq(values);
 
     console.log("res ===> ", res);
 
-    navigate("game");
+    navigate("/game");
   };
 
   return (
     <Layout className={styles.content}>
       <Card className={styles.login_box}>
-        <div className={styles.box}></div>
-
-        <h1 className={styles.title}>欢迎登录</h1>
+        <h1 className={styles.title}>
+          <ArrowLeftOutlined
+            className={styles.back}
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+          账号注册
+        </h1>
 
         <Form
+          form={from}
           name="basic"
           layout="vertical"
           style={{ width: 300 }}
@@ -53,16 +63,38 @@ const Login = () => {
             />
           </Form.Item>
 
-          <div className={styles.more}>
-            <div
-              onClick={() => {
-                navigate("/register");
-              }}
-            >
-              注册账号
-            </div>
-            <div>联系管理员</div>
-          </div>
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[{ required: true, message: "请输入你的密码！" }]}
+          >
+            <Input.Password
+              className={restStyles.login_input}
+              placeholder="请输入你的密码"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[{ required: true, message: "请输入你的密码！" }]}
+          >
+            <Input.Password
+              className={restStyles.login_input}
+              placeholder="请输入你的密码"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[{ required: true, message: "请输入你的密码！" }]}
+          >
+            <Input.Password
+              className={restStyles.login_input}
+              placeholder="请输入你的密码"
+            />
+          </Form.Item>
 
           <Button
             type="primary"
@@ -71,7 +103,7 @@ const Login = () => {
             size="large"
             className={styles.submit}
           >
-            登录
+            注册
           </Button>
         </Form>
       </Card>
@@ -79,4 +111,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

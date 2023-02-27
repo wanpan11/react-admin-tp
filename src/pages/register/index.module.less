@@ -1,6 +1,7 @@
 .content {
   min-height: 100vh;
-  align-items: end;
+  align-items: center;
+  justify-content: center;
   background-image: url("../../assets/img/login_bg.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -10,34 +11,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 400px;
-    margin: 10% 10% 0 0;
+    width: 600px;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
     position: relative;
-
-    .box {
-      width: 150px;
-      height: 150px;
-      background-image: linear-gradient(to right, #4096ff 0%, #00f2fe 100%);
-      border-radius: 100%;
-      transform: translate(-140px, -100px);
-      position: absolute;
-      opacity: 0.4;
-    }
-
-    .more {
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      color: rgba(0, 0, 0, 0.6);
-    }
   }
 
   .title {
     font-size: 24px;
-    color: rgba(0, 0, 0, 0.8);
     text-align: center;
     margin-bottom: 38px;
+    color: rgba(0, 0, 0, 0.8);
+    position: relative;
+
+    .back {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+      font-size: 24px;
+      color: rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+    }
   }
 
   .item {

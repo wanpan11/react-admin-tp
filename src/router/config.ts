@@ -19,6 +19,11 @@ const routers: Routers = [
     component: getLazyLoad("/login"),
   },
   {
+    path: "register",
+    title: "登录",
+    component: getLazyLoad("/register"),
+  },
+  {
     path: "game",
     title: "",
     component: getLazyLoad("/game"),

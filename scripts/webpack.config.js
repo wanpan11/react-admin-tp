@@ -52,6 +52,15 @@ const baseConfig = {
           plugins: ["@babel/plugin-transform-runtime"],
         },
       },
+      {
+        test: /\.(jpe?g|png|svg|gif)/i,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 限制于 8kb
+          },
+        },
+      },
     ],
   },
   // 模块解析
