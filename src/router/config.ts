@@ -35,14 +35,21 @@ const routers: Routers = [
         component: getLazyLoad("/game/home"),
       },
       {
-        path: "projectRelease",
+        path: "projectManage",
         title: "游戏接入 / 项目发行",
-        component: getLazyLoad("/game/gameAccess/projectRelease"),
+        component: getLazyLoad("/game/gameAccess/projectManage"),
+      },
+      {
+        path: "releaseManage",
+        title: "游戏接入 / 发行管理",
+        component: getLazyLoad("/game/gameAccess/releaseManage"),
       },
     ],
   },
 ];
 
 export const routerMap = getRouterMap(routers);
+
+console.log("routerMap ===> ", routerMap);
 
 export default routers;

@@ -6,18 +6,18 @@ export const tabInfo: TabInfo[] = [
   { name: "首页", path: "/game", index: true, id: "0" },
   {
     name: "游戏接入",
-    path: "/game/projectRelease",
+    path: "/game/projectManage",
     id: "1",
     childrenList: [
       {
         name: "项目管理",
-        path: "/game/projectRelease",
+        path: "/game/projectManage",
         id: "1_0",
         index: true,
       },
       {
         name: "发行管理",
-        path: "/game/projectRelease",
+        path: "/game/releaseManage",
         id: "1_1",
       },
       {

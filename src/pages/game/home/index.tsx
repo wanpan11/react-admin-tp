@@ -1,11 +1,14 @@
 import React from "react";
+import { Skeleton } from "antd";
 
-const list_1 = () => {
+const Home = () => {
   return (
     <div>
-      <h1>首页</h1>
+      <h1>数据看板</h1>
+
+      <Skeleton />
     </div>
   );
 };
 
-export default list_1;
+export default Home;

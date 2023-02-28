@@ -12,3 +12,10 @@ export type TabInfo = {
   index?: boolean;
   childrenList?: TabInfo[];
 };
+
+export interface FilterInfo {
+  name: string;
+  type: "input" | "select" | "date";
+  label: string;
+  options?: { value: string }[];
+}

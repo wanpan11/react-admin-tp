@@ -17,27 +17,6 @@ const { Content, /* Footer */ Sider } = Layout;
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
-  // const { data, loading } = useRequest(getSiderInfoReq);
-
-  // /* 当前路由对应的menu */
-  // const defaultKey = useMemo(() => {
-  //   let key = "";
-  //   const getKey = (items: SiderItem[]): boolean => {
-  //     return items.some((e: SiderItem) => {
-  //       if (pathname === e.path) {
-  //         key = e.key;
-  //         return true;
-  //       }
-  //       if (e.children) {
-  //         return getKey(e.children);
-  //       }
-  //     });
-  //   };
-
-  //   getKey(items);
-
-  //   return key || "0";
-  // }, [pathname, items]);
 
   const { topKey, leftKey } = useMemo(() => {
     let topKey = "";
@@ -102,7 +81,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <BreadCrumb routerMap={routerMap} />
 
             <MobxContext.Provider value={store}>
-              <Card>{children}</Card>
+              {children}
             </MobxContext.Provider>
           </Content>
 
