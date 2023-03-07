@@ -1,10 +1,8 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
-// import { useRequest } from "ahooks";
-import { Layout, Menu, Card, ConfigProvider } from "antd";
+import { Layout, Menu, ConfigProvider } from "antd";
 import BreadCrumb from "@src/components/BreadCrumb";
 import { Link } from "react-router-dom";
-// import { getSiderInfoReq } from "@src/api/game";
 import MobxContext from "@src/store/context";
 import store from "@src/store/store";
 import { colorPrimary } from "@src/config/index";
@@ -13,7 +11,7 @@ import MenuHeader from "./header";
 import { tabInfo } from "@src/config/index";
 import { TabInfo, MenuItem } from "@src/types/index";
 
-const { Content, /* Footer */ Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
@@ -72,7 +70,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <Sider theme="light">
             <div style={{ height: "28px" }}></div>
 
-            <Menu defaultSelectedKeys={[leftKey]} mode="inline" items={items} />
+            <Menu selectedKeys={[leftKey]} mode="inline" items={items} />
           </Sider>
         ) : null}
 
@@ -84,10 +82,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
               {children}
             </MobxContext.Provider>
           </Content>
-
-          {/* <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2023 Created by Ant UED
-          </Footer> */}
         </Layout>
       </Layout>
     </ConfigProvider>

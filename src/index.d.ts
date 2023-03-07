@@ -18,13 +18,8 @@ interface Route {
   component: React.LazyExoticComponent;
   childrenList?: Route[];
 }
-type Routers = Route[];
-interface DynamicRouteProps {
-  path?: string;
-  index: true;
-  key: string;
-  element: React.LazyExoticComponent;
-}
+type Router = Route[];
+
 interface PageProps {
   children: ReactNode;
   title: string;

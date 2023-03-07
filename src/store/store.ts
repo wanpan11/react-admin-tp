@@ -1,10 +1,10 @@
-import { makeAutoObservable, runInAction } from "mobx";
-import { getDataReq } from "@src/api/game";
-import { List } from "@src/types/api";
+import { makeAutoObservable /* runInAction */ } from "mobx";
+// import { getDataReq } from "@src/api/game";
+// import { List } from "@src/types/api";
 
 export class MobxStore {
   count = 0;
-  data: List = [];
+  // data: List = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -14,12 +14,12 @@ export class MobxStore {
     this.count += 1;
   }
 
-  async getData() {
-    const { data } = await getDataReq();
-    runInAction(() => {
-      this.data = data;
-    });
-  }
+  // async getData() {
+  //   const { data } = await getDataReq();
+  //   runInAction(() => {
+  //     this.data = data;
+  //   });
+  // }
 }
 
 const store = new MobxStore();

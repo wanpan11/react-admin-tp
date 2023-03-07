@@ -4,16 +4,25 @@
 
 > 项目概览
 
-- axios 请求模块 src/api
-- 路由模块 src/router (lazy 懒加载模式)
-- mobx store 模块 src/store
-- 基于 antd 的 UI 框架
-- 支持 less、css modules
+- scripts 打包相关
+- env 环境变量
+- src
+  - api 接口相关
+  - assets 资源文件
+  - components 公用组件
+  - config 公用参数
+  - layout 布局
+  - mock 模拟数据
+  - pages 路由页面
+  - store
+  - types
+  - utils
 
 > 注意
 
 - 需要安装 ESLint、Prettier 插件
 - 安装完项目依赖后再提交代码，保持项目整洁
+- 环境变量和打包配置动态加载
 
 ---
 

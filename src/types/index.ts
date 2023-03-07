@@ -13,9 +13,11 @@ export type TabInfo = {
   childrenList?: TabInfo[];
 };
 
-export interface FilterInfo {
+export interface FormItemInfo {
   name: string;
-  type: "input" | "select" | "date";
-  label: string;
-  options?: { value: string }[];
+  type: "input" | "select" | "date" | "radio";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  rule?: any;
+  label?: string;
+  options?: { label?: string; value: string }[];
 }

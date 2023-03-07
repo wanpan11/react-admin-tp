@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout, Avatar, Dropdown } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import styles from "./index.module.less";
@@ -40,7 +39,7 @@ const MenuHeader = ({ currentTab }: { currentTab: string }) => {
             src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
             alt="logo"
           />
-          Ant Design
+          管理系统
         </h1>
 
         {tabInfo.map(e => {

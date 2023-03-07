@@ -1,7 +1,7 @@
-import React, { StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import AppRouter from "./router";
-import "./assets/css/_init.less";
+import "./assets/css/init.less";
 import "./mock/index";
 
 const dom = document.getElementById("root") as Element;

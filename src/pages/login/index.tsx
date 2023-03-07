@@ -1,20 +1,17 @@
-import React from "react";
 import { Card, Layout } from "antd";
 import styles from "./index.module.less";
 import restStyles from "@src/assets/css/reset.module.less";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
-import { loginReq } from "@src/api/game";
+import { loginReq } from "@src/api/account";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values: { account: string; password: string }) => {
     const res = await loginReq(values);
-
-    console.log("res ===> ", res);
-
-    navigate("game");
+    console.log("loginReq ===> ", res);
+    navigate("/system");
   };
 
   return (
@@ -30,6 +27,7 @@ const Login = () => {
           style={{ width: 300 }}
           onFinish={onFinish}
           requiredMark="optional"
+          initialValues={{ account: "user", password: "123" }}
         >
           <Form.Item
             label="账号"
@@ -54,13 +52,6 @@ const Login = () => {
           </Form.Item>
 
           <div className={styles.more}>
-            <div
-              onClick={() => {
-                navigate("/register");
-              }}
-            >
-              注册账号
-            </div>
             <div>联系管理员</div>
           </div>
 

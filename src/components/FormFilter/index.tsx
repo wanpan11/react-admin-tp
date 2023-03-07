@@ -1,30 +1,22 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import lessStyle from "./index.module.less";
-import { Form, Input, Select, Button, Row, Col, DatePicker } from "antd";
-import type { FilterInfo } from "@src/types/index";
-
-const { RangePicker } = DatePicker;
+import { Form, Button, Row, Col } from "antd";
+import type { FormItemInfo } from "@src/types/index";
+import { getFormElement } from "../tools";
 
 export interface FormFilterProps {
   reset?: boolean;
-  filterInfo: FilterInfo[];
+  loading?: boolean;
+  filterInfo: FormItemInfo[];
   onSubmit: (value: Record<string, string>) => void;
 }
 
-const FormFilter = ({ filterInfo, onSubmit, reset }: FormFilterProps) => {
-  const getFormElement = (type: string, info: FilterInfo) => {
-    switch (type) {
-      case "input":
-        return <Input />;
-
-      case "select":
-        return <Select options={info.options} />;
-
-      case "date":
-        return <RangePicker placeholder={["开始时间", "结束时间"]} />;
-    }
-  };
-
+const FormFilter = ({
+  filterInfo,
+  onSubmit,
+  reset,
+  loading,
+}: FormFilterProps) => {
   const onFinish = (value: Record<string, string>) => {
     onSubmit(value);
   };
@@ -44,15 +36,26 @@ const FormFilter = ({ filterInfo, onSubmit, reset }: FormFilterProps) => {
                 );
               })
             : null}
+
+          {filterInfo.length > 2 ? null : (
+            <div className={lessStyle.button_box_2}>
+              {reset ? <Button htmlType="reset">重置</Button> : null}
+              <Button htmlType="submit" type="primary" loading={loading}>
+                查询
+              </Button>
+            </div>
+          )}
         </Row>
 
-        <Row justify="end" className={lessStyle.button_box}>
-          {reset ? <Button htmlType="reset">重置</Button> : null}
+        {filterInfo.length > 2 ? (
+          <Row justify="end" className={lessStyle.button_box}>
+            {reset ? <Button htmlType="reset">重置</Button> : null}
 
-          <Button htmlType="submit" type="primary">
-            查询
-          </Button>
-        </Row>
+            <Button htmlType="submit" type="primary" loading={loading}>
+              查询
+            </Button>
+          </Row>
+        ) : null}
       </Form>
     </div>
   );
