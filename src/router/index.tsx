@@ -1,9 +1,9 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Spin } from "antd";
 import routersObj from "./config";
 
-const getRoutes = (routers: Routers) => {
+const getRoutes = (routers: Router) => {
   return routers.map(e => {
     const {
       path = "",

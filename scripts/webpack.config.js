@@ -1,22 +1,24 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 require("../env/env.js");
-const webpack = require("webpack");
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
+const config = require(`./${process.env.NODE_ENV}.config.js`);
 const dirRoot = path.resolve(__dirname, "../");
 
 const baseConfig = {
   context: path.resolve(dirRoot, "./src"),
-  entry: "./main.tsx",
+  entry: config.entry,
   output: {
-    path: path.resolve(dirRoot, "./dist"), //必须是绝对路径
+    path: path.resolve(dirRoot, config.outDir),
     filename: "[name]_[contenthash].js",
     chunkFilename: "js/[name]_[contenthash].js",
     clean: true,
-    publicPath: "/",
+    publicPath: config.publicPath,
     assetModuleFilename: "images/[hash][ext][query]",
   },
   devtool: false,
@@ -52,6 +54,15 @@ const baseConfig = {
           plugins: ["@babel/plugin-transform-runtime"],
         },
       },
+      {
+        test: /\.(jpe?g|png|svg|gif)/i,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 限制于 8kb
+          },
+        },
+      },
     ],
   },
   // 模块解析
@@ -64,7 +75,7 @@ const baseConfig = {
   plugins: [
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
-      title: "react",
+      title: config.title,
       template: path.resolve(dirRoot, "./public/index.html"),
       filename: "index.html",
     }),
@@ -79,6 +90,8 @@ const baseConfig = {
 };
 
 module.exports = (env, argv) => {
+  console.log("ENV ===>", argv.mode);
+
   if (argv.mode === "development") {
     const devServer = {
       historyApiFallback: true,
@@ -88,16 +101,9 @@ module.exports = (env, argv) => {
         progress: true,
         overlay: true,
       },
-      // proxy: {
-      //   "/proxy": {
-      //     target: "https://xxxxx.xxxx",
-      //     pathRewrite: { "^/proxy": "" },
-      //     changeOrigin: true, // 控制服务器接收到的请求头中host字段的值
-      //     secure: false,
-      //   },
-      // },
+      proxy: config?.devServer?.proxy,
       open: true,
-      port: 2000,
+      port: config?.devServer?.port,
     };
     baseConfig.cache = { type: "filesystem" };
     baseConfig.devServer = devServer;
@@ -135,8 +141,6 @@ module.exports = (env, argv) => {
       new BundleAnalyzerPlugin({ analyzerMode: "static" })
     );
   }
-
-  console.log(`运行环境 ${argv.mode}`);
 
   return baseConfig;
 };

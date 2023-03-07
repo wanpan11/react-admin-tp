@@ -1,8 +1,8 @@
-export const getRouterMap = (routes: Route[]) => {
+export const getRouterMap = (routes: Router) => {
   const obj: { [prop: string]: string } = {};
 
   const getBreadCrumbConf = (
-    arr: Routers,
+    arr: Router,
     parentPath = "",
     parentTitle = ""
   ) => {

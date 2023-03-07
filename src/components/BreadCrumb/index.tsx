@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import lessStyle from "./index.module.less";
 import { useLocation } from "react-router-dom";
 

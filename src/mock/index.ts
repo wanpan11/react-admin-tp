@@ -1,13 +1,21 @@
 import Mock from "mockjs";
 
-Mock.mock("/getData", {
-  code: 200,
-  "data|3-5": [
-    {
-      name: "@cname",
-      "id|+1": 0,
+Mock.mock(/company\/list/, () => {
+  return Mock.mock({
+    code: 1,
+    data: {
+      "list|10": [
+        {
+          "id|+1": 0,
+          category: 0,
+          name: "厂商",
+          contact: "联系",
+          mobile: "1235",
+          updateTime: "updateTime",
+        },
+      ],
     },
-  ],
+  });
 });
 
 Mock.mock("/login", req => {
