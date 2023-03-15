@@ -13,27 +13,43 @@ const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
  * @param {childrenList} 嵌套路由 可以在父路由组件内嵌 渲染
  *
  */
-const routers: Router = [
+const routers: Route[] = [
   {
+    id: "0",
     path: "*",
     title: "登录",
     component: getLazyLoad("/login"),
   },
   {
-    path: "system",
+    id: "1",
+    path: "/system",
     title: "",
     component: getLazyLoad("/system"),
     childrenList: [
       {
-        path: "",
+        id: "1-1",
         index: true,
         title: "首页",
         component: getLazyLoad("/system/home"),
       },
       {
-        path: "companyManage",
-        title: "系统设置 / 厂商管理",
-        component: getLazyLoad("/system/setting/companyManage"),
+        id: "1-2",
+        path: "/system/setting",
+        title: "系统设置",
+        childrenList: [
+          {
+            id: "1-2-1",
+            title: "厂商管理",
+            index: true,
+            component: getLazyLoad("/system/setting/company"),
+          },
+          {
+            id: "1-2-2",
+            title: "开发管理",
+            path: "/system/setting/dev",
+            component: getLazyLoad("/system/setting/company"),
+          },
+        ],
       },
     ],
   },

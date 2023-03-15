@@ -4,11 +4,12 @@ import restStyles from "@src/assets/css/reset.module.less";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { loginReq } from "@src/api/account";
+import type { AccountApi } from "@src/types/api";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const onFinish = async (values: { account: string; password: string }) => {
+  const onFinish = async (values: AccountApi.Login) => {
     const res = await loginReq(values);
     console.log("loginReq ===> ", res);
     navigate("/system");

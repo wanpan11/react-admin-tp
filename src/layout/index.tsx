@@ -8,52 +8,57 @@ import store from "@src/store/store";
 import { colorPrimary } from "@src/config/index";
 import { routerMap } from "@src/router/config";
 import MenuHeader from "./header";
-import { tabInfo } from "@src/config/index";
 import { TabInfo, MenuItem } from "@src/types/index";
+import { observer } from "mobx-react-lite";
 
 const { Content, Sider } = Layout;
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
+  const { tabList } = store;
 
   const { topKey, leftKey } = useMemo(() => {
     let topKey = "";
     let leftKey = "";
 
-    const getItemsArr = (arr: TabInfo[], parentKay: string): boolean => {
-      return arr.some((e: TabInfo) => {
-        const { childrenList, index, path, id } = e;
+    const getTabId = (arr: TabInfo[], deep = 0) => {
+      arr.forEach((e: TabInfo) => {
+        const { childrenList = [], path, id } = e;
 
-        if (childrenList) {
-          return getItemsArr(childrenList, id);
-        } else {
-          topKey = parentKay || id;
-          leftKey = parentKay ? id : "";
-          return index ? pathname === path : ~pathname.indexOf(path);
+        if (path === pathname) {
+          if (deep === 0) {
+            topKey = id;
+          }
+
+          leftKey = id;
+        }
+
+        if (childrenList.length) {
+          getTabId(childrenList, deep + 1);
         }
       });
     };
-    getItemsArr(tabInfo, "");
+    getTabId(tabList);
 
     return { topKey, leftKey };
-  }, [pathname]);
+  }, [pathname, tabList]);
 
-  const items = useMemo(() => {
+  const menuList = useMemo(() => {
     if (!topKey) return [];
 
-    const getItemsArr = (arr: TabInfo[]): MenuItem[] => {
+    const getMenuList = (arr: TabInfo[]): MenuItem[] => {
       return arr.map(e => ({
-        label: e.childrenList ? e.name : <Link to={e.path}>{e.name}</Link>,
+        label: e.childrenList ? e.label : <Link to={e.path}>{e.label}</Link>,
         path: e.path,
         key: e.id,
-        children: e.childrenList ? getItemsArr(e.childrenList) : null,
+        children: e.childrenList ? getMenuList(e.childrenList) : undefined,
       }));
     };
 
-    return getItemsArr(
-      tabInfo.filter(e => e.id === topKey)?.[0]?.childrenList || []
+    return getMenuList(
+      tabList.filter(e => e.id === topKey)?.[0]?.childrenList || []
     );
-  }, [topKey]);
+  }, [topKey, tabList]);
 
   return (
     <ConfigProvider
@@ -63,14 +68,14 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         },
       }}
     >
-      <MenuHeader currentTab={topKey}></MenuHeader>
+      <MenuHeader tabId={topKey} tabList={tabList}></MenuHeader>
 
       <Layout style={{ minHeight: "calc(100vh - 58px)" }}>
         {leftKey ? (
           <Sider theme="light">
             <div style={{ height: "28px" }}></div>
 
-            <Menu selectedKeys={[leftKey]} mode="inline" items={items} />
+            <Menu selectedKeys={[leftKey]} mode="inline" items={menuList} />
           </Sider>
         ) : null}
 
@@ -86,6 +91,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       </Layout>
     </ConfigProvider>
   );
-};
+});
 
 export default AppLayout;

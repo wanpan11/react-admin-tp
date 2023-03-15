@@ -11,14 +11,24 @@ declare module "*.jpg" {
   export default classes;
 }
 
-interface Route {
+interface PathRoute {
+  id: string;
   path: string;
   title: string;
-  index?: true;
-  component: React.LazyExoticComponent;
+  index?: boolean;
+  component?: React.LazyExoticComponent;
   childrenList?: Route[];
 }
-type Router = Route[];
+interface IndexRoute {
+  id: string;
+  path?: string;
+  title: string;
+  index: boolean;
+  component?: React.LazyExoticComponent;
+  childrenList?: Route[];
+}
+
+type Route = PathRoute | IndexRoute;
 
 interface PageProps {
   children: ReactNode;

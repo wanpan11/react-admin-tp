@@ -11,7 +11,7 @@ const filterInfo: FormItemInfo[] = [
   { name: "projectName", type: "input", label: "厂商名称" },
 ];
 
-const manufacturerInfo: FormItemInfo[] = [
+const editInfo: FormItemInfo[] = [
   {
     name: "category",
     label: "类型",
@@ -51,7 +51,7 @@ const manufacturerInfo: FormItemInfo[] = [
   },
 ];
 
-const CompanyManage = () => {
+const Company = () => {
   const [ModalOpen, ModalOpenHandle] = useState(false);
 
   const { data, error, loading, run } = useRequest(companyService.list, {
@@ -108,7 +108,7 @@ const CompanyManage = () => {
     run({ pageNum: 1, pageSize: 10, name: "" });
   };
 
-  const manufacturerEdit = async (value: CompanyApi["insertReq"]) => {
+  const createOrEdit = async (value: CompanyApi.InsertReq) => {
     try {
       const res = await companyService.insert(value);
       console.log(res);
@@ -156,16 +156,16 @@ const CompanyManage = () => {
       <FormModal
         open={ModalOpen}
         title="厂商编辑"
-        editInfo={manufacturerInfo}
+        editInfo={editInfo}
         onCancel={() => {
           ModalOpenHandle(false);
         }}
         onOk={value => {
-          manufacturerEdit(value as CompanyApi["insertReq"]);
+          createOrEdit(value as unknown as CompanyApi.InsertReq);
         }}
       />
     </div>
   );
 };
 
-export default CompanyManage;
+export default Company;
