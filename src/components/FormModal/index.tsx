@@ -49,7 +49,7 @@ const FormModal = ({
               key={e.name}
               name={e.name}
               label={e.label}
-              rules={[e.rule]}
+              rules={e.rule ? [e.rule] : undefined}
             >
               {getFormElement(e.type, e)}
             </Form.Item>

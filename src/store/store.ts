@@ -1,25 +1,37 @@
-import { makeAutoObservable /* runInAction */ } from "mobx";
-// import { getDataReq } from "@src/api/game";
-// import { List } from "@src/types/api";
+import { makeAutoObservable } from "mobx";
+import routers from "@src/router/config";
+import { getRouterMap } from "@src/utils/index";
+import type { TabInfo } from "@src/types/index";
 
 export class MobxStore {
-  count = 0;
-  // data: List = [];
-
   constructor() {
     makeAutoObservable(this);
   }
 
-  increaseTimer() {
-    this.count += 1;
+  get tabList() {
+    function getTab(arr: Route[], partePath = "") {
+      return arr.map((e): TabInfo => {
+        const { title, path, id, index, childrenList = [] } = e;
+
+        return {
+          id,
+          path: index ? partePath : (path as string),
+          label: title,
+          childrenList: childrenList.length
+            ? getTab(childrenList, path)
+            : undefined,
+        };
+      });
+    }
+
+    return getTab([routers[1]])[0].childrenList as TabInfo[];
   }
 
-  // async getData() {
-  //   const { data } = await getDataReq();
-  //   runInAction(() => {
-  //     this.data = data;
-  //   });
-  // }
+  get routerMap() {
+    const { tabList } = this;
+
+    return getRouterMap(tabList);
+  }
 }
 
 const store = new MobxStore();

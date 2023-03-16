@@ -4,56 +4,63 @@ import { Layout, Menu, ConfigProvider } from "antd";
 import BreadCrumb from "@src/components/BreadCrumb";
 import { Link } from "react-router-dom";
 import MobxContext from "@src/store/context";
-import store from "@src/store/store";
 import { colorPrimary } from "@src/config/index";
-import { routerMap } from "@src/router/config";
 import MenuHeader from "./header";
-import { tabInfo } from "@src/config/index";
 import { TabInfo, MenuItem } from "@src/types/index";
+import store from "@src/store/store";
+import { observer } from "mobx-react-lite";
 
 const { Content, Sider } = Layout;
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
+  const { tabList, routerMap } = store;
 
   const { topKey, leftKey } = useMemo(() => {
-    let topKey = "";
-    let leftKey = "";
+    let parentStr = "";
+    const getCurrentId = (arr: TabInfo[], parteId = "") => {
+      arr.forEach((e: TabInfo) => {
+        const { childrenList = [], path, id } = e;
 
-    const getItemsArr = (arr: TabInfo[], parentKay: string): boolean => {
-      return arr.some((e: TabInfo) => {
-        const { childrenList, index, path, id } = e;
+        if (path === pathname) {
+          parentStr = parteId + "&" + id;
+        }
 
-        if (childrenList) {
-          return getItemsArr(childrenList, id);
-        } else {
-          topKey = parentKay || id;
-          leftKey = parentKay ? id : "";
-          return index ? pathname === path : ~pathname.indexOf(path);
+        let newParentStr = "";
+        if (childrenList.length) {
+          if (parteId) {
+            newParentStr = `${parteId}_${id}`;
+          } else {
+            newParentStr = `${id}`;
+          }
+          getCurrentId(childrenList, newParentStr);
         }
       });
     };
-    getItemsArr(tabInfo, "");
+    getCurrentId(tabList);
 
+    const keys = parentStr?.split("&");
+    const topKey = keys[0];
+    const leftKey = keys[keys.length - 1];
     return { topKey, leftKey };
-  }, [pathname]);
+  }, [pathname, tabList]);
 
-  const items = useMemo(() => {
+  const menuList = useMemo(() => {
     if (!topKey) return [];
 
-    const getItemsArr = (arr: TabInfo[]): MenuItem[] => {
+    const getMenuList = (arr: TabInfo[]): MenuItem[] => {
       return arr.map(e => ({
-        label: e.childrenList ? e.name : <Link to={e.path}>{e.name}</Link>,
+        label: e.childrenList ? e.label : <Link to={e.path}>{e.label}</Link>,
         path: e.path,
         key: e.id,
-        children: e.childrenList ? getItemsArr(e.childrenList) : null,
+        children: e.childrenList ? getMenuList(e.childrenList) : undefined,
       }));
     };
 
-    return getItemsArr(
-      tabInfo.filter(e => e.id === topKey)?.[0]?.childrenList || []
+    return getMenuList(
+      tabList.filter(e => e.id === topKey)?.[0]?.childrenList || []
     );
-  }, [topKey]);
+  }, [topKey, tabList]);
 
   return (
     <ConfigProvider
@@ -63,14 +70,13 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         },
       }}
     >
-      <MenuHeader currentTab={topKey}></MenuHeader>
+      <MenuHeader tabId={topKey} tabList={tabList}></MenuHeader>
 
       <Layout style={{ minHeight: "calc(100vh - 58px)" }}>
-        {leftKey ? (
+        {menuList.length ? (
           <Sider theme="light">
             <div style={{ height: "28px" }}></div>
-
-            <Menu selectedKeys={[leftKey]} mode="inline" items={items} />
+            <Menu selectedKeys={[leftKey]} mode="inline" items={menuList} />
           </Sider>
         ) : null}
 
@@ -86,6 +92,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       </Layout>
     </ConfigProvider>
   );
-};
+});
 
 export default AppLayout;

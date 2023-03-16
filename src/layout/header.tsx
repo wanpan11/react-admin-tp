@@ -1,14 +1,20 @@
 import { Layout, Avatar, Dropdown } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import styles from "./index.module.less";
-import { tabInfo } from "@src/config/index";
 import { useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import type { MenuProps } from "antd";
+import type { TabInfo } from "@src/types/index";
 
 const { Header } = Layout;
 
-const MenuHeader = ({ currentTab }: { currentTab: string }) => {
+const MenuHeader = ({
+  tabId,
+  tabList,
+}: {
+  tabId: string;
+  tabList: TabInfo[];
+}) => {
   const navigate = useNavigate();
 
   const items: MenuProps["items"] = [
@@ -42,12 +48,12 @@ const MenuHeader = ({ currentTab }: { currentTab: string }) => {
           管理系统
         </h1>
 
-        {tabInfo.map(e => {
+        {tabList.map(e => {
           return (
             <div
               key={e.id}
               className={classnames(styles.tabItem, {
-                [styles.tabItem_active]: e.id === currentTab,
+                [styles.tabItem_active]: e.id === tabId,
               })}
             >
               <div
@@ -55,7 +61,7 @@ const MenuHeader = ({ currentTab }: { currentTab: string }) => {
                   itemClick(e.path);
                 }}
               >
-                {e.name}
+                {e.label}
               </div>
 
               <div className={styles.line}></div>

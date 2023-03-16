@@ -1,28 +1,32 @@
 import { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import { Spin } from "antd";
-import routersObj from "./config";
+import routers from "./config";
+import Loading from "@src/components/Loading";
 
-const getRoutes = (routers: Router) => {
+const getRoutes = (routers: Route[]) => {
   return routers.map(e => {
     const {
-      path = "",
-      component: Component,
-      childrenList = [],
+      id,
+      path,
       title,
       index,
+      component: Component,
+      childrenList = [],
     } = e;
-    const props = {
-      key: title,
-      element: (
-        <Suspense fallback={<Spin />}>
+
+    const props: { key: string; element?: JSX.Element } = {
+      key: id,
+    };
+
+    if (Component) {
+      props.element = (
+        <Suspense fallback={<Loading full />}>
           <Component title={title}>
-            {/* Outlet 用作子路由页面出口 */}
             {childrenList.length ? <Outlet /> : null}
           </Component>
         </Suspense>
-      ),
-    };
+      );
+    }
 
     const jsx = index ? (
       <Route {...props} index></Route>
@@ -39,7 +43,7 @@ const getRoutes = (routers: Router) => {
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Routes>{getRoutes(routersObj)}</Routes>
+      <Routes>{getRoutes(routers)}</Routes>
     </BrowserRouter>
   );
 };

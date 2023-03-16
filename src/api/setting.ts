@@ -2,17 +2,12 @@ import request from "@src/api/request";
 import type { CompanyApi } from "../types/api";
 
 export const companyService = {
-  insert: (data: CompanyApi["insertReq"]) => {
-    return request.send<CompanyApi["insertRes"]>(
-      "/company/insert",
-      "post",
-      data,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+  insert: (data: CompanyApi.InsertReq) => {
+    return request.send<string>("/company/insert", "post", data, {
+      headers: { "Content-Type": "application/json" },
+    });
   },
-  list: (data: CompanyApi["listReq"]) => {
-    return request.send<CompanyApi["listRes"]>("/company/list", "get", data);
+  list: (data: CompanyApi.ListReq) => {
+    return request.send<CompanyApi.ListRes>("/company/list", "get", data);
   },
 };

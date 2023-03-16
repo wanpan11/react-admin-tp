@@ -1,23 +1,22 @@
-export type MenuItem = {
-  label: string | JSX.Element;
-  path: string;
+export interface MenuItem {
   key: string;
-  children?: null | MenuItem[];
-};
-
-export type TabInfo = {
-  name: string;
   path: string;
+  label: string | JSX.Element;
+  children?: MenuItem[];
+}
+
+export interface TabInfo {
   id: string;
+  label: string;
+  path: string;
   index?: boolean;
   childrenList?: TabInfo[];
-};
+}
 
 export interface FormItemInfo {
   name: string;
-  type: "input" | "select" | "date" | "radio";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rule?: any;
   label?: string;
+  type: "input" | "select" | "date" | "radio";
   options?: { label?: string; value: string }[];
+  rule?: { required: boolean; message: string; pattern?: RegExp };
 }
