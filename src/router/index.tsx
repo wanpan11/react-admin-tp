@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import { Spin } from "antd";
 import routers from "./config";
+import Loading from "@src/components/Loading";
 
 const getRoutes = (routers: Route[]) => {
   return routers.map(e => {
@@ -20,7 +20,7 @@ const getRoutes = (routers: Route[]) => {
 
     if (Component) {
       props.element = (
-        <Suspense fallback={<Spin />}>
+        <Suspense fallback={<Loading full />}>
           <Component title={title}>
             {childrenList.length ? <Outlet /> : null}
           </Component>

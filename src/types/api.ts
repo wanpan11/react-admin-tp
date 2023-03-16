@@ -4,34 +4,34 @@ export interface AxiosRes<T> {
   data: T;
 }
 
-interface PageInfo<T> {
+type PageInfo<T> = {
   pageNum: number;
   pageSize: number;
   total: number;
   totalPage: number;
   list: T[];
-}
+};
 
 export namespace AccountApi {
-  export interface Login {
+  export type Login = {
     account: string;
     password: string;
-  }
+  };
 }
 
 export namespace CompanyApi {
-  export interface InsertReq {
+  export type InsertReq = {
     category: number;
     contact: string;
     name: string;
     mobile: string;
-  }
+  };
 
-  export interface ListReq {
+  export type ListReq = {
     pageNum: number;
     pageSize: number;
     name?: string;
-  }
+  };
 
   export type ListRes = PageInfo<
     InsertReq & { id: number; updateTime: string }

@@ -1,10 +1,9 @@
 import { makeAutoObservable } from "mobx";
 import routers from "@src/router/config";
+import { getRouterMap } from "@src/utils/index";
 import type { TabInfo } from "@src/types/index";
 
 export class MobxStore {
-  count = 0;
-
   constructor() {
     makeAutoObservable(this);
   }
@@ -26,6 +25,12 @@ export class MobxStore {
     }
 
     return getTab([routers[1]])[0].childrenList as TabInfo[];
+  }
+
+  get routerMap() {
+    const { tabList } = this;
+
+    return getRouterMap(tabList);
   }
 }
 

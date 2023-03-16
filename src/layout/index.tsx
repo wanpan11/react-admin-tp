@@ -4,42 +4,44 @@ import { Layout, Menu, ConfigProvider } from "antd";
 import BreadCrumb from "@src/components/BreadCrumb";
 import { Link } from "react-router-dom";
 import MobxContext from "@src/store/context";
-import store from "@src/store/store";
 import { colorPrimary } from "@src/config/index";
-import { routerMap } from "@src/router/config";
 import MenuHeader from "./header";
 import { TabInfo, MenuItem } from "@src/types/index";
+import store from "@src/store/store";
 import { observer } from "mobx-react-lite";
 
 const { Content, Sider } = Layout;
 
 const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
-  const { tabList } = store;
+  const { tabList, routerMap } = store;
 
   const { topKey, leftKey } = useMemo(() => {
-    let topKey = "";
-    let leftKey = "";
-
-    const getTabId = (arr: TabInfo[], deep = 0) => {
+    let parentStr = "";
+    const getCurrentId = (arr: TabInfo[], parteId = "") => {
       arr.forEach((e: TabInfo) => {
         const { childrenList = [], path, id } = e;
 
         if (path === pathname) {
-          if (deep === 0) {
-            topKey = id;
-          }
-
-          leftKey = id;
+          parentStr = parteId + "&" + id;
         }
 
+        let newParentStr = "";
         if (childrenList.length) {
-          getTabId(childrenList, deep + 1);
+          if (parteId) {
+            newParentStr = `${parteId}_${id}`;
+          } else {
+            newParentStr = `${id}`;
+          }
+          getCurrentId(childrenList, newParentStr);
         }
       });
     };
-    getTabId(tabList);
+    getCurrentId(tabList);
 
+    const keys = parentStr?.split("&");
+    const topKey = keys[0];
+    const leftKey = keys[keys.length - 1];
     return { topKey, leftKey };
   }, [pathname, tabList]);
 
@@ -71,10 +73,9 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
       <MenuHeader tabId={topKey} tabList={tabList}></MenuHeader>
 
       <Layout style={{ minHeight: "calc(100vh - 58px)" }}>
-        {leftKey ? (
+        {menuList.length ? (
           <Sider theme="light">
             <div style={{ height: "28px" }}></div>
-
             <Menu selectedKeys={[leftKey]} mode="inline" items={menuList} />
           </Sider>
         ) : null}

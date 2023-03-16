@@ -161,7 +161,7 @@ const Company = () => {
           ModalOpenHandle(false);
         }}
         onOk={value => {
-          createOrEdit(value as unknown as CompanyApi.InsertReq);
+          createOrEdit(value as CompanyApi.InsertReq);
         }}
       />
     </div>

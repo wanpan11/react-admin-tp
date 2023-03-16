@@ -1,25 +1,18 @@
-export const getRouterMap = (routes: Route[]) => {
+import type { TabInfo } from "@src/types/index";
+
+export const getRouterMap = (routes: TabInfo[]) => {
   const obj: { [key: string]: string } = {};
 
-  const getBreadCrumbConf = (
-    arr: Route[],
-    parentPath = "",
-    parentTitle = ""
-  ) => {
+  const getBreadCrumbConf = (arr: TabInfo[], parentTitle = "") => {
     arr.forEach(e => {
       let newTitle = "";
-      const { path, title, childrenList = [] } = e;
-      const currentPath =
-        !path || path === "*" ? (parentPath ? "" : "/") : `/${path}`;
-      const newPath = `${
-        parentPath !== "/" ? parentPath + currentPath : currentPath
-      }`;
+      const { path, label, childrenList = [] } = e;
 
-      newTitle = parentTitle + title;
-      obj[newPath] = newTitle;
+      newTitle = parentTitle + label;
+      obj[path] = newTitle;
 
       if (childrenList.length) {
-        getBreadCrumbConf(childrenList, newPath, title ? newTitle + " / " : "");
+        getBreadCrumbConf(childrenList, label ? newTitle + " / " : "");
       }
     });
   };
