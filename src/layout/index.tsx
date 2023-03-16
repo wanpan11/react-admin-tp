@@ -9,6 +9,7 @@ import MenuHeader from "./header";
 import { TabInfo, MenuItem } from "@src/types/index";
 import store from "@src/store/store";
 import { observer } from "mobx-react-lite";
+import lessStyle from "./index.module.less";
 
 const { Content, Sider } = Layout;
 
@@ -23,7 +24,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
         const { childrenList = [], path, id } = e;
 
         if (path === pathname) {
-          parentStr = parteId + "&" + id;
+          parentStr = parteId ? parteId + "&" + id : id;
         }
 
         let newParentStr = "";
@@ -72,7 +73,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
     >
       <MenuHeader tabId={topKey} tabList={tabList}></MenuHeader>
 
-      <Layout style={{ minHeight: "calc(100vh - 58px)" }}>
+      <Layout className={lessStyle.container}>
         {menuList.length ? (
           <Sider theme="light">
             <div style={{ height: "28px" }}></div>
@@ -84,9 +85,11 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
           <Content style={{ margin: "0 16px" }}>
             <BreadCrumb routerMap={routerMap} />
 
-            <MobxContext.Provider value={store}>
-              {children}
-            </MobxContext.Provider>
+            <div className={lessStyle.content}>
+              <MobxContext.Provider value={store}>
+                {children}
+              </MobxContext.Provider>
+            </div>
           </Content>
         </Layout>
       </Layout>

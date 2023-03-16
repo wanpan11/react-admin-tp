@@ -26,24 +26,37 @@ const routers: Route[] = [
     component: getLazyLoad("/system"),
     childrenList: [
       {
-        id: "1-1",
+        id: "11",
         index: true,
         title: "首页",
         component: getLazyLoad("/system/home"),
       },
       {
-        id: "1-2",
+        id: "12",
+        path: "/system/data",
+        title: "数据报表",
+        childrenList: [
+          {
+            id: "121",
+            title: "销售数据",
+            index: true,
+            component: getLazyLoad("/system/data/report"),
+          },
+        ],
+      },
+      {
+        id: "13",
         path: "/system/setting",
         title: "系统设置",
         childrenList: [
           {
-            id: "1-2-1",
+            id: "131",
             title: "厂商管理",
             index: true,
             component: getLazyLoad("/system/setting/company"),
           },
           {
-            id: "1-2-2",
+            id: "132",
             title: "开发管理",
             path: "/system/setting/dev",
             component: getLazyLoad("/system/setting/dev"),

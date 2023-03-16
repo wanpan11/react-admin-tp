@@ -4,7 +4,7 @@ Mock.mock(/company\/list/, () => {
   return Mock.mock({
     code: 1,
     data: {
-      "list|10": [
+      "list|5": [
         {
           "id|+1": 0,
           category: 0,
