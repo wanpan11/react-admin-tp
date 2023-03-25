@@ -18,6 +18,7 @@ export class Request {
   constructor(config: AxiosRequestConfig) {
     this.instance = axios.create(Object.assign(this.baseConfig, config));
 
+    // 请求发送前
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         return config;
@@ -27,6 +28,7 @@ export class Request {
       }
     );
 
+    // 请求返回后
     this.instance.interceptors.response.use(
       (res: AxiosResponse) => {
         return res.data;
@@ -39,15 +41,15 @@ export class Request {
 
   send<T>(
     url: string,
-    method: string,
-    data: unknown,
+    method = "get",
+    data?: unknown,
     config?: AxiosRequestConfig
   ): Promise<AxiosRes<T>> {
     const axiosConfig = { ...config };
     axiosConfig.url = url;
     axiosConfig.method = method;
 
-    if (method === "get") {
+    if (method.toLocaleLowerCase() === "get") {
       axiosConfig.params = data;
     } else {
       axiosConfig.data = data;
