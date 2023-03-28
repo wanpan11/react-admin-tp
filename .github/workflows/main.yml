@@ -21,6 +21,7 @@ jobs:
 
     - name: ESLintCode
       uses: actions/setup-node@v2
+    - run: npm install pnpm -g
     - run: pnpm install
     - run: pnpm lint
 
@@ -41,6 +42,7 @@ jobs:
       # env:
       #  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       #  BRANCH: main
+    - run: npm install pnpm -g
     - run: pnpm install
     - run: pnpm build
 
