@@ -24,7 +24,7 @@ export class MobxStore {
       });
     }
 
-    return getTab([routers[1]])[0].childrenList as TabInfo[];
+    return getTab([routers[0]])[0].childrenList as TabInfo[];
   }
 
   get routerMap() {

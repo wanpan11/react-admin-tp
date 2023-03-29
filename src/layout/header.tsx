@@ -24,7 +24,7 @@ const MenuHeader = ({
         <div
           className={styles.menu_item}
           onClick={() => {
-            navigate("/");
+            navigate("/login");
           }}
         >
           退出登录

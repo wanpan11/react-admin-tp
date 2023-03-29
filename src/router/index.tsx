@@ -42,7 +42,7 @@ const getRoutes = (routers: Route[]) => {
 
 const AppRouter = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
       <Routes>{getRoutes(routers)}</Routes>
     </BrowserRouter>
   );

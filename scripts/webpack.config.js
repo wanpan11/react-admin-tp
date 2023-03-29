@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-require("../env/env.js");
+require("../env/env.js"); // 导入对应环境变量
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -7,18 +7,19 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
-const config = require(`./${process.env.NODE_ENV}.config.js`);
-const dirRoot = path.resolve(__dirname, "../");
+const dynamicConf = require(`./${process.env.NODE_ENV}.config.js`); //  导入对应环境打包配置
+const rootDir = path.resolve(__dirname, "../");
+console.log("NODE_ENV ===>", process.env.NODE_ENV);
 
 const baseConfig = {
-  context: path.resolve(dirRoot, "./src"),
-  entry: config.entry,
+  context: path.resolve(rootDir, "./src"),
+  entry: dynamicConf.entry,
   output: {
-    path: path.resolve(dirRoot, config.outDir),
+    path: path.resolve(rootDir, dynamicConf.outDir),
     filename: "[name]_[contenthash].js",
     chunkFilename: "js/[name]_[contenthash].js",
     clean: true,
-    publicPath: config.publicPath,
+    publicPath: dynamicConf.publicPath,
     assetModuleFilename: "images/[hash][ext][query]",
   },
   devtool: false,
@@ -27,7 +28,18 @@ const baseConfig = {
     rules: [
       {
         test: /\.(c|le)ss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: dynamicConf.cssPublicPath
+                ? dynamicConf.cssPublicPath
+                : dynamicConf.publicPath,
+            },
+          },
+          "css-loader",
+          "less-loader",
+        ],
       },
       {
         test: /\.(t|j)sx?$/,
@@ -68,15 +80,15 @@ const baseConfig = {
   // 模块解析
   resolve: {
     alias: {
-      "@src": path.resolve(dirRoot, "./src"),
+      "@src": path.resolve(rootDir, "./src"),
     },
     extensions: [".ts", ".jsx", ".tsx", "..."], // 自动不全文件后缀
   },
   plugins: [
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
-      title: config.title,
-      template: path.resolve(dirRoot, "./public/index.html"),
+      title: dynamicConf.title,
+      template: path.resolve(rootDir, "./public/index.html"),
       filename: "index.html",
     }),
     // css 分离
@@ -90,7 +102,7 @@ const baseConfig = {
 };
 
 module.exports = (env, argv) => {
-  console.log("ENV ===>", argv.mode);
+  console.log("MODE ===>", argv.mode);
 
   if (argv.mode === "development") {
     const devServer = {
@@ -101,9 +113,9 @@ module.exports = (env, argv) => {
         progress: true,
         overlay: true,
       },
-      proxy: config?.devServer?.proxy,
+      proxy: dynamicConf?.devServer?.proxy,
       open: true,
-      port: config?.devServer?.port,
+      port: dynamicConf?.devServer?.port,
     };
     baseConfig.cache = { type: "filesystem" };
     baseConfig.devServer = devServer;
