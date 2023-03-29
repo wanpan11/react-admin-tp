@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Layout, Menu, ConfigProvider } from "antd";
 import BreadCrumb from "@src/components/BreadCrumb";
 import { Link } from "react-router-dom";
@@ -15,7 +15,8 @@ const { Content, Sider } = Layout;
 
 const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
-  const { tabList, routerMap } = store;
+  const navigate = useNavigate();
+  const { tabList, routerMap, isLogin } = store;
 
   const { topKey, leftKey } = useMemo(() => {
     let parentStr = "";
@@ -62,6 +63,12 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
       tabList.filter(e => e.id === topKey)?.[0]?.childrenList || []
     );
   }, [topKey, tabList]);
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+    }
+  }, [isLogin, navigate]);
 
   return (
     <ConfigProvider

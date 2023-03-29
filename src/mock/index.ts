@@ -19,5 +19,8 @@ Mock.mock(/company\/list/, () => {
 });
 
 Mock.mock("/login", req => {
-  return req.body;
+  return {
+    code: 0,
+    data: { token: "eqiopeuqueopqueopq2uepoueqou", userInfo: req.body },
+  };
 });

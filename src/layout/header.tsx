@@ -24,6 +24,7 @@ const MenuHeader = ({
         <div
           className={styles.menu_item}
           onClick={() => {
+            localStorage.clear();
             navigate("/login");
           }}
         >

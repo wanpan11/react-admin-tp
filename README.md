@@ -1,10 +1,15 @@
 ## react-admin-tp
 
----
-
-react-typescipt 管理系统项目模版、动态路由
+react-typescript 管理系统项目模版、动态路由
 
 > 项目概览
+
+- 主要依赖库
+
+  - ant-design
+  - mobx
+  - ahooks
+  - axios
 
 - scripts 打包相关
 
@@ -35,14 +40,12 @@ react-typescipt 管理系统项目模版、动态路由
 
   ***
 
-  > 注意
+> 注意
 
 - 需要安装 ESLint、Prettier 插件
 - 安装完项目依赖后再提交代码，保持项目整洁
 - 环境变量和打包配置动态加载
 - homepage 相关文件、构建指令皆可删除
-
----
 
 > 安装依赖
 

@@ -32,6 +32,11 @@ export class MobxStore {
 
     return getRouterMap(tabList);
   }
+
+  get isLogin() {
+    const token = localStorage.getItem("token");
+    return token ? true : false;
+  }
 }
 
 const store = new MobxStore();

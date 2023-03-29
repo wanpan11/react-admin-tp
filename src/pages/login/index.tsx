@@ -11,7 +11,8 @@ const Login = () => {
 
   const onFinish = async (values: AccountApi.Login) => {
     const res = await loginReq(values);
-    console.log("loginReq ===> ", res);
+    console.log("loginReq ===> ", res.data.userInfo);
+    localStorage.setItem("token", res.data.token);
     navigate("/");
   };
 
