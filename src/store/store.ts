@@ -4,6 +4,8 @@ import { getRouterMap } from "@src/utils/index";
 import type { TabInfo } from "@src/types/index";
 
 export class MobxStore {
+  isLogin = localStorage.getItem("token") ? true : false;
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -33,9 +35,8 @@ export class MobxStore {
     return getRouterMap(tabList);
   }
 
-  get isLogin() {
-    const token = localStorage.getItem("token");
-    return token ? true : false;
+  setLogin(val: boolean) {
+    this.isLogin = val;
   }
 }
 

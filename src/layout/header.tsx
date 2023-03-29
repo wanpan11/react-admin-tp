@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import type { MenuProps } from "antd";
 import type { TabInfo } from "@src/types/index";
+import store from "@src/store/store";
 
 const { Header } = Layout;
 
@@ -25,6 +26,7 @@ const MenuHeader = ({
           className={styles.menu_item}
           onClick={() => {
             localStorage.clear();
+            store.setLogin(false);
             navigate("/login");
           }}
         >

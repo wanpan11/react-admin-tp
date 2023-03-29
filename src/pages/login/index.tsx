@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { loginReq } from "@src/api/account";
 import type { AccountApi } from "@src/types/api";
+import store from "@src/store/store";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Login = () => {
     const res = await loginReq(values);
     console.log("loginReq ===> ", res.data.userInfo);
     localStorage.setItem("token", res.data.token);
+    store.setLogin(true);
     navigate("/");
   };
 
