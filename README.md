@@ -11,6 +11,8 @@ react-typescipt 管理系统项目模版、动态路由
   - webpack.config.js 打包入口文件
   - xxxx.config.js 不同环境打包配置
 
+  ***
+
 - env 环境变量
 
   - .env 全局环境变量
@@ -31,7 +33,9 @@ react-typescipt 管理系统项目模版、动态路由
   - types
   - utils
 
-> 注意
+  ***
+
+  > 注意
 
 - 需要安装 ESLint、Prettier 插件
 - 安装完项目依赖后再提交代码，保持项目整洁

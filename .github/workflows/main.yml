@@ -21,6 +21,8 @@ jobs:
 
       - name: ESLintCode
         uses: actions/setup-node@v3
+        with:
+          node-version: "16"
       - run: npm install pnpm -g
       - run: pnpm install
       - run: pnpm lint
@@ -39,12 +41,11 @@ jobs:
       # Runs a single command using the runners shell
       - name: build
         uses: actions/setup-node@v3
-        # env:
-        #  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        #  BRANCH: main
+        with:
+          node-version: "16"
       - run: npm install pnpm -g
       - run: pnpm install
-      - run: pnpm build
+      - run: pnpm build:homepage
 
       - name: deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
