@@ -38,7 +38,12 @@ const baseConfig = {
             },
           },
           "css-loader",
-          "less-loader",
+          {
+            loader: "less-loader",
+            options: {
+              additionalData: '@import "@src/assets/css/config.less";',
+            },
+          },
         ],
       },
       {

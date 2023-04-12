@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 declare module "*.module.scss" {
   const classes: { [key: string]: string };
   export default classes;
@@ -33,4 +34,5 @@ type Route = PathRoute | IndexRoute;
 interface PageProps {
   children: ReactNode;
   title: string;
+  redirect?: string;
 }

@@ -21,6 +21,12 @@ export class Request {
     // 请求发送前
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
+        // const isHttp = config.url?.indexOf("http");
+
+        // if (process.env.ENV === "DEV" && !isHttp) {
+        //   config.url = "/proxy" + config.url;
+        // }
+
         return config;
       },
       (err: AxiosError) => {
@@ -42,7 +48,7 @@ export class Request {
   send<T>(
     url: string,
     method = "get",
-    data?: unknown,
+    data?: any,
     config?: AxiosRequestConfig
   ): Promise<AxiosRes<T>> {
     const axiosConfig = { ...config };

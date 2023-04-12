@@ -4,7 +4,8 @@ const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
 
 /**
  *
- * @description 嵌套路由配置 react-router-dom V6 参考：https://github.com/remix-run/react-router/blob/main/docs/getting-started/tutorial.md
+ * @description 嵌套路由配置 react-router-dom V6
+ * @param {id} 唯一标识
  * @param {path} * 表示无匹配时 渲染此项
  * @param {index} 默认渲染此项 index path 不能同时存在
  * @param {title} 每个对应组件会接收到 title

@@ -1,30 +1,56 @@
-import { memo } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { memo, useEffect } from "react";
 import lessStyle from "./index.module.less";
 import { Form, Button, Row, Col } from "antd";
-import type { FormItemInfo } from "@src/types/index";
-import { getFormElement } from "../tools";
+import { getFormElement } from "@src/components/tools";
+import type { FormItemInfo } from "@src/components/type";
 
 export interface FormFilterProps {
+  filterInfo: FormItemInfo[];
+  initialValues?: { [key: string]: unknown };
   reset?: boolean;
   loading?: boolean;
-  filterInfo: FormItemInfo[];
-  onSubmit: (value: Record<string, string>) => void;
+  onSubmit?: (value: Record<string, string>) => void;
+  compact?: boolean;
 }
 
 const FormFilter = ({
   filterInfo,
+  initialValues,
   onSubmit,
   reset,
   loading,
+  compact = false,
 }: FormFilterProps) => {
+  const [form] = Form.useForm();
+
   const onFinish = (value: Record<string, string>) => {
-    onSubmit(value);
+    onSubmit && onSubmit(value);
+  };
+
+  useEffect(() => {
+    if (initialValues) {
+      form.setFieldsValue(initialValues);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getBtn = () => {
+    return (
+      <div className={lessStyle[compact ? "button_box_2" : "button_box_1"]}>
+        {reset ? <Button htmlType="reset">重置</Button> : null}
+
+        <Button htmlType="submit" type="primary" loading={loading}>
+          查询
+        </Button>
+      </div>
+    );
   };
 
   return (
     <div className={lessStyle.filter_box}>
-      <Form onFinish={onFinish} colon={false}>
-        <Row gutter={24}>
+      <Form form={form} onFinish={onFinish} colon={false}>
+        <Row gutter={21} style={{ paddingRight: 200 }}>
           {filterInfo.length > 0
             ? filterInfo.map(e => {
                 return (
@@ -37,25 +63,8 @@ const FormFilter = ({
               })
             : null}
 
-          {filterInfo.length > 2 ? null : (
-            <div className={lessStyle.button_box_2}>
-              {reset ? <Button htmlType="reset">重置</Button> : null}
-              <Button htmlType="submit" type="primary" loading={loading}>
-                查询
-              </Button>
-            </div>
-          )}
+          {getBtn()}
         </Row>
-
-        {filterInfo.length > 2 ? (
-          <Row justify="end" className={lessStyle.button_box}>
-            {reset ? <Button htmlType="reset">重置</Button> : null}
-
-            <Button htmlType="submit" type="primary" loading={loading}>
-              查询
-            </Button>
-          </Row>
-        ) : null}
       </Form>
     </div>
   );

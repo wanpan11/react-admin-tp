@@ -48,6 +48,8 @@ module.exports = {
       { arrowParens: "avoid", singleQuote: false },
     ],
     "react/prop-types": 0,
+    "no-use-before-define": "error",
+    "@typescript-eslint/no-explicit-any": 0,
   },
   // 过滤文件
   ignorePatterns: ["dist", "node_modules", "pnpm-lock", "env"],
