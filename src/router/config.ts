@@ -15,7 +15,7 @@ const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
  */
 const routers: Route[] = [
   {
-    id: "1",
+    id: "0",
     path: "/",
     title: "",
     component: getLazyLoad("/system"),
@@ -61,7 +61,7 @@ const routers: Route[] = [
     ],
   },
   {
-    id: "0",
+    id: "1",
     path: "/login",
     title: "登录",
     component: getLazyLoad("/login"),

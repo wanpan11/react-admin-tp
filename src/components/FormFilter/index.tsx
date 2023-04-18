@@ -3,10 +3,10 @@ import { memo, useEffect } from "react";
 import lessStyle from "./index.module.less";
 import { Form, Button, Row, Col } from "antd";
 import { getFormElement } from "@src/components/tools";
-import type { FormItemInfo } from "@src/components/type";
+import type { FormItem } from "@src/components/type";
 
 export interface FormFilterProps {
-  filterInfo: FormItemInfo[];
+  filterInfo: FormItem[];
   initialValues?: { [key: string]: unknown };
   reset?: boolean;
   loading?: boolean;

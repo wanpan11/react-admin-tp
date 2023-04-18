@@ -2,12 +2,12 @@ import { memo, useEffect } from "react";
 import lessStyle from "./index.module.less";
 import { Modal, Form } from "antd";
 import { getFormElement } from "@src/components/tools";
-import type { FormItemInfo } from "@src/components/type";
+import type { FormItem } from "@src/components/type";
 
 interface FormModalProps {
   open?: boolean;
   title?: string;
-  editInfo: FormItemInfo[];
+  editInfo: FormItem[];
   initialValues?: { [key: string]: unknown };
   onCancel?: () => void;
   onOk?: (value: { [key: string]: unknown }) => void;

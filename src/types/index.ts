@@ -13,7 +13,7 @@ export interface TabInfo {
   childrenList?: TabInfo[];
 }
 
-export interface FormItemInfo {
+export interface FormItem {
   name: string;
   label?: string;
   type: "input" | "select" | "date" | "radio";

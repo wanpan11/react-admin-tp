@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import routers from "./config";
 import Loading from "@src/components/Loading";
+import { colorPrimary } from "@src/config/index";
+import { ConfigProvider } from "antd";
 
 const getRoutes = (routers: Route[]) => {
   return routers.map(e => {
@@ -43,7 +45,15 @@ const getRoutes = (routers: Route[]) => {
 const AppRouter = () => {
   return (
     <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
-      <Routes>{getRoutes(routers)}</Routes>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary,
+          },
+        }}
+      >
+        <Routes>{getRoutes(routers)}</Routes>
+      </ConfigProvider>
     </BrowserRouter>
   );
 };

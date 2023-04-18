@@ -1,10 +1,9 @@
 import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Layout, Menu, ConfigProvider } from "antd";
+import { Layout, Menu } from "antd";
 import BreadCrumb from "@src/components/BreadCrumb";
 import { Link } from "react-router-dom";
 import MobxContext from "@src/store/context";
-import { colorPrimary } from "@src/config/index";
 import MenuHeader from "./header";
 import { TabInfo, MenuItem } from "@src/types/index";
 import store from "@src/store/store";
@@ -71,13 +70,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   }, [isLogin, navigate]);
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary,
-        },
-      }}
-    >
+    <>
       <MenuHeader tabId={topKey} tabList={tabList}></MenuHeader>
 
       <Layout className={lessStyle.container}>
@@ -93,14 +86,14 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
             <BreadCrumb routerMap={routerMap} />
 
             <div className={lessStyle.content}>
-              <MobxContext.Provider value={store}>
+              <MobxContext.Provider value={{ isLogin: store.isLogin }}>
                 {children}
               </MobxContext.Provider>
             </div>
           </Content>
         </Layout>
       </Layout>
-    </ConfigProvider>
+    </>
   );
 });
 

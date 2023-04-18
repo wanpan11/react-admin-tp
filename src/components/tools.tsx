@@ -1,9 +1,9 @@
-import type { FormItemInfo } from "./type";
+import type { FormItem } from "./type";
 import { Input, Select, Radio, DatePicker, Switch, InputNumber } from "antd";
 
 const { RangePicker } = DatePicker;
 
-export const getFormElement = (type: string, info: FormItemInfo) => {
+export const getFormElement = (type: string, info: FormItem) => {
   switch (type) {
     case "radio":
       return (
@@ -52,8 +52,8 @@ export const getFormElement = (type: string, info: FormItemInfo) => {
           placeholder={info.placeholder}
           disabled={info.disable}
           showCount
-          maxLength={100}
-          style={{ height: 120, marginBottom: 24 }}
+          maxLength={500}
+          style={{ height: 150 }}
         />
       );
   }

@@ -5,13 +5,13 @@ import { Card, Button, Table } from "antd";
 import { useRequest } from "ahooks";
 import { companyService } from "@src/api/setting";
 import type { CompanyApi } from "@src/types/api";
-import type { FormItemInfo } from "@src/types/index";
+import type { FormItem } from "@src/types/index";
 
-const filterInfo: FormItemInfo[] = [
+const filterInfo: FormItem[] = [
   { name: "projectName", type: "input", label: "厂商名称" },
 ];
 
-const editInfo: FormItemInfo[] = [
+const editInfo: FormItem[] = [
   {
     name: "category",
     label: "类型",
