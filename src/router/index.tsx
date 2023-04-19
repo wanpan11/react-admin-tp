@@ -12,6 +12,7 @@ const getRoutes = (routers: Route[]) => {
       path,
       title,
       index,
+      redirect,
       component: Component,
       childrenList = [],
     } = e;
@@ -23,7 +24,7 @@ const getRoutes = (routers: Route[]) => {
     if (Component) {
       props.element = (
         <Suspense fallback={<Loading full />}>
-          <Component title={title}>
+          <Component title={title} redirect={redirect}>
             {childrenList.length ? <Outlet /> : null}
           </Component>
         </Suspense>

@@ -32,18 +32,24 @@ export function getFormData(obj: any) {
   return formData;
 }
 
-export function getParam(name: string, defaultValue = ""): string {
+export function getParam(): Record<string, string>;
+export function getParam(name: string): string;
+export function getParam(name?: string) {
   const query = window.location.search.substring(1);
   const vars = query.split("&");
 
+  const value: any = {};
+
   for (let i = 0; i < vars.length; i++) {
     const pair = vars[i].split("=");
-    if (pair[0] == name) {
-      return pair[1] + (pair[2] ? "=" + pair[2] : "");
-    }
+    value[pair[0]] = pair[1] + (pair[2] ? "=" + pair[2] : "");
   }
 
-  return defaultValue;
+  if (name) {
+    return value[name];
+  } else {
+    return value;
+  }
 }
 
 export function getCookie(key: string) {

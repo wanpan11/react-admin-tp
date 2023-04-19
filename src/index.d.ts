@@ -17,6 +17,7 @@ interface PathRoute {
   path: string;
   title?: string;
   index?: boolean;
+  redirect?: string;
   component?: React.LazyExoticComponent;
   childrenList?: Route[];
 }
@@ -25,6 +26,7 @@ interface IndexRoute {
   path?: string;
   title?: string;
   index: boolean;
+  redirect?: string;
   component?: React.LazyExoticComponent;
   childrenList?: Route[];
 }
