@@ -18,7 +18,7 @@ export class MobxStore {
         return {
           id,
           path: index ? partePath : (path as string),
-          label: title,
+          label: title ? title : "",
           childrenList: childrenList.length
             ? getTab(childrenList, path)
             : undefined,

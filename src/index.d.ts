@@ -15,7 +15,7 @@ declare module "*.jpg" {
 interface PathRoute {
   id: string;
   path: string;
-  title: string;
+  title?: string;
   index?: boolean;
   component?: React.LazyExoticComponent;
   childrenList?: Route[];
@@ -23,7 +23,7 @@ interface PathRoute {
 interface IndexRoute {
   id: string;
   path?: string;
-  title: string;
+  title?: string;
   index: boolean;
   component?: React.LazyExoticComponent;
   childrenList?: Route[];
