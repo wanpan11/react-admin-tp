@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useEffect } from "react";
 import lessStyle from "./index.module.less";
-import { Form, Button, Row, Col } from "antd";
+import { Form, Button } from "antd";
 import { getFormElement } from "@src/components/tools";
 import type { FormItem } from "@src/components/type";
 
@@ -49,22 +49,24 @@ const FormFilter = ({
 
   return (
     <div className={lessStyle.filter_box}>
-      <Form form={form} onFinish={onFinish} colon={false}>
-        <Row gutter={21} style={{ paddingRight: 200 }}>
-          {filterInfo.length > 0
-            ? filterInfo.map(e => {
-                return (
-                  <Col key={e.name} span={6}>
-                    <Form.Item name={e.name} label={e.label}>
-                      {getFormElement(e.type, e)}
-                    </Form.Item>
-                  </Col>
-                );
-              })
-            : null}
+      <Form
+        form={form}
+        colon={false}
+        layout="inline"
+        onFinish={onFinish}
+        style={{ paddingRight: 200, position: "relative" }}
+      >
+        {filterInfo.length > 0
+          ? filterInfo.map(e => {
+              return (
+                <Form.Item key={e.name} name={e.name} label={e.label}>
+                  {getFormElement(e.type, e)}
+                </Form.Item>
+              );
+            })
+          : null}
 
-          {getBtn()}
-        </Row>
+        {getBtn()}
       </Form>
     </div>
   );
