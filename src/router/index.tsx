@@ -4,6 +4,8 @@ import routers from "./config";
 import Loading from "@src/components/Loading";
 import { colorPrimary } from "@src/config/index";
 import { ConfigProvider } from "antd";
+import ErrorBoundary from "@src/components/ErrorBoundary";
+import Error from "@src/components/Error";
 
 const getRoutes = (routers: Route[]) => {
   return routers.map(e => {
@@ -45,17 +47,19 @@ const getRoutes = (routers: Route[]) => {
 
 const AppRouter = () => {
   return (
-    <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary,
-          },
-        }}
-      >
-        <Routes>{getRoutes(routers)}</Routes>
-      </ConfigProvider>
-    </BrowserRouter>
+    <ErrorBoundary errComponent={<Error />}>
+      <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary,
+            },
+          }}
+        >
+          <Routes>{getRoutes(routers)}</Routes>
+        </ConfigProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };
 
