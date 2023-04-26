@@ -35,6 +35,7 @@ export const getFormElement = (type: string, info: FormItem) => {
           placeholder={info.placeholder}
           disabled={info.disable}
           options={info.options as { value: string }[]}
+          style={{ minWidth: "150px" }}
         />
       );
 
@@ -53,7 +54,7 @@ export const getFormElement = (type: string, info: FormItem) => {
           disabled={info.disable}
           showCount
           maxLength={500}
-          style={{ height: 150 }}
+          style={{ height: 120, marginBottom: 24 }}
         />
       );
   }

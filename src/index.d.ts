@@ -11,20 +11,38 @@ declare module "*.jpg" {
   const classes: string;
   export default classes;
 }
+declare module "*.png" {
+  const classes: string;
+  export default classes;
+}
+declare module "*.jpeg" {
+  const classes: string;
+  export default classes;
+}
+declare module "*.svg" {
+  const classes: string;
+  export default classes;
+}
+declare module "*.gif" {
+  const classes: string;
+  export default classes;
+}
 
 interface PathRoute {
   id: string;
   path: string;
-  title: string;
+  title?: string;
   index?: boolean;
+  redirect?: string;
   component?: React.LazyExoticComponent;
   childrenList?: Route[];
 }
 interface IndexRoute {
   id: string;
   path?: string;
-  title: string;
+  title?: string;
   index: boolean;
+  redirect?: string;
   component?: React.LazyExoticComponent;
   childrenList?: Route[];
 }

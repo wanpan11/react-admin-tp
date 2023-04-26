@@ -93,8 +93,9 @@ const baseConfig = {
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
       title: dynamicConf.title,
-      template: path.resolve(rootDir, "./public/index.html"),
+      template: path.resolve(rootDir, "./template/index.html"),
       filename: "index.html",
+      favicon: path.resolve(rootDir, "./template/favicon.svg"),
     }),
     // css 分离
     new MiniCssExtractPlugin({

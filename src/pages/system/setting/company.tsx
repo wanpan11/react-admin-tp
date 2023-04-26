@@ -1,7 +1,7 @@
 import { useState } from "react";
 import FormFilter from "@src/components/FormFilter";
 import FormModal from "@src/components/FormModal";
-import { Card, Button, Table } from "antd";
+import { Card, Button, Table, notification } from "antd";
 import { useRequest } from "ahooks";
 import { companyService } from "@src/api/setting";
 import type { CompanyApi } from "@src/types/api";
@@ -104,7 +104,7 @@ const Company = () => {
     },
   ];
 
-  const onSearch = async () => {
+  const onSearch = () => {
     run({ pageNum: 1, pageSize: 10, name: "" });
   };
 
@@ -112,8 +112,10 @@ const Company = () => {
     try {
       const res = await companyService.insert(value);
       console.log(res);
-    } catch (error) {
-      console.log("createManufacturerReq err");
+    } catch (error: any) {
+      notification.error({
+        message: "companyService.insert ===> " + error.message,
+      });
     }
     ModalOpenHandle(false);
   };
