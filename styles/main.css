@@ -5,6 +5,18 @@
   align-items: center;
 }
 
+.ugrtGuOhGdTKVA39amDg {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.ugrtGuOhGdTKVA39amDg img {
+  height: 50%;
+}
+
 .login_input {
   border: none;
   outline: none;
