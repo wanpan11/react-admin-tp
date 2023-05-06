@@ -4,7 +4,7 @@ import styles from "./index.module.less";
 import { useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import type { MenuProps } from "antd";
-import type { TabInfo } from "@src/types/index";
+import type { MenuItem } from "@src/types/index";
 import store from "@src/store/store";
 
 const { Header } = Layout;
@@ -14,7 +14,7 @@ const MenuHeader = ({
   tabList,
 }: {
   tabId: string;
-  tabList: TabInfo[];
+  tabList: MenuItem[];
 }) => {
   const navigate = useNavigate();
 
@@ -54,9 +54,9 @@ const MenuHeader = ({
         {tabList.map(e => {
           return (
             <div
-              key={e.id}
+              key={e.key}
               className={classnames(styles.tabItem, {
-                [styles.tabItem_active]: e.id === tabId,
+                [styles.tabItem_active]: e.key === tabId,
               })}
             >
               <div

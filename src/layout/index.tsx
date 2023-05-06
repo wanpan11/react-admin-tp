@@ -1,67 +1,84 @@
 import { useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Layout, Menu } from "antd";
-import BreadCrumb from "@src/components/BreadCrumb";
-import { Link } from "react-router-dom";
-import MobxContext from "@src/store/context";
-import MenuHeader from "./header";
-import { TabInfo, MenuItem } from "@src/types/index";
-import store from "@src/store/store";
+import { Layout } from "antd";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import BreadCrumb from "@src/components/BreadCrumb";
+import MobxContext from "@src/store/context";
+import { MenuItem } from "@src/types/index";
+import store from "@src/store/store";
+import MenuHeader from "./header";
+import SiderCom from "./sider";
 import lessStyle from "./index.module.less";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { tabList, routerMap, isLogin } = store;
+  const { menuConf, routerMap, isLogin } = store;
 
-  const { topKey, leftKey } = useMemo(() => {
+  console.log("menuConf ===>", menuConf);
+
+  // 获取当前选中 menu ID
+  const [topKey, leftKey] = useMemo(() => {
+    if (!menuConf.length) return ["", ""];
+
+    let menuId = "";
     let parentStr = "";
-    const getCurrentId = (arr: TabInfo[], parteId = "") => {
-      arr.forEach((e: TabInfo) => {
-        const { childrenList = [], path, id } = e;
 
-        if (path === pathname) {
-          parentStr = parteId ? parteId + "&" + id : id;
+    function getCurrentPathId(arr: MenuItem[], parent?: string) {
+      if (arr.length < 0) return;
+
+      arr.forEach(e => {
+        if (pathname.includes(e.path)) {
+          parentStr = parent ? parent : `${e.key}`;
+
+          if (!e.children?.length) {
+            menuId = parent ? `${e.key}` : "";
+          }
         }
 
         let newParentStr = "";
-        if (childrenList.length) {
-          if (parteId) {
-            newParentStr = `${parteId}_${id}`;
+        if (e.children?.length) {
+          if (parent) {
+            newParentStr = `${parent}_${e.key}`;
           } else {
-            newParentStr = `${id}`;
+            newParentStr = `${e.key}`;
           }
-          getCurrentId(childrenList, newParentStr);
+
+          getCurrentPathId(e.children, newParentStr);
         }
       });
-    };
-    getCurrentId(tabList);
+    }
+    getCurrentPathId(menuConf);
 
-    const keys = parentStr?.split("&");
-    const topKey = keys[0];
-    const leftKey = keys[keys.length - 1];
-    return { topKey, leftKey };
-  }, [pathname, tabList]);
+    const tabId = parentStr?.split("_")?.[0] || `${menuConf[0]?.key}`;
 
-  const menuList = useMemo(() => {
+    return [tabId, `${menuId}`];
+  }, [pathname, menuConf]);
+
+  const currentMenuList = useMemo(() => {
     if (!topKey) return [];
 
-    const getMenuList = (arr: TabInfo[]): MenuItem[] => {
-      return arr.map(e => ({
-        label: e.childrenList ? e.label : <Link to={e.path}>{e.label}</Link>,
-        path: e.path,
-        key: e.id,
-        children: e.childrenList ? getMenuList(e.childrenList) : undefined,
-      }));
-    };
+    const current = menuConf.filter(e => e.key === topKey)?.[0]?.children || [];
 
-    return getMenuList(
-      tabList.filter(e => e.id === topKey)?.[0]?.childrenList || []
-    );
-  }, [topKey, tabList]);
+    function getFullRouter(arr: MenuItem[]): MenuItem[] {
+      return arr.map(ele => {
+        const { path, children } = ele;
+
+        return {
+          ...ele,
+          label: children?.length ? (
+            ele.label
+          ) : (
+            <Link to={path}> {ele.label}</Link>
+          ),
+          children: children?.length ? getFullRouter(children) : undefined,
+        };
+      });
+    }
+    return getFullRouter(current);
+  }, [topKey, menuConf]);
 
   useEffect(() => {
     if (!isLogin) {
@@ -69,16 +86,15 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
     }
   }, [isLogin, navigate]);
 
+  console.log("menuList ===>", topKey, leftKey);
+
   return (
     <>
-      <MenuHeader tabId={topKey} tabList={tabList}></MenuHeader>
+      <MenuHeader tabId={topKey} tabList={menuConf}></MenuHeader>
 
       <Layout className={lessStyle.container}>
-        {menuList.length ? (
-          <Sider theme="light">
-            <div style={{ height: "28px" }}></div>
-            <Menu selectedKeys={[leftKey]} mode="inline" items={menuList} />
-          </Sider>
+        {currentMenuList.length ? (
+          <SiderCom menu={currentMenuList} selectKey={leftKey} />
         ) : null}
 
         <Layout>

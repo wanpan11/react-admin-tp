@@ -5,14 +5,6 @@ export interface MenuItem {
   children?: MenuItem[];
 }
 
-export interface TabInfo {
-  id: string;
-  label: string;
-  path: string;
-  index?: boolean;
-  childrenList?: TabInfo[];
-}
-
 export interface FormItem {
   name: string;
   label?: string;

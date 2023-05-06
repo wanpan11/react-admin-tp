@@ -1,6 +1,7 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
+import classNames from "classnames";
+import { useLocation, useNavigate } from "react-router-dom";
 import lessStyle from "./index.module.less";
-import { useLocation } from "react-router-dom";
 
 interface BreadCrumbProps {
   routerMap: { [prop: string]: string };
@@ -8,11 +9,45 @@ interface BreadCrumbProps {
 
 const BreadCrumb = ({ routerMap }: BreadCrumbProps) => {
   const { pathname } = useLocation();
-  const title = routerMap[pathname];
+  const navigate = useNavigate();
+  const title = routerMap[pathname] || "";
+
+  const pathMap = useMemo(() => {
+    const temp: Record<string, string> = {};
+
+    Object.keys(routerMap).map(e => {
+      const arr = routerMap[e].split("/");
+      temp[arr[arr.length - 1].trim()] = e;
+    });
+
+    return temp;
+  }, [routerMap]);
+
+  console.log("pathMap ===>", pathMap);
 
   return (
     <div className={lessStyle.bread_crumb}>
-      <span>{title}</span>
+      {title.split("/").map((e, i, arr) => {
+        const isLast = arr.length - 1 === i;
+        const path = pathMap[e.trim()];
+
+        return (
+          <span key={e}>
+            <span
+              className={classNames({
+                [lessStyle.route]: !isLast && path,
+              })}
+              onClick={() => {
+                navigate(path);
+              }}
+            >
+              {e}
+            </span>
+
+            {isLast ? null : <span className={lessStyle.item}>/</span>}
+          </span>
+        );
+      })}
     </div>
   );
 };

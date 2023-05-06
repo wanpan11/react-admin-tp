@@ -1,11 +1,11 @@
 import { Card, Skeleton } from "antd";
 
-const Report = () => {
+const Api = () => {
   return (
-    <Card title="Report">
+    <Card title="Api">
       <Skeleton active />
     </Card>
   );
 };
 
-export default Report;
+export default Api;
