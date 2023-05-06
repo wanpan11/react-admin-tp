@@ -9,6 +9,7 @@ const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
  * @param {path} * 表示无匹配时 渲染此项
  * @param {index} 默认渲染此项 index path 不能同时存在
  * @param {title} 每个对应组件会接收到 title
+ * @param {notMenu} 非菜单项
  * @param {redirect} 重定向地址
  * @param {component} 对应组件 采用 lazy 懒加载模式
  * @param {childrenList} 嵌套路由 可以在父路由组件内嵌 渲染
@@ -55,7 +56,35 @@ const routers: Route[] = [
             id: "132",
             title: "开发管理",
             path: "/setting/dev",
-            component: getLazyLoad("/system/setting/dev"),
+            childrenList: [
+              {
+                id: "1321",
+                title: "参数配置",
+                path: "/setting/dev",
+                childrenList: [
+                  {
+                    id: "13211",
+                    title: "",
+                    index: true,
+                    notMenu: true,
+                    component: getLazyLoad("/system/setting/params"),
+                  },
+                  {
+                    id: "13212",
+                    title: "详情",
+                    path: "/setting/dev/detail",
+                    notMenu: true,
+                    component: getLazyLoad("/system/setting/detail"),
+                  },
+                ],
+              },
+              {
+                id: "1322",
+                title: "接口配置",
+                path: "/setting/dev/api",
+                component: getLazyLoad("/system/setting/api"),
+              },
+            ],
           },
         ],
       },
