@@ -17,8 +17,6 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const { menuConf, routerMap, isLogin } = store;
 
-  console.log("menuConf ===>", menuConf);
-
   // 获取当前选中 menu ID
   const [topKey, leftKey] = useMemo(() => {
     if (!menuConf.length) return ["", ""];
@@ -85,8 +83,6 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
       navigate("/login");
     }
   }, [isLogin, navigate]);
-
-  console.log("menuList ===>", topKey, leftKey);
 
   return (
     <>
