@@ -23,8 +23,6 @@ const BreadCrumb = ({ routerMap }: BreadCrumbProps) => {
     return temp;
   }, [routerMap]);
 
-  console.log("pathMap ===>", pathMap);
-
   return (
     <div className={lessStyle.bread_crumb}>
       {title.split("/").map((e, i, arr) => {
