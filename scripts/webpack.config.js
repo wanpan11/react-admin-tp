@@ -123,7 +123,6 @@ module.exports = (env, argv) => {
       open: true,
       port: dynamicConf?.devServer?.port,
     };
-    baseConfig.cache = { type: "filesystem" };
     baseConfig.devServer = devServer;
     baseConfig.plugins.push(new webpack.SourceMapDevToolPlugin({}));
   }
