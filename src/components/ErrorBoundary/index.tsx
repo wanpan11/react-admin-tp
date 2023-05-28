@@ -13,7 +13,9 @@ class ErrorBoundary extends Component<{
     addEventListener(
       "error",
       err => {
-        notification.error({ message: "异常报错 ===>" + err.message });
+        notification.error({
+          message: "ErrorBoundary 异常报错 ===>" + err.message,
+        });
       },
       false
     );

@@ -30,7 +30,7 @@ export class Request {
         return config;
       },
       (err: AxiosError) => {
-        return Promise.reject(err);
+        console.error("interceptors.request ===> ", err.message);
       }
     );
 
@@ -40,7 +40,7 @@ export class Request {
         return res.data;
       },
       (err: AxiosError) => {
-        return Promise.reject(err.response);
+        console.error("interceptors.response ===> ", err.message);
       }
     );
   }
