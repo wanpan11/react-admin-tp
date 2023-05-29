@@ -20,8 +20,8 @@ dependencies:
     specifier: ^2.3.2
     version: 2.3.2
   core-js:
-    specifier: '3'
-    version: 3.29.0
+    specifier: ^3.30.2
+    version: 3.30.2
   mobx:
     specifier: ^6.8.0
     version: 6.8.0
@@ -2794,8 +2794,8 @@ packages:
       browserslist: 4.21.5
     dev: true
 
-  /core-js@3.29.0:
-    resolution: {integrity: sha512-VG23vuEisJNkGl6XQmFJd3rEG/so/CNatqeE+7uZAwTSwFeB/qaO0be8xZYUNWprJ/GIwL8aMt9cj1kvbpTZhg==}
+  /core-js@3.30.2:
+    resolution: {integrity: sha512-uBJiDmwqsbJCWHAwjrx3cvjbMXP7xD72Dmsn5LOJpiRmE3WbBbN5rCqQ2Qh6Ek6/eOrjlWngEynBWo4VxerQhg==}
     requiresBuild: true
     dev: false
 
