@@ -112,6 +112,7 @@ module.exports = (env, argv) => {
 
   if (argv.mode === "development") {
     const devServer = {
+      static: ["template"],
       historyApiFallback: true,
       compress: true,
       client: {
