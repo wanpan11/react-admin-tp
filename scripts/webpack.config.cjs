@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-require("../env/env.js"); // 导入对应环境变量
+require("../env/env.cjs"); // 导入对应环境变量
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
-const dynamicConf = require(`./${process.env.NODE_ENV}.config.js`); //  导入对应环境打包配置
+const dynamicConf = require(`./${process.env.NODE_ENV}.config.cjs`); //  导入对应环境打包配置
 const rootDir = path.resolve(__dirname, "../");
 console.log("NODE_ENV ===>", process.env.NODE_ENV);
 
