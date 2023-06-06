@@ -5,7 +5,7 @@ const Params = () => {
   return (
     <Card title="Params">
       <div>
-        <Link to="/setting/dev/detail">detail</Link>
+        <Link to="/setting/detail">detail</Link>
       </div>
       <Skeleton active />
     </Card>
