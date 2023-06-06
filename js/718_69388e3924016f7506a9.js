@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[718],{718:(e,s,t)=>{t.r(s),t.d(s,{default:()=>r});var c=t(2958),n=t(764),i=t(5250);const r=function(){return(0,i.jsx)("div",{children:(0,i.jsx)(c.Z,{title:"数据看板",children:(0,i.jsx)(n.Z,{active:!0})})})}}}]);

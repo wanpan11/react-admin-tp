@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[774],{2774:(e,t,s)=>{s.r(t),s.d(t,{default:()=>i});var c=s(7414),n=s(764),u=s(5250);const i=function(){return(0,u.jsx)(c.Z,{title:"Api",children:(0,u.jsx)(n.Z,{active:!0})})}}}]);
