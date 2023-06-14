@@ -1,53 +1,61 @@
-## react-admin-tp
+## 📊 react-admin-tp
 
-react-typescript 管理系统项目模版、动态路由
+react-typescript 后台管理系统项目模版、内置动态嵌套路由、数据 mock、动态包屑组件。
 
-> 项目概览
+<image src='./src/assets/images/admin.png' style='border-radius:10px' >
 
-- 主要依赖库
+### 🏠 项目概览
 
-  - ant-design
-  - mobx
-  - ahooks
-  - axios
+#### 主要依赖库
 
-- scripts 打包相关
+- ant-design
+- mobx (轻微使用)
+- ahooks
+- axios
 
-  - webpack.config.js 打包入口文件
-  - xxxx.config.js 不同环境打包配置
+#### scripts 打包相关
 
-  ***
+- webpack.config.js 打包入口文件
+- xxxx.config.js 不同环境打包配置
 
-- env 环境变量
+#### env 环境变量
 
-  - .env 全局环境变量
-  - .env.xxxx 动态环境变量
+- .env 全局环境变量
+- .env.xxxx 动态环境变量
 
-  ***
+```
+新增环境需要在 scripts 里配置相应指令 cross-env NODE_ENV=(你的环境名)
+环境变量文件 你的环境名.config.js .env.你的环境名 即可自动加载
+```
 
-- src
+---
 
-  - api 接口相关
-  - assets 资源文件
-  - components 公用组件
-  - config 公用参数
-  - layout 布局
-  - mock 模拟数据
-  - pages 路由页面
-  - store
-  - types
-  - utils
+### 项目结构
 
-  ***
+#### src
+
+- api 接口相关
+- assets 资源文件
+- components 公用组件
+- config 公用参数
+- layout 公用布局
+- mock 模拟数据
+- pages 路由页面
+- router 路由表 嵌套路由组件
+- store
+- types
+- utils
+
+---
 
 > 注意
 
 - 需要安装 ESLint、Prettier 插件
-- 安装完项目依赖后再提交代码，保持项目整洁
 - 环境变量和打包配置动态加载
+- 安装完项目依赖后再提交代码，保持项目整洁
 - homepage 相关文件、构建指令皆可删除
 
-> 安装依赖
+安装依赖
 
 ```
 // 没有pnpm的话先安装pnpm
@@ -57,7 +65,7 @@ npm i pnpm -g
 pnpm i
 ```
 
-> 项目启动
+项目启动
 
 ```
 // dev
@@ -67,15 +75,11 @@ pnpm start
 pnpm build
 ```
 
-> 打包配置
+> 打包/开发相关
 
 - webpack.config.js
-- 请求代理 devServer.proxy (基于 http-proxy-middleware)
-
-> 嵌套路由
-
-- src/router/config.js 路由表
-- src/router/index.jsx 嵌套路由组件
+- 请求代理 devServer.proxy
+- src\api\request.ts 可添加请求拦截相关处理逻辑
 
 > 如有问题请提 issue
 

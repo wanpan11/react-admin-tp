@@ -6,7 +6,10 @@ import type {
   InternalAxiosRequestConfig,
   AxiosError,
 } from "axios";
+import { notification } from "antd";
 import type { AxiosRes } from "../types/api";
+
+export const BAD_REQ_CODE = 911;
 
 export class Request {
   instance: AxiosInstance;
@@ -21,16 +24,13 @@ export class Request {
     // 请求发送前
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        // const isHttp = config.url?.indexOf("http");
-
+        // 代理标识
+        // const isHttp = config.url?.includes("http");
         // if (process.env.ENV === "DEV" && !isHttp) {
         //   config.url = "/proxy" + config.url;
         // }
 
         return config;
-      },
-      (err: AxiosError) => {
-        console.error("interceptors.request ===> ", err.message);
       }
     );
 
@@ -40,7 +40,11 @@ export class Request {
         return res.data;
       },
       (err: AxiosError) => {
-        console.error("interceptors.response ===> ", err.message);
+        console.error("请求异常 ===> ", err.message);
+        notification.error({
+          message: `请求异常 ===> ${err.message}`,
+        });
+        return { code: BAD_REQ_CODE, data: {} };
       }
     );
   }

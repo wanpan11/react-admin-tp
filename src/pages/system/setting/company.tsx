@@ -6,6 +6,7 @@ import { useRequest } from "ahooks";
 import { companyService } from "@src/api/setting";
 import type { CompanyApi } from "@src/types/api";
 import type { FormItem } from "@src/types/index";
+import { defaultPageInfo } from "@src/config";
 
 const filterInfo: FormItem[] = [
   { name: "projectName", type: "input", label: "厂商名称" },
@@ -53,9 +54,11 @@ const editInfo: FormItem[] = [
 
 const Company = () => {
   const [ModalOpen, ModalOpenHandle] = useState(false);
+  const [searchInfo, searchInfoHandle] = useState<Record<string, any>>({});
+  const [pageInfo, pageInfoHandle] = useState(defaultPageInfo);
 
   const { data, error, loading, run } = useRequest(companyService.list, {
-    defaultParams: [{ pageNum: 1, pageSize: 5, name: "" }],
+    defaultParams: [{ ...pageInfo, ...searchInfo }],
     loadingDelay: 300,
   });
 
@@ -104,8 +107,9 @@ const Company = () => {
     },
   ];
 
-  const onSearch = () => {
-    run({ pageNum: 1, pageSize: 10, name: "" });
+  const onSearch = (query: Record<string, any>) => {
+    run({ ...defaultPageInfo, ...query });
+    searchInfoHandle(query);
   };
 
   const createOrEdit = async (value: CompanyApi.InsertReq) => {
