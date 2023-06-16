@@ -65,32 +65,26 @@ const Company = () => {
   const columns = [
     {
       title: "ID",
-      key: "id",
       dataIndex: "id",
     },
     {
       title: "类型",
-      key: "category",
       dataIndex: "category",
     },
     {
       title: "厂商名称",
-      key: "name",
       dataIndex: "name",
     },
     {
       title: "联系人",
-      key: "contact",
       dataIndex: "contact",
     },
     {
       title: "联系电话",
-      key: "mobile",
       dataIndex: "mobile",
     },
     {
       title: "创建时间",
-      key: "updateTime",
       dataIndex: "updateTime",
     },
     {
@@ -100,7 +94,14 @@ const Company = () => {
         return (
           <>
             <Button type="link">删除</Button>
-            <Button type="link">编辑</Button>
+            <Button
+              type="link"
+              onClick={() => {
+                ModalOpenHandle(true);
+              }}
+            >
+              编辑
+            </Button>
           </>
         );
       },

@@ -1,4 +1,5 @@
 import Mock from "mockjs";
+import { nanoid } from "nanoid";
 
 Mock.mock(/company\/list/, () => {
   return Mock.mock({
@@ -6,12 +7,12 @@ Mock.mock(/company\/list/, () => {
     data: {
       "list|5": [
         {
-          "id|+1": 0,
-          category: 0,
-          name: "厂商",
-          contact: "联系",
-          mobile: "1235",
-          updateTime: "updateTime",
+          id: "@id",
+          "category|0-1": 1,
+          name: "@title",
+          contact: "@cname",
+          mobile: "@natural",
+          updateTime: "@datetime",
         },
       ],
     },
@@ -21,6 +22,6 @@ Mock.mock(/company\/list/, () => {
 Mock.mock("/login", req => {
   return {
     code: 0,
-    data: { token: "eqiopeuqueopqueopq2uepoueqou", userInfo: req.body },
+    data: { token: nanoid(), userInfo: req.body },
   };
 });

@@ -13,29 +13,27 @@ export class MobxStore {
   get menuConf() {
     if (!routers?.[0]?.childrenList) return [];
 
-    const menu: MenuItem[] = [];
     // 过滤 notMenu
-    (function filterNotMenu(arr: Route[], temp: MenuItem[], partePath = "") {
+    const filterNotMenu = (arr: Route[], partePath = "") => {
+      const menu: MenuItem[] = [];
+
       arr.forEach(element => {
         const { title, path, id, index, notMenu, childrenList } = element;
         if (notMenu) return;
 
-        const obj = {
+        menu.push({
           key: id,
           path: index ? partePath : path || "",
           label: title ? title : "",
-          children: [],
-        };
-
-        temp.push(obj);
-
-        if (childrenList?.length) {
-          filterNotMenu(childrenList, obj.children, path);
-        }
+          children: childrenList?.length
+            ? filterNotMenu(childrenList, path)
+            : undefined,
+        });
       });
-    })(routers[0].childrenList, menu);
 
-    return menu;
+      return menu;
+    };
+    return filterNotMenu(routers[0].childrenList);
   }
 
   get fullRouter() {

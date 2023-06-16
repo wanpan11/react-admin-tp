@@ -1,4 +1,5 @@
 import { lazy } from "react";
+import { nanoid } from "nanoid";
 
 const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
 
@@ -17,24 +18,24 @@ const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
  */
 const routers: Route[] = [
   {
-    id: "0",
+    id: nanoid(),
     path: "/",
     title: "",
     component: getLazyLoad("/system"),
     childrenList: [
       {
-        id: "11",
+        id: nanoid(),
         index: true,
         title: "首页",
         component: getLazyLoad("/system/home"),
       },
       {
-        id: "12",
+        id: nanoid(),
         path: "/data",
         title: "数据报表",
         childrenList: [
           {
-            id: "121",
+            id: nanoid(),
             index: true,
             title: "销售数据",
             component: getLazyLoad("/system/data/report"),
@@ -42,29 +43,29 @@ const routers: Route[] = [
         ],
       },
       {
-        id: "13",
+        id: nanoid(),
         path: "/setting/",
         title: "系统设置",
         childrenList: [
           {
-            id: "132",
+            id: nanoid(),
             path: "/setting/",
             title: "开发管理",
             childrenList: [
               {
-                id: "1321",
+                id: nanoid(),
                 path: "/setting/",
                 title: "参数配置",
                 childrenList: [
                   {
-                    id: "13211",
+                    id: nanoid(),
                     index: true,
                     notMenu: true,
                     title: "",
                     component: getLazyLoad("/system/setting/params"),
                   },
                   {
-                    id: "13212",
+                    id: nanoid(),
                     path: "/setting/detail",
                     notMenu: true,
                     title: "详情",
@@ -73,7 +74,7 @@ const routers: Route[] = [
                 ],
               },
               {
-                id: "1322",
+                id: nanoid(),
                 path: "/setting/api",
                 title: "接口配置",
                 component: getLazyLoad("/system/setting/api"),
@@ -81,7 +82,7 @@ const routers: Route[] = [
             ],
           },
           {
-            id: "131",
+            id: nanoid(),
             path: "/setting/company",
             title: "厂商管理",
             component: getLazyLoad("/system/setting/company"),
@@ -91,13 +92,13 @@ const routers: Route[] = [
     ],
   },
   {
-    id: "1",
+    id: nanoid(),
     path: "/login",
     title: "登录",
     component: getLazyLoad("/login"),
   },
   {
-    id: "2",
+    id: nanoid(),
     path: "*",
     title: "登录",
     component: getLazyLoad("/login"),
