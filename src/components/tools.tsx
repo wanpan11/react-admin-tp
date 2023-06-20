@@ -1,4 +1,3 @@
-import type { FormItem } from "./type";
 import { Input, Select, Radio, DatePicker, Switch, InputNumber } from "antd";
 
 const { RangePicker } = DatePicker;
@@ -8,7 +7,7 @@ export const getFormElement = (type: string, info: FormItem) => {
     case "radio":
       return (
         <Radio.Group
-          options={info.options as { label: string; value: string }[]}
+          options={info!.options}
           optionType="button"
           buttonStyle="solid"
           disabled={info.disable}

@@ -1,11 +1,11 @@
 import { Suspense } from "react";
+import { ConfigProvider } from "antd";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import routers from "./config";
 import Loading from "@src/components/Loading";
 import { colorPrimary } from "@src/config/index";
-import { ConfigProvider } from "antd";
 import ErrorBoundary from "@src/components/ErrorBoundary";
 import Error from "@src/components/Error";
+import store from "@src/store/store";
 
 const getRoutes = (routers: Route[]) => {
   return routers.map(e => {
@@ -20,7 +20,7 @@ const getRoutes = (routers: Route[]) => {
     } = e;
 
     const props: { key: string; element?: JSX.Element } = {
-      key: id,
+      key: id as string,
     };
 
     if (Component) {
@@ -46,6 +46,8 @@ const getRoutes = (routers: Route[]) => {
 };
 
 const AppRouter = () => {
+  const { router } = store.getRouteMenu;
+
   return (
     <ErrorBoundary errComponent={<Error />}>
       <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
@@ -56,7 +58,7 @@ const AppRouter = () => {
             },
           }}
         >
-          <Routes>{getRoutes(routers)}</Routes>
+          <Routes>{getRoutes(router)}</Routes>
         </ConfigProvider>
       </BrowserRouter>
     </ErrorBoundary>

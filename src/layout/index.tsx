@@ -4,8 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import BreadCrumb from "@src/components/BreadCrumb";
 import MobxContext from "@src/store/context";
-import { MenuItem } from "@src/types/index";
 import store from "@src/store/store";
+import { splitFlag } from "@src/config";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
 import lessStyle from "./index.module.less";
@@ -15,11 +15,15 @@ const { Content } = Layout;
 const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { menuConf, routerMap, isLogin } = store;
+  const {
+    routerMap,
+    isLogin,
+    getRouteMenu: { menu },
+  } = store;
 
   // 获取当前选中 menu ID
   const [topKey, leftKey] = useMemo(() => {
-    if (!menuConf.length) return ["", ""];
+    if (!menu.length) return ["", ""];
 
     let menuId = "";
     let parentStr = "";
@@ -39,7 +43,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
         let newParentStr = "";
         if (e.children?.length) {
           if (parent) {
-            newParentStr = `${parent}_${e.key}`;
+            newParentStr = `${parent + splitFlag + e.key}`;
           } else {
             newParentStr = `${e.key}`;
           }
@@ -48,19 +52,18 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
         }
       });
     }
-    getCurrentPathId(menuConf);
+    getCurrentPathId(menu);
 
-    const tabId = parentStr?.split("_")?.[0] || `${menuConf[0]?.key}`;
+    const tabId = parentStr?.split(splitFlag)?.[0] || `${menu[0]?.key}`;
 
     return [tabId, `${menuId}`];
-  }, [pathname, menuConf]);
+  }, [pathname, menu]);
 
   const currentMenuList = useMemo(() => {
     if (!topKey) return [];
+    const current = menu.filter(e => e.key === topKey)?.[0]?.children || [];
 
-    const current = menuConf.filter(e => e.key === topKey)?.[0]?.children || [];
-
-    function getFullRouter(arr: MenuItem[]): MenuItem[] {
+    function getSideMenu(arr: MenuItem[]): MenuItem[] {
       return arr.map(ele => {
         const { path, children } = ele;
 
@@ -71,12 +74,12 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
           ) : (
             <Link to={path}> {ele.label}</Link>
           ),
-          children: children?.length ? getFullRouter(children) : undefined,
+          children: children?.length ? getSideMenu(children) : undefined,
         };
       });
     }
-    return getFullRouter(current);
-  }, [topKey, menuConf]);
+    return getSideMenu(current);
+  }, [topKey, menu]);
 
   useEffect(() => {
     if (!isLogin) {
@@ -86,7 +89,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <MenuHeader tabId={topKey} tabList={menuConf}></MenuHeader>
+      <MenuHeader tabId={topKey} tabList={menu}></MenuHeader>
 
       <Layout className={lessStyle.container}>
         {currentMenuList.length ? (

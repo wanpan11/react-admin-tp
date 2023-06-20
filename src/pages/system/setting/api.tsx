@@ -1,8 +1,8 @@
 import { Card, Skeleton } from "antd";
 
-const Api = () => {
+const Api = ({ title }: PageProps) => {
   return (
-    <Card title="Api">
+    <Card title={title}>
       <Skeleton active />
     </Card>
   );

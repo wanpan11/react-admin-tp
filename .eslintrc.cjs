@@ -50,6 +50,7 @@ module.exports = {
     "react/prop-types": 0,
     "no-use-before-define": "error",
     "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
   },
   // 过滤文件
   ignorePatterns: ["dist", "node_modules", "pnpm-lock", "env"],

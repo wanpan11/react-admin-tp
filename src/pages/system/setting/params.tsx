@@ -1,9 +1,9 @@
 import { Card, Skeleton } from "antd";
 import { Link } from "react-router-dom";
 
-const Params = () => {
+const Params = ({ title }: PageProps) => {
   return (
-    <Card title="Params">
+    <Card title={title || "参数配置"}>
       <div>
         <Link to="/setting/detail">detail</Link>
       </div>

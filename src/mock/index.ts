@@ -1,6 +1,8 @@
 import Mock from "mockjs";
 import { nanoid } from "nanoid";
 
+Mock.setup({ timeout: 1000 });
+
 Mock.mock(/company\/list/, () => {
   return Mock.mock({
     code: 1,
@@ -8,7 +10,7 @@ Mock.mock(/company\/list/, () => {
       "list|5": [
         {
           id: "@id",
-          "category|0-1": 1,
+          "category|1-3": 1,
           name: "@title",
           contact: "@cname",
           mobile: "@natural",

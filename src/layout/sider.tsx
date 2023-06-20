@@ -1,6 +1,5 @@
 import { Layout, Menu } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import type { MenuItem } from "@src/types/index";
 
 const { Sider } = Layout;
 

@@ -1,8 +1,8 @@
 import { Card, Skeleton } from "antd";
 
-const Detail = () => {
+const Detail = ({ title }: PageProps) => {
   return (
-    <Card title="Detail">
+    <Card title={title}>
       <Skeleton active />
     </Card>
   );

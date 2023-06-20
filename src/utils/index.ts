@@ -4,7 +4,7 @@ export const getRouterMap = (routes: Route[]) => {
   const getBreadCrumbConf = (arr: Route[], parentTitle = "") => {
     arr.forEach(e => {
       let newTitle = "";
-      const { path, title, childrenList = [] } = e;
+      const { path, title = "", childrenList = [] } = e;
 
       newTitle = parentTitle
         ? `${parentTitle}${title ? " / " + title : ""}`

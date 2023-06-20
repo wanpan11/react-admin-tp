@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
 interface PathRoute {
-  id: string;
+  id?: string;
   path: string;
-  title: string;
+  title?: string;
   index?: boolean;
   notMenu?: boolean;
   redirect?: string;
@@ -10,9 +10,9 @@ interface PathRoute {
   childrenList?: Route[];
 }
 interface IndexRoute {
-  id: string;
+  id?: string;
   path?: string;
-  title: string;
+  title?: string;
   index: boolean;
   notMenu?: boolean;
   redirect?: string;
@@ -24,6 +24,34 @@ interface PageProps {
   children: ReactNode;
   title: string;
   redirect?: string;
+}
+
+interface MenuItem {
+  key: string;
+  path: string;
+  label: string | JSX.Element;
+  children?: MenuItem[];
+}
+interface FormItem {
+  name: string;
+  type:
+    | "input"
+    | "numberInput"
+    | "select"
+    | "date"
+    | "radio"
+    | "textArea"
+    | "switch"
+    | "blockNode"
+    | "node";
+  placeholder?: string;
+  leftNode?: JSX.Element;
+  disable?: boolean;
+  initialValue?: unknown;
+  hide?: boolean;
+  rule?: any;
+  label?: string | JSX.Element;
+  options?: { label: string; value: any }[];
 }
 
 declare module "*.module.scss" {

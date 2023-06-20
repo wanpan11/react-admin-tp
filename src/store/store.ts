@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
+import { nanoid } from "nanoid";
 import routers from "@src/router/config";
 import { getRouterMap } from "@src/utils/index";
-import type { MenuItem } from "@src/types/index";
 
 export class MobxStore {
   isLogin = localStorage.getItem("token") ? true : false;
@@ -10,51 +10,63 @@ export class MobxStore {
     makeAutoObservable(this);
   }
 
-  get menuConf() {
-    if (!routers?.[0]?.childrenList) return [];
+  // 获取菜单、路由
+  get getRouteMenu() {
+    const router: Route[] = [];
+    const menu: MenuItem[] = [];
 
-    // 过滤 notMenu
-    const filterNotMenu = (arr: Route[], partePath = "") => {
-      const menu: MenuItem[] = [];
-
+    function getFullRouter(
+      arr: Route[],
+      router: Route[],
+      menu: MenuItem[],
+      partePath = ""
+    ) {
       arr.forEach(element => {
-        const { title, path, id, index, notMenu, childrenList } = element;
-        if (notMenu) return;
+        const id = nanoid();
+        const { path, index, title, childrenList, notMenu } = element;
 
-        menu.push({
-          key: id,
-          path: index ? partePath : path || "",
-          label: title ? title : "",
-          children: childrenList?.length
-            ? filterNotMenu(childrenList, path)
-            : undefined,
-        });
-      });
+        let newPath = path as string;
+        // 多级嵌套 补全 /
+        if (path?.startsWith("/") && childrenList?.length) {
+          newPath = (path + "/").replace(/\/\/+/g, "/");
+        }
 
-      return menu;
-    };
-    return filterNotMenu(routers[0].childrenList);
-  }
-
-  get fullRouter() {
-    function getFullRouter(arr: Route[], partePath = ""): Route[] {
-      return arr.map(element => {
-        const { path, index, childrenList } = element;
-
-        return {
+        const routeObj = {
           ...element,
-          path: index ? partePath : path || "",
-          childrenList: childrenList?.length
-            ? getFullRouter(childrenList, path)
-            : undefined,
+          id,
+          path: index ? partePath : newPath,
+          childrenList: [],
         };
+        const menuObj = {
+          key: id,
+          path: index ? partePath : (path as string),
+          label: title ? title : "",
+          children: [],
+        };
+
+        router.push(routeObj);
+        if (!notMenu) {
+          menu.push(menuObj);
+        }
+
+        if (childrenList?.length) {
+          getFullRouter(
+            childrenList,
+            routeObj.childrenList,
+            menuObj.children,
+            newPath
+          );
+        }
       });
     }
-    return getFullRouter(routers);
+    getFullRouter(routers, router, menu);
+
+    return { router, menu: menu[0].children as MenuItem[] };
   }
 
+  // 获取面包屑
   get routerMap() {
-    return getRouterMap(this.fullRouter);
+    return getRouterMap(this.getRouteMenu.router[0].childrenList as Route[]);
   }
 
   setLogin(val: boolean) {

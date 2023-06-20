@@ -7,10 +7,13 @@ interface BreadCrumbProps {
   routerMap: { [prop: string]: string };
 }
 
-const BreadCrumb = ({ routerMap }: BreadCrumbProps) => {
+const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const title = routerMap[pathname] || "";
+  const currentPath =
+    routerMap[
+      Object.keys(routerMap).find(item => item.startsWith(pathname)) || ""
+    ];
 
   const pathMap = useMemo(() => {
     const temp: Record<string, string> = {};
@@ -25,7 +28,7 @@ const BreadCrumb = ({ routerMap }: BreadCrumbProps) => {
 
   return (
     <div className={lessStyle.bread_crumb}>
-      {title.split("/").map((e, i, arr) => {
+      {currentPath.split("/").map((e, i, arr) => {
         const isLast = arr.length - 1 === i;
         const path = pathMap[e.trim()];
 

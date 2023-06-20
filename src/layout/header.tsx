@@ -4,7 +4,6 @@ import styles from "./index.module.less";
 import { useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import type { MenuProps } from "antd";
-import type { MenuItem } from "@src/types/index";
 import store from "@src/store/store";
 
 const { Header } = Layout;
