@@ -58,6 +58,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@babel/runtime": "^7.17.2",
+    "@unocss/reset": "^0.53.3",
     "ahooks": "^3.7.4",
     "antd": "^5.2.2",
     "axios": "^1.3.3",

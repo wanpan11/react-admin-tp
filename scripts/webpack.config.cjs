@@ -41,7 +41,7 @@ const baseConfig = {
           {
             loader: "less-loader",
             options: {
-              additionalData: '@import "@src/assets/css/config.less";',
+              additionalData: '@import "@src/assets/css/global.less";',
             },
           },
         ],

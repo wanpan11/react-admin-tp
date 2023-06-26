@@ -1,6 +1,5 @@
 import { Card, Layout } from "antd";
-import styles from "./index.module.less";
-import restStyles from "@src/assets/css/reset.module.less";
+import lessStyle from "./index.module.less";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { loginReq } from "@src/api/account";
@@ -18,11 +17,11 @@ const Login = () => {
   };
 
   return (
-    <Layout className={styles.content}>
-      <Card className={styles.login_box}>
-        <div className={styles.box}></div>
+    <Layout className={lessStyle.content}>
+      <Card className={lessStyle.login_box}>
+        <div className={lessStyle.box}></div>
 
-        <h1 className={styles.title}>欢迎登录</h1>
+        <h1 className={lessStyle.title}>欢迎登录</h1>
 
         <Form
           name="basic"
@@ -38,7 +37,7 @@ const Login = () => {
             rules={[{ required: true, message: "请输入你的账号!" }]}
           >
             <Input
-              className={restStyles.login_input}
+              className={lessStyle.login_input}
               placeholder="请输入你的账号"
             />
           </Form.Item>
@@ -49,12 +48,12 @@ const Login = () => {
             rules={[{ required: true, message: "请输入你的密码！" }]}
           >
             <Input.Password
-              className={restStyles.login_input}
+              className={lessStyle.login_input}
               placeholder="请输入你的密码"
             />
           </Form.Item>
 
-          <div className={styles.more}>
+          <div className={lessStyle.more}>
             <div>联系管理员</div>
           </div>
 
@@ -63,7 +62,7 @@ const Login = () => {
             htmlType="submit"
             block
             size="large"
-            className={styles.submit}
+            className={lessStyle.submit}
           >
             登录
           </Button>
