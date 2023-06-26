@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const UnoCSS = require("@unocss/webpack").default;
 
 const dynamicConf = require(`./${process.env.NODE_ENV}.config.cjs`); //  导入对应环境打包配置
 const rootDir = path.resolve(__dirname, "../");
@@ -104,6 +105,7 @@ const baseConfig = {
     new webpack.DefinePlugin({
       "process.env": JSON.stringify(process.env),
     }),
+    UnoCSS(),
   ],
 };
 
