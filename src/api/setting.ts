@@ -1,4 +1,4 @@
-import request from "@src/api/request";
+import request from "@src/utils/request";
 import type { CompanyApi } from "../types/api";
 
 export const companyService = {

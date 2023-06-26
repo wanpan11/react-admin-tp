@@ -2,6 +2,11 @@
 
 react-typescript 后台管理系统项目模版、内置动态嵌套路由、数据 mock、动态包屑组件。
 
+![Static Badge](https://img.shields.io/badge/unocss-black?logo=unocss&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/antdesign-black?logo=antdesign&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/mobx-black?logo=mobx&style=for-the-badge)
+
 <image src='./src/assets/images/admin.png' style='border-radius:10px' >
 
 ### 🏠 项目概览
@@ -12,6 +17,7 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 - mobx (轻微使用)
 - ahooks
 - axios
+- unocss - [即时按需原子 CSS 引擎](https://unocss.dev/)
 
 #### scripts 打包相关
 
@@ -50,7 +56,7 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 
 > 注意
 
-- 需要安装 ESLint、Prettier 插件
+- 需要安装 ESLint、Prettier、UnoCSS 插件（墙裂推荐安装）
 - 环境变量和打包配置动态加载
 - 安装完项目依赖后再提交代码，保持项目整洁
 - homepage 相关文件、构建指令皆可删除

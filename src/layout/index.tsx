@@ -97,7 +97,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
         ) : null}
 
         <Layout>
-          <Content style={{ margin: "0 16px" }}>
+          <Content m="t-0 b-0 16px">
             <BreadCrumb routerMap={routerMap} />
 
             <div className={lessStyle.content}>

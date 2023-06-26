@@ -1,6 +1,5 @@
 import { memo } from "react";
 import { Spin, Layout } from "antd";
-import lessStyle from "./index.module.less";
 import classnames from "classnames";
 
 interface LoadingProps {
@@ -9,7 +8,11 @@ interface LoadingProps {
 
 const Loading = ({ full }: LoadingProps) => {
   return (
-    <Layout className={classnames({ [lessStyle.full]: full })}>
+    <Layout
+      className={classnames({
+        "h-screen flex items-center justify-center": full,
+      })}
+    >
       <Spin size="large" tip="数据加载中..." />
     </Layout>
   );

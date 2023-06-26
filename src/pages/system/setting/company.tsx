@@ -140,10 +140,8 @@ const Company = () => {
         reset
       />
 
-      <div style={{ height: "12px" }}></div>
-
-      <Card>
-        <div style={{ marginBottom: "12px" }}>
+      <Card m="t-12px">
+        <div m="b-12px">
           <Button
             type="primary"
             onClick={() => {

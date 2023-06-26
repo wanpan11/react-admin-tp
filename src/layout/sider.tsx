@@ -34,7 +34,7 @@ const SiderCom = ({
 
   return (
     <Sider theme="light" width={160}>
-      <div style={{ height: "28px" }}></div>
+      <div h="28px"></div>
 
       <Menu
         mode="inline"

@@ -1,10 +1,10 @@
 import { Card, Layout } from "antd";
-import lessStyle from "./index.module.less";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import { loginReq } from "@src/api/account";
 import type { AccountApi } from "@src/types/api";
 import store from "@src/store/store";
+import lessStyle from "./index.module.less";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,15 +21,17 @@ const Login = () => {
       <Card className={lessStyle.login_box}>
         <div className={lessStyle.box}></div>
 
-        <h1 className={lessStyle.title}>欢迎登录</h1>
+        <h1 text="24px center" m="b38px">
+          欢迎登录
+        </h1>
 
         <Form
           name="basic"
           layout="vertical"
-          style={{ width: 300 }}
           onFinish={onFinish}
           requiredMark="optional"
           initialValues={{ account: "user", password: "123" }}
+          w="300px"
         >
           <Form.Item
             label="账号"
@@ -53,16 +55,16 @@ const Login = () => {
             />
           </Form.Item>
 
-          <div className={lessStyle.more}>
+          <div flex="~ justify-between" text="neutral-400" cursor="pointer">
             <div>联系管理员</div>
           </div>
 
           <Button
-            type="primary"
-            htmlType="submit"
             block
             size="large"
-            className={lessStyle.submit}
+            type="primary"
+            htmlType="submit"
+            m="b16px t38px"
           >
             登录
           </Button>

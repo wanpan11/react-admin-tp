@@ -1,5 +1,4 @@
 import { memo, useEffect } from "react";
-import lessStyle from "./index.module.less";
 import { Modal, Form } from "antd";
 import { getFormElement } from "@src/components/tools";
 
@@ -57,7 +56,7 @@ const FormModal = ({
       }}
       footer={noFooter ? null : undefined}
     >
-      <div className={lessStyle.content}>
+      <div className="min-h-300px p-32px p-l-0 p-r-0">
         <Form
           form={form}
           labelCol={{ span: 5 }}

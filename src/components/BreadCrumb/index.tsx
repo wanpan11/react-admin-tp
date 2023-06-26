@@ -1,7 +1,6 @@
 import { memo, useMemo } from "react";
 import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
-import lessStyle from "./index.module.less";
 
 interface BreadCrumbProps {
   routerMap: { [prop: string]: string };
@@ -27,7 +26,7 @@ const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
   }, [routerMap]);
 
   return (
-    <div className={lessStyle.bread_crumb}>
+    <div className="h-58px" flex="~ items-center" text="14px neutral-400">
       {currentPath.split("/").map((e, i, arr) => {
         const isLast = arr.length - 1 === i;
         const path = pathMap[e.trim()];
@@ -36,7 +35,7 @@ const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
           <span key={e}>
             <span
               className={classNames({
-                [lessStyle.route]: !isLast && path,
+                "cursor-pointer text-primary": !isLast && path,
               })}
               onClick={() => {
                 navigate(path);
@@ -45,7 +44,7 @@ const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
               {e}
             </span>
 
-            {isLast ? null : <span className={lessStyle.item}>/</span>}
+            {isLast ? null : <span m="t-0 b-0 6px">/</span>}
           </span>
         );
       })}

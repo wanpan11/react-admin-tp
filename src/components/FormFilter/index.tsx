@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useEffect } from "react";
-import lessStyle from "./index.module.less";
 import { Form, Button } from "antd";
 import { getFormElement } from "@src/components/tools";
 
@@ -36,10 +35,10 @@ const FormFilter = ({
 
   const getBtn = () => {
     return (
-      <div className={lessStyle[compact ? "button_box_2" : "button_box_1"]}>
+      <div className={compact ? "" : "absolute right-24px bottom-0"}>
         {reset ? <Button htmlType="reset">重置</Button> : null}
 
-        <Button htmlType="submit" type="primary" loading={loading}>
+        <Button htmlType="submit" type="primary" loading={loading} m="l-24px">
           查询
         </Button>
       </div>
@@ -47,13 +46,13 @@ const FormFilter = ({
   };
 
   return (
-    <div className={lessStyle.filter_box}>
+    <div className="box-border border-r-24px bg-white p-24px">
       <Form
         form={form}
         colon={false}
         layout="inline"
         onFinish={onFinish}
-        style={{ paddingRight: 200, position: "relative" }}
+        className="relative p-r-200px"
       >
         {filterInfo.length > 0
           ? filterInfo.map(e => {
