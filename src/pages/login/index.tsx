@@ -21,9 +21,7 @@ const Login = () => {
       <Card className={lessStyle.login_box}>
         <div className={lessStyle.box}></div>
 
-        <h1 text="24px center" m="b38px">
-          欢迎登录
-        </h1>
+        <h1 className=" mb-9 text-center text-2xl">欢迎登录</h1>
 
         <Form
           name="basic"
@@ -31,7 +29,7 @@ const Login = () => {
           onFinish={onFinish}
           requiredMark="optional"
           initialValues={{ account: "user", password: "123" }}
-          w="300px"
+          className=" w-80"
         >
           <Form.Item
             label="账号"
@@ -55,7 +53,7 @@ const Login = () => {
             />
           </Form.Item>
 
-          <div flex="~ justify-between" text="neutral-400" cursor="pointer">
+          <div className=" flex cursor-pointer justify-between text-neutral-400">
             <div>联系管理员</div>
           </div>
 
@@ -64,7 +62,7 @@ const Login = () => {
             size="large"
             type="primary"
             htmlType="submit"
-            m="b16px t38px"
+            className="mb-4 mt-9"
           >
             登录
           </Button>

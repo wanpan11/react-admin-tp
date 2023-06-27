@@ -35,10 +35,15 @@ const FormFilter = ({
 
   const getBtn = () => {
     return (
-      <div className={compact ? "" : "absolute right-24px bottom-0"}>
+      <div className={compact ? "" : "absolute bottom-0 right-6"}>
         {reset ? <Button htmlType="reset">重置</Button> : null}
 
-        <Button htmlType="submit" type="primary" loading={loading} m="l-24px">
+        <Button
+          type="primary"
+          className="ml-6"
+          htmlType="submit"
+          loading={loading}
+        >
           查询
         </Button>
       </div>
@@ -46,13 +51,13 @@ const FormFilter = ({
   };
 
   return (
-    <div className="box-border border-r-24px bg-white p-24px">
+    <div className="rounded- box-border rounded-lg bg-white p-6">
       <Form
         form={form}
         colon={false}
         layout="inline"
         onFinish={onFinish}
-        className="relative p-r-200px"
+        className="relative pr-52"
       >
         {filterInfo.length > 0
           ? filterInfo.map(e => {

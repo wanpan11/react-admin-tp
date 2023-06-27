@@ -19,7 +19,6 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
-    "@unocss",
   ],
   // 解析选项
   parserOptions: {
@@ -49,7 +48,6 @@ module.exports = {
       { arrowParens: "avoid", singleQuote: false },
     ],
     "react/prop-types": 0,
-    "react/no-unknown-property": 0,
     "no-use-before-define": "error",
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,

@@ -1,4 +1,4 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["attributify", "datetime", "unocss"]
+  "cSpell.words": ["attributify", "datetime", "tailwindcss", "unocss"]
 }

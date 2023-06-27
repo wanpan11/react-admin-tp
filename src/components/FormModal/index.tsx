@@ -56,7 +56,7 @@ const FormModal = ({
       }}
       footer={noFooter ? null : undefined}
     >
-      <div className="min-h-300px p-32px p-l-0 p-r-0">
+      <div className="min-h-[300px] p-8 pl-0 pr-0">
         <Form
           form={form}
           labelCol={{ span: 5 }}

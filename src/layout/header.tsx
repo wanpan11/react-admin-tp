@@ -22,7 +22,7 @@ const MenuHeader = ({
       key: "1",
       label: (
         <div
-          className={styles.menu_item}
+          className="p-3 pb-1 pt-1"
           onClick={() => {
             localStorage.clear();
             store.setLogin(false);

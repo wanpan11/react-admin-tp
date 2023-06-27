@@ -1,5 +1,9 @@
 @import "@unocss/reset/normalize.css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body,
 ul,
 li {

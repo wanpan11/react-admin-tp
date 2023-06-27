@@ -26,10 +26,11 @@ const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
   }, [routerMap]);
 
   return (
-    <div className="h-58px" flex="~ items-center" text="14px neutral-400">
+    <div className="flex h-14 items-center text-neutral-400">
       {currentPath.split("/").map((e, i, arr) => {
+        const text = e.trim();
         const isLast = arr.length - 1 === i;
-        const path = pathMap[e.trim()];
+        const path = pathMap[text];
 
         return (
           <span key={e}>
@@ -41,10 +42,10 @@ const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
                 navigate(path);
               }}
             >
-              {e}
+              {text}
             </span>
 
-            {isLast ? null : <span m="t-0 b-0 6px">/</span>}
+            {isLast ? null : <span className="ml-2 mr-2">/</span>}
           </span>
         );
       })}

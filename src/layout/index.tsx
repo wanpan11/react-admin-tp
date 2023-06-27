@@ -8,7 +8,6 @@ import store from "@src/store/store";
 import { splitFlag } from "@src/config";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
-import lessStyle from "./index.module.less";
 
 const { Content } = Layout;
 
@@ -91,16 +90,16 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
     <>
       <MenuHeader tabId={topKey} tabList={menu}></MenuHeader>
 
-      <Layout className={lessStyle.container}>
+      <Layout className="h-[calc(100vh-58px)] overflow-hidden">
         {currentMenuList.length ? (
           <SiderCom menu={currentMenuList} selectKey={leftKey} />
         ) : null}
 
         <Layout>
-          <Content m="t-0 b-0 16px">
+          <Content className="m-3 mb-0 mt-0">
             <BreadCrumb routerMap={routerMap} />
 
-            <div className={lessStyle.content}>
+            <div className=" h-[calc(100%-4.5rem)] overflow-auto">
               <MobxContext.Provider value={{ isLogin: store.isLogin }}>
                 {children}
               </MobxContext.Provider>

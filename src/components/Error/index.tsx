@@ -3,8 +3,8 @@ import error from "@src/assets/images/error.png";
 
 const Error = () => {
   return (
-    <div h="screen" w="screen" flex="~ justify-center items-center col">
-      <img src={error} alt="" h="50%" />
+    <div className="flex h-screen w-screen flex-col items-center justify-center">
+      <img src={error} alt="出错啦!" className="h-1/2" />
       <div>系统错误！！</div>
     </div>
   );

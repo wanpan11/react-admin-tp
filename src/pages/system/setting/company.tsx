@@ -140,8 +140,8 @@ const Company = () => {
         reset
       />
 
-      <Card m="t-12px">
-        <div m="b-12px">
+      <Card>
+        <div>
           <Button
             type="primary"
             onClick={() => {
@@ -164,13 +164,13 @@ const Company = () => {
         open={ModalOpen}
         title="厂商编辑"
         editInfo={editInfo}
+        initialValues={editData}
         onCancel={() => {
           clearEdit();
         }}
         onOk={value => {
           createOrEdit(value as CompanyApi.InsertReq);
         }}
-        initialValues={editData}
       />
     </div>
   );

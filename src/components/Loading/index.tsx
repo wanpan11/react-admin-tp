@@ -10,7 +10,7 @@ const Loading = ({ full }: LoadingProps) => {
   return (
     <Layout
       className={classnames({
-        "h-screen flex items-center justify-center": full,
+        "flex h-screen items-center justify-center": full,
       })}
     >
       <Spin size="large" tip="数据加载中..." />

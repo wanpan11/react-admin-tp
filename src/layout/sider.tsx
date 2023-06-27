@@ -34,13 +34,12 @@ const SiderCom = ({
 
   return (
     <Sider theme="light" width={160}>
-      <div h="28px"></div>
-
       <Menu
         mode="inline"
+        items={menu}
         openKeys={keys}
         selectedKeys={[`${currentKay}`]}
-        items={menu}
+        className="mt-5"
         onOpenChange={openKeys => {
           keysHandle(openKeys);
         }}
