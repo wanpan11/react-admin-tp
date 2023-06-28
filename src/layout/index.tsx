@@ -88,10 +88,10 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   }, [isLogin, navigate]);
 
   return (
-    <>
+    <Layout>
       <MenuHeader tabId={topKey} tabList={menu}></MenuHeader>
 
-      <Layout className="h-[calc(100vh-58px)] overflow-hidden">
+      <Layout className="h-[calc(100vh-3.5rem)] overflow-hidden">
         {currentMenuList.length ? (
           <SiderCom selectKey={leftKey} menu={currentMenuList} />
         ) : null}
@@ -108,7 +108,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
           </Content>
         </Layout>
       </Layout>
-    </>
+    </Layout>
   );
 });
 

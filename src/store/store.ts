@@ -4,6 +4,7 @@ import routers from "@src/router/config";
 import { getRouterMap } from "@src/utils/index";
 
 export class MobxStore {
+  darkMode = false;
   isLogin = localStorage.getItem("token") ? true : false;
   userInfo: { account: string } | undefined = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo") as string)
@@ -70,6 +71,10 @@ export class MobxStore {
   // 获取面包屑
   get routerMap() {
     return getRouterMap(this.getRouteMenu.router[0].childrenList as Route[]);
+  }
+
+  setTheme(boolean: boolean) {
+    this.darkMode = boolean;
   }
 
   setLogin(val: boolean, userInfo?: { account: string }) {

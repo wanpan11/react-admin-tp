@@ -1,63 +1,16 @@
-.header {
-  height: 58px;
-  padding: 10px 28px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 999;
+.line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: #4096ff;
+}
 
-  .left {
-    display: flex;
-    align-items: center;
-
-    .title {
-      text-align: center;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 100px;
-
-      img {
-        width: 32px;
-        margin-right: 8px;
-      }
-    }
-
-    .tabItem {
-      margin: 0 24px;
-      height: 58px;
-      line-height: 58px;
-      color: rgba(0, 0, 0, 0.8);
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-
-      .line {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 3px;
-        background-color: #4096ff;
-      }
-    }
-
-    .tabItem_active {
-      color: #4096ff;
-
-      .line {
-        animation-name: lineIn;
-        animation-duration: 300ms;
-        animation-fill-mode: forwards;
-      }
-    }
-  }
-
-  .right {
-    cursor: pointer;
+.tabItem_active {
+  .line {
+    animation-name: lineIn;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
   }
 }
 

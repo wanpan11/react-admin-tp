@@ -26,7 +26,7 @@ const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
   }, [routerMap]);
 
   return (
-    <div className="flex h-14 items-center text-neutral-400">
+    <div className="flex h-14 items-center pl-2 text-neutral-400">
       {currentPath.split("/").map((e, i, arr) => {
         const text = e.trim();
         const isLast = arr.length - 1 === i;

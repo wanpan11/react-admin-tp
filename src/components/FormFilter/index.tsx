@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useEffect } from "react";
-import { Form, Button } from "antd";
+import { Form, Button, Card } from "antd";
 import { getFormElement } from "@src/components/tools";
 
 export interface FormFilterProps {
@@ -13,12 +13,12 @@ export interface FormFilterProps {
 }
 
 const FormFilter = ({
-  filterInfo,
-  initialValues,
-  onSubmit,
   reset,
   loading,
   compact = false,
+  onSubmit,
+  filterInfo,
+  initialValues,
 }: FormFilterProps) => {
   const [form] = Form.useForm();
 
@@ -51,7 +51,7 @@ const FormFilter = ({
   };
 
   return (
-    <div className="rounded- box-border rounded-lg bg-white p-6">
+    <Card>
       <Form
         form={form}
         colon={false}
@@ -71,7 +71,7 @@ const FormFilter = ({
 
         {getBtn()}
       </Form>
-    </div>
+    </Card>
   );
 };
 

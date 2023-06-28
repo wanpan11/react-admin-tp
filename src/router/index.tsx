@@ -1,6 +1,7 @@
 import { Suspense } from "react";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, theme } from "antd";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 import Loading from "@src/components/Loading";
 import { colorPrimary } from "@src/config/index";
 import ErrorBoundary from "@src/components/ErrorBoundary";
@@ -45,24 +46,28 @@ const getRoutes = (routers: Route[]) => {
   });
 };
 
-const AppRouter = () => {
-  const { router } = store.getRouteMenu;
+const AppRouter = observer(() => {
+  const {
+    darkMode,
+    getRouteMenu: { router },
+  } = store;
+
+  const currentThem = {
+    algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    token: {
+      colorPrimary,
+    },
+  };
 
   return (
     <ErrorBoundary errComponent={<Error />}>
       <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary,
-            },
-          }}
-        >
+        <ConfigProvider theme={currentThem}>
           <Routes>{getRoutes(router)}</Routes>
         </ConfigProvider>
       </BrowserRouter>
     </ErrorBoundary>
   );
-};
+});
 
 export default AppRouter;
