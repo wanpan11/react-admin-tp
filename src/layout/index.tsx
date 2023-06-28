@@ -15,8 +15,9 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const {
-    routerMap,
     isLogin,
+    userInfo,
+    routerMap,
     getRouteMenu: { menu },
   } = store;
 
@@ -92,15 +93,15 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
 
       <Layout className="h-[calc(100vh-58px)] overflow-hidden">
         {currentMenuList.length ? (
-          <SiderCom menu={currentMenuList} selectKey={leftKey} />
+          <SiderCom selectKey={leftKey} menu={currentMenuList} />
         ) : null}
 
         <Layout>
           <Content className="m-3 mb-0 mt-0">
             <BreadCrumb routerMap={routerMap} />
 
-            <div className=" h-[calc(100%-4.5rem)] overflow-auto">
-              <MobxContext.Provider value={{ isLogin: store.isLogin }}>
+            <div className="h-[calc(100%-4.5rem)] overflow-auto">
+              <MobxContext.Provider value={{ isLogin, userInfo }}>
                 {children}
               </MobxContext.Provider>
             </div>

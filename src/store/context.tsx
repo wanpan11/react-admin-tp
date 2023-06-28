@@ -1,8 +1,12 @@
 import { createContext } from "react";
-import store from "./store";
+import store, { MobxStore } from "./store";
 
-const MobxContext = createContext<{ isLogin: boolean }>({
+const MobxContext = createContext<{
+  isLogin: MobxStore["isLogin"];
+  userInfo: MobxStore["userInfo"];
+}>({
   isLogin: store.isLogin,
+  userInfo: store.userInfo,
 });
 MobxContext.displayName = "MobxContext";
 

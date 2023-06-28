@@ -111,7 +111,7 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
                 </Checkbox>
               </div>
 
-              <div className=" ml-6">
+              <div className="ml-6">
                 {getEle(conf.children, deep + 1, newPath)}
               </div>
             </div>

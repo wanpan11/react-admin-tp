@@ -5,6 +5,9 @@ import { getRouterMap } from "@src/utils/index";
 
 export class MobxStore {
   isLogin = localStorage.getItem("token") ? true : false;
+  userInfo: { account: string } | undefined = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo") as string)
+    : undefined;
 
   constructor() {
     makeAutoObservable(this);
@@ -69,8 +72,9 @@ export class MobxStore {
     return getRouterMap(this.getRouteMenu.router[0].childrenList as Route[]);
   }
 
-  setLogin(val: boolean) {
+  setLogin(val: boolean, userInfo?: { account: string }) {
     this.isLogin = val;
+    this.userInfo = userInfo;
   }
 }
 

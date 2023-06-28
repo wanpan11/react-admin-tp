@@ -140,7 +140,7 @@ const Company = () => {
         reset
       />
 
-      <Card>
+      <Card className="mt-3">
         <div>
           <Button
             type="primary"

@@ -24,6 +24,6 @@ Mock.mock(/company\/list/, () => {
 Mock.mock("/login", req => {
   return {
     code: 0,
-    data: { token: nanoid(), userInfo: req.body },
+    data: { token: nanoid(), userInfo: JSON.parse(req.body) },
   };
 });

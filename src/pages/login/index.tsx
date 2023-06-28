@@ -1,6 +1,6 @@
-import { Card, Layout } from "antd";
+import { useState } from "react";
+import { Card, Layout, Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input } from "antd";
 import { loginReq } from "@src/api/account";
 import type { AccountApi } from "@src/types/api";
 import store from "@src/store/store";
@@ -8,11 +8,15 @@ import lessStyle from "./index.module.less";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loading, loadingHandle] = useState(false);
 
   const onFinish = async (values: AccountApi.Login) => {
+    loadingHandle(true);
     const res = await loginReq(values);
+    loadingHandle(false);
     localStorage.setItem("token", res.data.token);
-    store.setLogin(true);
+    localStorage.setItem("userInfo", JSON.stringify(res.data.userInfo));
+    store.setLogin(true, res.data.userInfo);
     navigate("/");
   };
 
@@ -21,15 +25,15 @@ const Login = () => {
       <Card className={lessStyle.login_box}>
         <div className={lessStyle.box}></div>
 
-        <h1 className=" mb-9 text-center text-2xl">欢迎登录</h1>
+        <h1 className="mb-9 text-center text-2xl">欢迎登录</h1>
 
         <Form
           name="basic"
           layout="vertical"
           onFinish={onFinish}
           requiredMark="optional"
-          initialValues={{ account: "user", password: "123" }}
-          className=" w-80"
+          initialValues={{ account: "管理小明", password: "123" }}
+          className="w-80"
         >
           <Form.Item
             label="账号"
@@ -53,7 +57,7 @@ const Login = () => {
             />
           </Form.Item>
 
-          <div className=" flex cursor-pointer justify-between text-neutral-400">
+          <div className="flex cursor-pointer justify-between text-neutral-400">
             <div>联系管理员</div>
           </div>
 
@@ -63,6 +67,7 @@ const Login = () => {
             type="primary"
             htmlType="submit"
             className="mb-4 mt-9"
+            loading={loading}
           >
             登录
           </Button>
