@@ -400,8 +400,14 @@
 .mr-2{
   margin-right: 0.5rem;
 }
+.mr-3{
+  margin-right: 0.75rem;
+}
 .mt-0{
   margin-top: 0px;
+}
+.mt-3{
+  margin-top: 0.75rem;
 }
 .mt-5{
   margin-top: 1.25rem;
