@@ -23,7 +23,6 @@ type Route = PathRoute | IndexRoute;
 interface PageProps {
   children: ReactNode;
   title: string;
-  redirect?: string;
 }
 
 interface MenuItem {

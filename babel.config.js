@@ -3,7 +3,7 @@ export default {
     [
       "@babel/preset-env",
       {
-        targets: "> 0.25%, not dead",
+        targets: "> 5%, not dead",
         useBuiltIns: "usage",
         corejs: "3.30.2",
       },

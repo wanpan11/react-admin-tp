@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import Loading from "@src/components/Loading";
 import { colorPrimary } from "@src/config/index";
 import ErrorBoundary from "@src/components/ErrorBoundary";
+import Redirect from "@src/components/Redirect";
 import Error from "@src/components/Error";
 import store from "@src/store/store";
 
@@ -24,10 +25,12 @@ const getRoutes = (routers: Route[]) => {
       key: id as string,
     };
 
-    if (Component) {
-      props.element = (
+    if (Component || redirect) {
+      props.element = redirect ? (
+        <Redirect redirect={redirect}></Redirect>
+      ) : (
         <Suspense fallback={<Loading full />}>
-          <Component title={title} redirect={redirect}>
+          <Component title={title}>
             {childrenList.length ? <Outlet /> : null}
           </Component>
         </Suspense>

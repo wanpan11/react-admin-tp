@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
 
-const Redirect = ({ redirect }: PageProps) => {
+const Redirect = ({ redirect }: { redirect: string }) => {
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 ## 📊 react-admin-tp
 
-react-typescript 后台管理系统项目模版、内置动态嵌套路由、数据 mock、动态包屑组件。
+react-typescript 后台管理系统项目模版、内置动态嵌套路由、数据 mock、tailwindcss、🌙 暗夜模式、动态面包屑、自定义 form 组件。
 
 ![Static Badge](https://img.shields.io/badge/react-black?logo=react&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/tailwindcss-black?logo=tailwindcss&style=for-the-badge)
