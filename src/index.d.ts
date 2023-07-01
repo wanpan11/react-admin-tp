@@ -53,6 +53,11 @@ interface FormItem {
   options?: { label: string; value: any }[];
 }
 
+interface AxiosRes<T> {
+  code: number;
+  data: T;
+}
+
 declare module "*.module.scss" {
   const classes: { [key: string]: string };
   export default classes;

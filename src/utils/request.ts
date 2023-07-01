@@ -7,7 +7,6 @@ import type {
   AxiosError,
 } from "axios";
 import { notification } from "antd";
-import type { AxiosRes } from "../types/api";
 
 export const BAD_REQ_CODE = 911;
 
