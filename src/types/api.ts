@@ -1,9 +1,4 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-export interface AxiosRes<T> {
-  code: number;
-  data: T;
-}
-
 type PageInfo<T> = {
   pageNum: number;
   pageSize: number;
