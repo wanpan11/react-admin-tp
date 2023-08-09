@@ -1,30 +1,39 @@
-## 📊 react-admin-tp
+## 📊 react-admin-tp 后台管理系统项目模版
 
 react-typescript 后台管理系统项目模版、内置动态嵌套路由、数据 mock、tailwindcss、🌙 暗夜模式、动态面包屑、自定义 form 组件。<br/>
 
 [![Security Status](https://www.murphysec.com/platform3/v31/badge/1673294894238294016.svg)](https://www.murphysec.com/console/report/1673294894200545280/1673294894238294016)<br/>
-
 ![Static Badge](https://img.shields.io/badge/react-black?logo=react&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/tailwindcss-black?logo=tailwindcss&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/antdesign-black?logo=antdesign&style=for-the-badge)
-![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/mobx-black?logo=mobx&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/vite-black?logo=vite&style=for-the-badge)
 
 <image src='./src/assets/images/admin.png' style='border-radius:10px' >
 
 ### 🏠 项目概览
 
+#### 构建工具任选 webpack vite
+
+![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/vite-black?logo=vite&style=for-the-badge)
+
+> 推荐使用脚手架安装模版 [react-tp-cli](https://github.com/wanpan11/react-template-cli)
+
 #### 主要依赖库
 
+- axios
+- ahooks
+- tailwindcss
 - ant-design
 - mobx (轻微使用)
-- ahooks
-- axios
-- tailwindcss
 
 #### scripts 打包相关
 
-- webpack.config.js 打包入口文件
+- 打包入口文件
+  - webpack.config.js
+  - vite.config.ts
 - xxxx.config.js 不同环境打包配置
 
 #### env 环境变量
@@ -87,7 +96,6 @@ pnpm build
 
 > 打包/开发相关
 
-- webpack.config.js
 - 请求代理 devServer.proxy
 - src\api\request.ts 可添加请求拦截相关处理逻辑
 
