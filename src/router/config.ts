@@ -1,6 +1,7 @@
 import { lazy } from "react";
 
-const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
+const getLazyLoad = (url: string) =>
+  lazy(() => import(/* @vite-ignore */ `../pages${url}.tsx`));
 
 /**
  *
@@ -17,12 +18,12 @@ const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
 const routers: Route[] = [
   {
     path: "/",
-    component: getLazyLoad("/system"),
+    component: getLazyLoad("/system/index"),
     childrenList: [
       {
         index: true,
         title: "首页",
-        component: getLazyLoad("/system/home"),
+        component: getLazyLoad("/system/home/index"),
       },
       {
         path: "/data",
@@ -79,7 +80,7 @@ const routers: Route[] = [
   {
     path: "/login",
     title: "登录",
-    component: getLazyLoad("/login"),
+    component: getLazyLoad("/login/index"),
   },
   {
     path: "*",

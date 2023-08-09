@@ -13,7 +13,7 @@ export const BAD_REQ_CODE = 911;
 export class Request {
   instance: AxiosInstance;
   baseConfig: AxiosRequestConfig = {
-    baseURL: process.env.BASE_REQUEST_URL,
+    baseURL: import.meta.env.VITE_BASE_REQUEST_URL,
     timeout: 30000,
   };
 

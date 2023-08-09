@@ -24,7 +24,7 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 
 #### scripts 打包相关
 
-- webpack.config.js 打包入口文件
+- vite.config.ts 打包入口文件
 - xxxx.config.js 不同环境打包配置
 
 #### env 环境变量
@@ -63,7 +63,6 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
   插件（墙裂推荐安装）
 - 环境变量和打包配置动态加载
 - 安装完项目依赖后再提交代码，保持项目整洁
-- homepage 相关文件、构建指令皆可删除
 
 安装依赖
 
@@ -87,7 +86,7 @@ pnpm build
 
 > 打包/开发相关
 
-- webpack.config.js
+- vite.config.ts
 - 请求代理 devServer.proxy
 - src\api\request.ts 可添加请求拦截相关处理逻辑
 

@@ -64,7 +64,7 @@ const AppRouter = observer(() => {
 
   return (
     <ErrorBoundary errComponent={<Error />}>
-      <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
+      <BrowserRouter basename={import.meta.env.VITE_ROUTER_BASE_NAME}>
         <ConfigProvider theme={currentThem}>
           <Routes>{getRoutes(router)}</Routes>
         </ConfigProvider>
