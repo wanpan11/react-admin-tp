@@ -4,6 +4,7 @@ interface PathRoute {
   path: string;
   title?: string;
   index?: boolean;
+  icon?: any;
   notMenu?: boolean;
   redirect?: string;
   component?: React.LazyExoticComponent;
@@ -14,6 +15,7 @@ interface IndexRoute {
   path?: string;
   title?: string;
   index: boolean;
+  icon?: any;
   notMenu?: boolean;
   redirect?: string;
   component?: React.LazyExoticComponent;
