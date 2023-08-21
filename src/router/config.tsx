@@ -1,4 +1,10 @@
 import { lazy } from "react";
+import {
+  BarChartOutlined,
+  BoxPlotOutlined,
+  OneToOneOutlined,
+  RadarChartOutlined,
+} from "@ant-design/icons";
 
 const getLazyLoad = (url: string) =>
   lazy(() => import(/* @vite-ignore */ `../pages${url}.tsx`));
@@ -32,6 +38,7 @@ const routers: Route[] = [
           {
             index: true,
             title: "销售数据",
+            icon: <BarChartOutlined />,
             component: getLazyLoad("/system/data/report"),
           },
         ],
@@ -47,6 +54,7 @@ const routers: Route[] = [
               {
                 path: "/setting",
                 title: "参数配置",
+                icon: <RadarChartOutlined />,
                 childrenList: [
                   {
                     index: true,
@@ -64,6 +72,7 @@ const routers: Route[] = [
               {
                 path: "/setting/api",
                 title: "接口配置",
+                icon: <BoxPlotOutlined />,
                 component: getLazyLoad("/system/setting/api"),
               },
             ],
@@ -71,6 +80,7 @@ const routers: Route[] = [
           {
             path: "/setting/company",
             title: "厂商管理",
+            icon: <OneToOneOutlined />,
             component: getLazyLoad("/system/setting/company"),
           },
         ],

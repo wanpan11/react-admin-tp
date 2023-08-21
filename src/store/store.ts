@@ -27,7 +27,7 @@ export class MobxStore {
     ) {
       arr.forEach(element => {
         const id = nanoid();
-        const { path, index, title, childrenList, notMenu } = element;
+        const { path, index, title, childrenList, notMenu, icon } = element;
 
         let newPath = path as string;
         // 多级嵌套 补全 /
@@ -45,6 +45,7 @@ export class MobxStore {
           key: id,
           path: index ? partePath : (path as string),
           label: title ? title : "",
+          icon: icon,
           children: [],
         };
 
