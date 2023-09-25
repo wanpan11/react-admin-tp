@@ -15,7 +15,7 @@ export const getFormElement = (type: string, info: FormItem) => {
       );
 
     case "node":
-      return info.leftNode;
+      return info.rightNode;
 
     case "switch":
       return <Switch disabled={info.disable} />;
@@ -31,6 +31,8 @@ export const getFormElement = (type: string, info: FormItem) => {
     case "select":
       return (
         <Select
+          mode={info.mode}
+          allowClear={true}
           placeholder={info.placeholder}
           disabled={info.disable}
           options={info.options as { value: string }[]}
@@ -38,7 +40,7 @@ export const getFormElement = (type: string, info: FormItem) => {
         />
       );
 
-    case "date":
+    case "rangePick":
       return (
         <RangePicker
           disabled={info.disable}
@@ -46,13 +48,16 @@ export const getFormElement = (type: string, info: FormItem) => {
         />
       );
 
+    case "datePick":
+      return <DatePicker disabled={info.disable} showTime={info.showTime} />;
+
     case "textArea":
       return (
         <Input.TextArea
           placeholder={info.placeholder}
           disabled={info.disable}
           showCount
-          maxLength={500}
+          maxLength={info.maxLength || 500}
           className="mb-6 h-32"
         />
       );
