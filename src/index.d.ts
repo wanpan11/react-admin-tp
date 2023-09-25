@@ -34,25 +34,32 @@ interface MenuItem {
   children?: MenuItem[];
 }
 interface FormItem {
+  // 公共
   name: string;
+  label?: string | JSX.Element;
+  placeholder?: string;
+  initialValue?: unknown;
+  rule?: any;
+  hide?: boolean;
+  disable?: boolean;
+  extra?: string;
   type:
     | "input"
     | "numberInput"
     | "select"
     | "date"
+    | "rangePick"
     | "radio"
     | "textArea"
     | "switch"
-    | "blockNode"
-    | "node";
-  placeholder?: string;
-  leftNode?: JSX.Element;
-  disable?: boolean;
-  initialValue?: unknown;
-  hide?: boolean;
-  rule?: any;
-  label?: string | JSX.Element;
-  options?: { label: string; value: any }[];
+    | "blockNode" // 自定义 元素
+    | "node"; // 自定义 右侧元素
+  // 私有
+  rightNode?: JSX.Element; // node
+  mode?: "multiple"; // select
+  maxLength?: number;
+  showTime?: boolean; // date
+  options?: { label: string; value: any }[]; // select radio
 }
 
 interface AxiosRes<T> {

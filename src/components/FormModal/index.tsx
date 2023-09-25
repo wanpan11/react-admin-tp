@@ -75,6 +75,7 @@ const FormModal = ({
                 name={e.name}
                 label={e.label}
                 rules={[e.rule]}
+                extra={e.extra}
                 initialValue={
                   e.type === "radio" ? e.options?.[0].value : undefined
                 }
