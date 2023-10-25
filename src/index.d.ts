@@ -35,7 +35,7 @@ interface MenuItem {
 }
 interface FormItem {
   // 公共
-  name: string;
+  name: string | (number | string)[];
   label?: string | JSX.Element;
   placeholder?: string;
   initialValue?: unknown;
@@ -43,17 +43,7 @@ interface FormItem {
   hide?: boolean;
   disable?: boolean;
   extra?: string;
-  type:
-    | "input"
-    | "numberInput"
-    | "select"
-    | "date"
-    | "rangePick"
-    | "radio"
-    | "textArea"
-    | "switch"
-    | "blockNode" // 自定义 元素
-    | "node"; // 自定义 右侧元素
+  type: "input" | "numberInput" | "select" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
   // 私有
   rightNode?: JSX.Element; // node
   mode?: "multiple"; // select

@@ -1,5 +1,6 @@
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { Checkbox } from "antd";
+import classNames from "classnames";
 
 type TreeProps = {
   treeData: {
@@ -13,20 +14,23 @@ type TreeProps = {
 
 const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
   const mapKeys = useMemo(() => {
-    if (selectKeys.length < 1) return [];
+    if (!selectKeys.length) return [];
 
     const strKeys = selectKeys.map(e => e.toString());
     const tempArr: string[] = [];
 
-    const addKeys = (arr: TreeProps["treeData"], newPath: string) => {
+    const addKeys = (arr: TreeProps["treeData"], parentPath: string) => {
       arr.forEach((ele: any) => {
         const next = strKeys.indexOf(`${ele.id}`);
         if (!~next) return;
 
+        const newPath = `${parentPath ? parentPath + "_" : ""}${ele.id}`;
+
         if (ele.children.length) {
-          addKeys(ele.children, `${newPath ? newPath + "_" : ""}${ele.id}`);
+          tempArr.push(newPath);
+          addKeys(ele.children, newPath);
         } else {
-          tempArr.push(`${newPath ? newPath + "_" : ""}${ele.id}`);
+          tempArr.push(newPath);
         }
       });
     };
@@ -57,19 +61,13 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
 
         if (conf.children.length) {
           return (
-            <div
-              key={conf.id}
-              style={{
-                padding: deep === 0 ? "12px 0" : "8px 0",
-                borderBottom: deep === 0 ? "1px solid rgba(0, 0, 0, 0.08)" : "0",
-              }}
-            >
+            <div key={conf.id} className={classNames(deep === 0 ? "border-b border-neutral-200 pb-3 pt-3" : "pb-2 pt-2")}>
               <div>
                 <Checkbox
+                  checked={parentArr.length > 0}
                   style={{
                     color: `rgba(0, 0, 0, ${0.2 * deep + 0.4})`,
                   }}
-                  checked={parentArr.length > 0}
                   onChange={evn => {
                     const check = evn.target.checked;
                     const keys: string[] = [];
@@ -103,31 +101,28 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
                 </Checkbox>
               </div>
 
-              <div className="ml-6">{getEle(conf.children, deep + 1, newPath)}</div>
+              <div className="ml-8">{getEle(conf.children, deep + 1, newPath)}</div>
             </div>
           );
         } else {
           return (
-            <div
-              key={conf.id}
-              style={{
-                display: deep === 0 ? "block" : "inline-block",
-                padding: deep === 0 ? "12px 0" : "8px 20px 8px 0",
-                borderBottom: deep === 0 ? "1px solid rgba(0, 0, 0, 0.08)" : "0",
-              }}
-            >
+            <div key={conf.id} className={classNames(deep === 0 ? "block border-b border-neutral-200 pb-3 pt-3" : "inline-block pb-2 pr-5 pt-2")}>
               <Checkbox
+                checked={idx > -1 ? true : false}
                 style={{
                   color: conf.children.length ? `rgba(0, 0, 0, ${0.2 * deep + 0.4})` : `rgba(0, 0, 0, 0.8)`,
                 }}
-                checked={idx > -1 ? true : false}
                 onChange={evn => {
                   const check = evn.target.checked;
 
                   if (check) {
                     mapKeys.push(newPath);
                   } else {
-                    mapKeys.splice(idx, 1);
+                    // 保留父级
+                    const currentKeyArr = mapKeys[idx].split("_");
+                    currentKeyArr.pop();
+
+                    mapKeys.splice(idx, 1, currentKeyArr.join("_"));
                   }
 
                   change([...mapKeys]);
@@ -142,8 +137,9 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
     };
 
     return <div>{getEle(treeData, 0)}</div>;
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapKeys, treeData]);
 };
 
-export default memo(Tree);
+export default Tree;

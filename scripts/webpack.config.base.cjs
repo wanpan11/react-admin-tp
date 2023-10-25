@@ -30,9 +30,7 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: dynamicConf.cssPublicPath
-                ? dynamicConf.cssPublicPath
-                : dynamicConf.publicPath,
+              publicPath: dynamicConf.cssPublicPath ? dynamicConf.cssPublicPath : dynamicConf.publicPath,
             },
           },
           "css-loader",
