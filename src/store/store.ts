@@ -6,9 +6,7 @@ import { getRouterMap } from "@src/utils/index";
 export class MobxStore {
   darkMode = false;
   isLogin = localStorage.getItem("token") ? true : false;
-  userInfo: { account: string } | undefined = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo") as string)
-    : undefined;
+  userInfo: { account: string } | undefined = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo") as string) : undefined;
 
   constructor() {
     makeAutoObservable(this);
@@ -19,12 +17,7 @@ export class MobxStore {
     const router: Route[] = [];
     const menu: MenuItem[] = [];
 
-    function getFullRouter(
-      arr: Route[],
-      router: Route[],
-      menu: MenuItem[],
-      partePath = ""
-    ) {
+    function getFullRouter(arr: Route[], router: Route[], menu: MenuItem[], partePath = "") {
       arr.forEach(element => {
         const id = nanoid();
         const { path, index, title, childrenList, notMenu, icon } = element;
@@ -55,12 +48,7 @@ export class MobxStore {
         }
 
         if (childrenList?.length) {
-          getFullRouter(
-            childrenList,
-            routeObj.childrenList,
-            menuObj.children,
-            newPath
-          );
+          getFullRouter(childrenList, routeObj.childrenList, menuObj.children, newPath);
         }
       });
     }

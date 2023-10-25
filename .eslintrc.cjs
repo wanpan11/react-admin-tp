@@ -13,13 +13,7 @@ module.exports = {
     __dirname: "readonly",
   },
   // 继承插件特性
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended",
-  ],
+  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:react/jsx-runtime", "plugin:react-hooks/recommended", "plugin:@typescript-eslint/recommended"],
   // 解析选项
   parserOptions: {
     ecmaFeatures: {
@@ -43,10 +37,7 @@ module.exports = {
   plugins: ["prettier", "react", "@typescript-eslint"],
   // 检查规则
   rules: {
-    "prettier/prettier": [
-      "error",
-      { arrowParens: "avoid", singleQuote: false },
-    ],
+    "prettier/prettier": ["error", { arrowParens: "avoid", singleQuote: false, printWidth: 170 }],
     "react/prop-types": 0,
     "no-use-before-define": "error",
     "@typescript-eslint/no-explicit-any": 0,
