@@ -12,15 +12,7 @@ interface FormModalProps {
   noFooter?: boolean;
 }
 
-const FormModal = ({
-  open,
-  title,
-  editInfo,
-  initialValues,
-  onCancel,
-  onOk,
-  noFooter,
-}: FormModalProps) => {
+const FormModal = ({ open, title, editInfo, initialValues, onCancel, onOk, noFooter }: FormModalProps) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -57,12 +49,7 @@ const FormModal = ({
       footer={noFooter ? null : undefined}
     >
       <div className="min-h-[300px] p-8 pl-0 pr-0">
-        <Form
-          form={form}
-          labelCol={{ span: 5 }}
-          labelAlign="right"
-          onFinish={onOk}
-        >
+        <Form form={form} labelCol={{ span: 5 }} labelAlign="right" onFinish={onOk}>
           {editInfo.map(e =>
             e.hide ? null : e.type === "blockNode" ? (
               <span key={e.name}> {e.label} </span>
@@ -76,9 +63,7 @@ const FormModal = ({
                 label={e.label}
                 rules={[e.rule]}
                 extra={e.extra}
-                initialValue={
-                  e.type === "radio" ? e.options?.[0].value : undefined
-                }
+                initialValue={e.type === "radio" ? e.options?.[0].value : undefined}
               >
                 {getFormElement(e.type, e)}
               </Form.Item>

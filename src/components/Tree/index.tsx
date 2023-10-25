@@ -46,11 +46,7 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
   };
 
   return useMemo(() => {
-    const getEle = (
-      roleConf: TreeProps["treeData"],
-      deep: number,
-      parentId = ""
-    ) => {
+    const getEle = (roleConf: TreeProps["treeData"], deep: number, parentId = "") => {
       return roleConf.map(conf => {
         const newPath = parentId ? `${parentId}_${conf.id}` : `${conf.id}`;
 
@@ -65,8 +61,7 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
               key={conf.id}
               style={{
                 padding: deep === 0 ? "12px 0" : "8px 0",
-                borderBottom:
-                  deep === 0 ? "1px solid rgba(0, 0, 0, 0.08)" : "0",
+                borderBottom: deep === 0 ? "1px solid rgba(0, 0, 0, 0.08)" : "0",
               }}
             >
               <div>
@@ -84,10 +79,7 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
                       const addKeys = (arr: any, newPath: string) => {
                         arr.forEach((element: any) => {
                           if (element.children.length) {
-                            addKeys(
-                              element.children,
-                              `${newPath}_${element.id}`
-                            );
+                            addKeys(element.children, `${newPath}_${element.id}`);
                           } else {
                             keys.push(`${newPath}_${element.id}`);
                           }
@@ -111,9 +103,7 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
                 </Checkbox>
               </div>
 
-              <div className="ml-6">
-                {getEle(conf.children, deep + 1, newPath)}
-              </div>
+              <div className="ml-6">{getEle(conf.children, deep + 1, newPath)}</div>
             </div>
           );
         } else {
@@ -123,15 +113,12 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
               style={{
                 display: deep === 0 ? "block" : "inline-block",
                 padding: deep === 0 ? "12px 0" : "8px 20px 8px 0",
-                borderBottom:
-                  deep === 0 ? "1px solid rgba(0, 0, 0, 0.08)" : "0",
+                borderBottom: deep === 0 ? "1px solid rgba(0, 0, 0, 0.08)" : "0",
               }}
             >
               <Checkbox
                 style={{
-                  color: conf.children.length
-                    ? `rgba(0, 0, 0, ${0.2 * deep + 0.4})`
-                    : `rgba(0, 0, 0, 0.8)`,
+                  color: conf.children.length ? `rgba(0, 0, 0, ${0.2 * deep + 0.4})` : `rgba(0, 0, 0, 0.8)`,
                 }}
                 checked={idx > -1 ? true : false}
                 onChange={evn => {

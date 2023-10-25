@@ -12,14 +12,7 @@ export interface FormFilterProps {
   compact?: boolean;
 }
 
-const FormFilter = ({
-  reset,
-  loading,
-  compact = false,
-  onSubmit,
-  filterInfo,
-  initialValues,
-}: FormFilterProps) => {
+const FormFilter = ({ reset, loading, compact = false, onSubmit, filterInfo, initialValues }: FormFilterProps) => {
   const [form] = Form.useForm();
 
   const onFinish = (value: Record<string, string>) => {
@@ -38,12 +31,7 @@ const FormFilter = ({
       <div className={compact ? "" : "absolute bottom-0 right-6"}>
         {reset ? <Button htmlType="reset">重置</Button> : null}
 
-        <Button
-          type="primary"
-          className="ml-6"
-          htmlType="submit"
-          loading={loading}
-        >
+        <Button type="primary" className="ml-6" htmlType="submit" loading={loading}>
           查询
         </Button>
       </div>
@@ -52,13 +40,7 @@ const FormFilter = ({
 
   return (
     <Card>
-      <Form
-        form={form}
-        colon={false}
-        layout="inline"
-        onFinish={onFinish}
-        className="relative pr-52"
-      >
+      <Form form={form} colon={false} layout="inline" onFinish={onFinish} className="relative pr-52">
         {filterInfo.length > 0
           ? filterInfo.map(e => {
               return (

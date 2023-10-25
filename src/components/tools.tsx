@@ -5,14 +5,7 @@ const { RangePicker } = DatePicker;
 export const getFormElement = (type: string, info: FormItem) => {
   switch (type) {
     case "radio":
-      return (
-        <Radio.Group
-          options={info!.options}
-          optionType="button"
-          buttonStyle="solid"
-          disabled={info.disable}
-        />
-      );
+      return <Radio.Group options={info!.options} optionType="button" buttonStyle="solid" disabled={info.disable} />;
 
     case "node":
       return info.rightNode;
@@ -24,9 +17,7 @@ export const getFormElement = (type: string, info: FormItem) => {
       return <Input placeholder={info.placeholder} disabled={info.disable} />;
 
     case "numberInput":
-      return (
-        <InputNumber placeholder={info.placeholder} disabled={info.disable} />
-      );
+      return <InputNumber placeholder={info.placeholder} disabled={info.disable} />;
 
     case "select":
       return (
@@ -41,25 +32,12 @@ export const getFormElement = (type: string, info: FormItem) => {
       );
 
     case "rangePick":
-      return (
-        <RangePicker
-          disabled={info.disable}
-          placeholder={["开始时间", "结束时间"]}
-        />
-      );
+      return <RangePicker disabled={info.disable} placeholder={["开始时间", "结束时间"]} />;
 
     case "datePick":
       return <DatePicker disabled={info.disable} showTime={info.showTime} />;
 
     case "textArea":
-      return (
-        <Input.TextArea
-          placeholder={info.placeholder}
-          disabled={info.disable}
-          showCount
-          maxLength={info.maxLength || 500}
-          className="mb-6 h-32"
-        />
-      );
+      return <Input.TextArea placeholder={info.placeholder} disabled={info.disable} showCount maxLength={info.maxLength || 500} className="mb-6 h-32" />;
   }
 };

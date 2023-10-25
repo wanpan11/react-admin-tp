@@ -11,15 +11,7 @@ import store from "@src/store/store";
 
 const getRoutes = (routers: Route[]) => {
   return routers.map(e => {
-    const {
-      id,
-      path,
-      title,
-      index,
-      redirect,
-      component: Component,
-      childrenList = [],
-    } = e;
+    const { id, path, title, index, redirect, component: Component, childrenList = [] } = e;
 
     const props: { key: string; element?: JSX.Element } = {
       key: id as string,
@@ -30,9 +22,7 @@ const getRoutes = (routers: Route[]) => {
         <Redirect redirect={redirect}></Redirect>
       ) : (
         <Suspense fallback={<Loading full />}>
-          <Component title={title}>
-            {childrenList.length ? <Outlet /> : null}
-          </Component>
+          <Component title={title}>{childrenList.length ? <Outlet /> : null}</Component>
         </Suspense>
       );
     }

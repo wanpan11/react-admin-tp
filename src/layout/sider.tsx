@@ -3,13 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const { Sider } = Layout;
 
-const SiderCom = ({
-  menu,
-  selectKey,
-}: {
-  menu: MenuItem[];
-  selectKey: string | null;
-}) => {
+const SiderCom = ({ menu, selectKey }: { menu: MenuItem[]; selectKey: string | null }) => {
   const [keys, keysHandle] = useState<string[]>([]);
 
   const currentKay = useMemo(() => {

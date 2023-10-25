@@ -9,10 +9,7 @@ interface BreadCrumbProps {
 const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const currentPath =
-    routerMap[
-      Object.keys(routerMap).find(item => item.startsWith(pathname)) || ""
-    ];
+  const currentPath = routerMap[Object.keys(routerMap).find(item => item.startsWith(pathname)) || ""];
 
   const pathMap = useMemo(() => {
     const temp: Record<string, string> = {};
