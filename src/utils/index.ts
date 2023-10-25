@@ -1,4 +1,52 @@
-export const getRouterMap = (routes: Route[]) => {
+import { nanoid } from "nanoid";
+
+export function transformRouter(routers: Route[]) {
+  const router: Route[] = [];
+  const routerMenu: MenuItem[] = [];
+
+  function transform(arr: Route[], router: Route[], menu: MenuItem[], partePath = "") {
+    arr.forEach(element => {
+      const id = nanoid();
+      const { path, index, title, childrenList, notMenu, icon } = element;
+
+      let newPath = path as string;
+
+      // 多级嵌套 补全 /
+      if (path?.startsWith("/") && childrenList?.length) {
+        newPath = (path + "/").replace(/\/\/+/g, "/");
+      }
+
+      const routeObj = {
+        ...element,
+        id,
+        path: index ? partePath : newPath,
+        childrenList: [],
+      };
+
+      const menuObj = {
+        key: id,
+        path: index ? partePath : (path as string),
+        label: title ? title : "",
+        icon: icon,
+        children: [],
+      };
+
+      router.push(routeObj);
+      if (!notMenu) {
+        menu.push(menuObj);
+      }
+
+      if (childrenList?.length) {
+        transform(childrenList, routeObj.childrenList, menuObj.children, newPath);
+      }
+    });
+  }
+  transform(routers, router, routerMenu);
+
+  return { router, routerMenu: routerMenu[0].children as MenuItem[] };
+}
+
+export const getPathRecord = (routes: Route[]) => {
   const obj: { [key: string]: string } = {};
 
   const getBreadCrumbConf = (arr: Route[], parentTitle = "") => {

@@ -79,7 +79,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint  --fix",
+      "eslint --fix",
       "bash -c tsc --noEmit"
     ],
     "*.md": [
