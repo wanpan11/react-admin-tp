@@ -1,18 +1,21 @@
+import { Modal, Form, FormInstance } from "antd";
 import { memo, useEffect } from "react";
-import { Modal, Form } from "antd";
 import { getFormElement } from "@src/components/tools";
 
 interface FormModalProps {
   open?: boolean;
   title?: string;
   editInfo: FormItem[];
-  initialValues?: { [key: string]: unknown };
-  onCancel?: () => void;
-  onOk?: (value: { [key: string]: unknown }) => void;
   noFooter?: boolean;
+  maskClosable?: boolean;
+  initialValues?: { [key: string]: unknown };
+  onOk?: (value: { [key: string]: unknown }) => void;
+  onForm?: (form: FormInstance) => void;
+  onCancel?: () => void;
+  onValuesChange?: (value: { [key: string]: unknown }) => void;
 }
 
-const FormModal = ({ open, title, editInfo, initialValues, onCancel, onOk, noFooter }: FormModalProps) => {
+const FormModal = ({ open, title, editInfo, noFooter, maskClosable = true, initialValues, onOk, onForm, onCancel, onValuesChange }: FormModalProps) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -29,16 +32,21 @@ const FormModal = ({ open, title, editInfo, initialValues, onCancel, onOk, noFoo
     }
   }, [open, initialValues, form, editInfo]);
 
+  useEffect(() => {
+    onForm && onForm(form);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Modal
       open={open}
       title={title}
       okText="确定"
       cancelText="取消"
-      width={800}
+      width={880}
       closable={noFooter ? true : false}
       destroyOnClose
-      maskClosable={false}
+      maskClosable={maskClosable}
       onCancel={onCancel}
       onOk={() => {
         form.submit();
@@ -48,21 +56,19 @@ const FormModal = ({ open, title, editInfo, initialValues, onCancel, onOk, noFoo
       }}
       footer={noFooter ? null : undefined}
     >
-      <div className="min-h-[300px] p-8 pl-0 pr-0">
-        <Form form={form} labelCol={{ span: 5 }} labelAlign="right" onFinish={onOk}>
+      <div className="pt-6">
+        <Form form={form} labelCol={{ span: 5 }} labelAlign="right" onFinish={onOk} onValuesChange={onValuesChange}>
           {editInfo.map(e =>
             e.hide ? null : e.type === "blockNode" ? (
-              <span key={e.name}> {e.label} </span>
+              <span key={typeof e.name === "string" ? e.name : e.name.join("_")}>{e.label}</span>
             ) : (
               <Form.Item
-                wrapperCol={{
-                  span: e.type === "select" ? 8 : 12,
-                }}
-                key={e.name}
+                key={typeof e.name === "string" ? e.name : e.name.join("_")}
                 name={e.name}
                 label={e.label}
                 rules={[e.rule]}
-                extra={e.extra}
+                valuePropName={e.type === "switch" ? "checked" : "value"}
+                wrapperCol={{ span: e.type === "select" ? 8 : 12 }}
                 initialValue={e.type === "radio" ? e.options?.[0].value : undefined}
               >
                 {getFormElement(e.type, e)}

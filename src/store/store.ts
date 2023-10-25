@@ -18,7 +18,7 @@ export class MobxStore {
   }
 
   // 获取面包屑
-  get routerMap() {
+  get routerPath() {
     return getPathRecord(this.getRouteMenu.router[0].childrenList!);
   }
 

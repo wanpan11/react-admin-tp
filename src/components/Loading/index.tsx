@@ -3,7 +3,7 @@ import { Spin, Layout } from "antd";
 import classnames from "classnames";
 
 interface LoadingProps {
-  full: boolean;
+  full?: boolean;
 }
 
 const Loading = ({ full }: LoadingProps) => {

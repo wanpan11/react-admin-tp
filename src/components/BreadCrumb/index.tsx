@@ -3,24 +3,24 @@ import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface BreadCrumbProps {
-  routerMap: { [prop: string]: string };
+  routerPath: { [prop: string]: string };
 }
 
-const BreadCrumb = ({ routerMap = {} }: BreadCrumbProps) => {
+const BreadCrumb = ({ routerPath = {} }: BreadCrumbProps) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const currentPath = routerMap[Object.keys(routerMap).find(item => item.startsWith(pathname)) || ""];
+  const currentPath = routerPath[Object.keys(routerPath).find(item => item.startsWith(pathname)) || ""];
 
   const pathMap = useMemo(() => {
     const temp: Record<string, string> = {};
 
-    Object.keys(routerMap).map(e => {
-      const arr = routerMap[e].split("/");
+    Object.keys(routerPath).map(e => {
+      const arr = routerPath[e].split("/");
       temp[arr[arr.length - 1].trim()] = e;
     });
 
     return temp;
-  }, [routerMap]);
+  }, [routerPath]);
 
   return (
     <div className="flex h-14 items-center pl-2 text-neutral-400">

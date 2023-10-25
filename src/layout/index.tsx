@@ -66,7 +66,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const {
     isLogin,
     userInfo,
-    routerMap,
+    routerPath,
     getRouteMenu: { routerMenu },
   } = store;
 
@@ -90,7 +90,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
 
         <Layout>
           <Content className="m-3 mb-0 mt-0">
-            <BreadCrumb routerMap={routerMap} />
+            <BreadCrumb routerPath={routerPath} />
 
             <div className="h-[calc(100%-4.5rem)] overflow-auto">
               <MobxContext.Provider value={{ isLogin, userInfo }}>{children}</MobxContext.Provider>
