@@ -16,7 +16,7 @@
     "start": "vite -c ./scripts/vite.config.ts",
     "build": "vite build -c ./scripts/vite.config.ts",
     "dev:build": "vite build -c ./scripts/vite.config.ts -m development --minify false",
-    "lint": "eslint --ext js,jsx,ts,tsx src/ && tsc --noEmit",
+    "lint": "eslint --fix --ext js,jsx,ts,tsx src/ && tsc --noEmit",
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -62,7 +62,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint  --fix",
+      "eslint --fix",
       "bash -c tsc --noEmit"
     ],
     "*.md": [

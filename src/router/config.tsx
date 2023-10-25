@@ -1,13 +1,7 @@
 import { lazy } from "react";
-import {
-  BarChartOutlined,
-  BoxPlotOutlined,
-  OneToOneOutlined,
-  RadarChartOutlined,
-} from "@ant-design/icons";
+import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
 
-const getLazyLoad = (url: string) =>
-  lazy(() => import(/* @vite-ignore */ `../pages${url}.tsx`));
+const getLazyLoad = (url: string) => lazy(() => import(/* @vite-ignore */ `../pages${url}.tsx`));
 
 /**
  *

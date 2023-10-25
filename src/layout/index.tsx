@@ -69,11 +69,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
 
         return {
           ...ele,
-          label: children?.length ? (
-            ele.label
-          ) : (
-            <Link to={path}> {ele.label}</Link>
-          ),
+          label: children?.length ? ele.label : <Link to={path}> {ele.label}</Link>,
           children: children?.length ? getSideMenu(children) : undefined,
         };
       });
@@ -92,18 +88,14 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
       <MenuHeader tabId={topKey} tabList={menu}></MenuHeader>
 
       <Layout className="h-[calc(100vh-3.5rem)] overflow-hidden">
-        {currentMenuList.length ? (
-          <SiderCom selectKey={leftKey} menu={currentMenuList} />
-        ) : null}
+        {currentMenuList.length ? <SiderCom selectKey={leftKey} menu={currentMenuList} /> : null}
 
         <Layout>
           <Content className="m-3 mb-0 mt-0">
             <BreadCrumb routerMap={routerMap} />
 
             <div className="h-[calc(100%-4.5rem)] overflow-auto">
-              <MobxContext.Provider value={{ isLogin, userInfo }}>
-                {children}
-              </MobxContext.Provider>
+              <MobxContext.Provider value={{ isLogin, userInfo }}>{children}</MobxContext.Provider>
             </div>
           </Content>
         </Layout>

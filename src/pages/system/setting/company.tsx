@@ -7,9 +7,7 @@ import { companyService } from "@src/api/setting";
 import type { CompanyApi } from "@src/types/api";
 import { defaultPageInfo } from "@src/config";
 
-const filterInfo: FormItem[] = [
-  { name: "projectName", type: "input", label: "厂商名称" },
-];
+const filterInfo: FormItem[] = [{ name: "projectName", type: "input", label: "厂商名称" }];
 const editInfo: FormItem[] = [
   {
     name: "category",
@@ -44,8 +42,7 @@ const editInfo: FormItem[] = [
     rule: {
       required: true,
       message: "请输入正确的厂商联系电话！",
-      pattern:
-        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
+      pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
     },
   },
 ];
@@ -133,12 +130,7 @@ const Company = () => {
 
   return (
     <div>
-      <FormFilter
-        loading={loading}
-        filterInfo={filterInfo}
-        onSubmit={onSearch}
-        reset
-      />
+      <FormFilter loading={loading} filterInfo={filterInfo} onSubmit={onSearch} reset />
 
       <Card className="mt-3">
         <div>
@@ -152,12 +144,7 @@ const Company = () => {
           </Button>
         </div>
 
-        <Table
-          dataSource={data?.data.list}
-          columns={columns}
-          rowKey="id"
-          loading={loading}
-        />
+        <Table dataSource={data?.data.list} columns={columns} rowKey="id" loading={loading} />
       </Card>
 
       <FormModal

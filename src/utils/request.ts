@@ -1,11 +1,5 @@
 import axios from "axios";
-import type {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-  AxiosError,
-} from "axios";
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig, AxiosError } from "axios";
 import { notification } from "antd";
 
 export const BAD_REQ_CODE = 911;
@@ -21,17 +15,15 @@ export class Request {
     this.instance = axios.create(Object.assign(this.baseConfig, config));
 
     // 请求发送前
-    this.instance.interceptors.request.use(
-      (config: InternalAxiosRequestConfig) => {
-        // 代理标识
-        // const isHttp = config.url?.includes("http");
-        // if (process.env.ENV === "DEV" && !isHttp) {
-        //   config.url = "/proxy" + config.url;
-        // }
+    this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+      // 代理标识
+      // const isHttp = config.url?.includes("http");
+      // if (process.env.ENV === "DEV" && !isHttp) {
+      //   config.url = "/proxy" + config.url;
+      // }
 
-        return config;
-      }
-    );
+      return config;
+    });
 
     // 请求返回后
     this.instance.interceptors.response.use(
@@ -48,12 +40,7 @@ export class Request {
     );
   }
 
-  send<T>(
-    url: string,
-    method = "get",
-    data?: any,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosRes<T>> {
+  send<T>(url: string, method = "get", data?: any, config?: AxiosRequestConfig): Promise<AxiosRes<T>> {
     const axiosConfig = { ...config };
     axiosConfig.url = url;
     axiosConfig.method = method;

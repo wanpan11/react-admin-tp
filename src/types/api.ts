@@ -28,7 +28,5 @@ export namespace CompanyApi {
     name?: string;
   };
 
-  export type ListRes = PageInfo<
-    InsertReq & { id: number; updateTime: string }
-  >;
+  export type ListRes = PageInfo<InsertReq & { id: number; updateTime: string }>;
 }
