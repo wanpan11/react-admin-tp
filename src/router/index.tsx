@@ -53,13 +53,15 @@ const AppRouter = observer(() => {
   };
 
   return (
-    <ErrorBoundary errComponent={<Error />}>
-      <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
-        <ConfigProvider theme={currentThem}>
-          <Routes>{getRoutes(router)}</Routes>
-        </ConfigProvider>
-      </BrowserRouter>
-    </ErrorBoundary>
+    <div className={darkMode ? "dark" : ""}>
+      <ErrorBoundary errComponent={<Error />}>
+        <BrowserRouter basename={process.env.ROUTER_BASE_NAME}>
+          <ConfigProvider theme={currentThem}>
+            <Routes>{getRoutes(router)}</Routes>
+          </ConfigProvider>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </div>
   );
 });
 
