@@ -373,8 +373,8 @@
 .bottom-0{
   bottom: 0px !important;
 }
-.right-10{
-  right: 2.5rem !important;
+.right-0{
+  right: 0px !important;
 }
 .z-\[999\]{
   z-index: 999 !important;
@@ -385,6 +385,9 @@
 .mb-0{
   margin-bottom: 0px !important;
 }
+.mb-2{
+  margin-bottom: 0.5rem !important;
+}
 .mb-4{
   margin-bottom: 1rem !important;
 }
@@ -393,6 +396,9 @@
 }
 .mb-9{
   margin-bottom: 2.25rem !important;
+}
+.ml-10{
+  margin-left: 2.5rem !important;
 }
 .ml-2{
   margin-left: 0.5rem !important;
@@ -621,5 +627,16 @@ li {
 ::after {
   border-width: 0;
   border-style: solid;
+}
+:is(.dark .dark\:border){
+  border-width: 1px !important;
+}
+:is(.dark .dark\:border-dark_border){
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(48 48 48 / var(--tw-border-opacity)) !important;
+}
+:is(.dark .dark\:bg-dark_bg){
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(20 20 20 / var(--tw-bg-opacity)) !important;
 }
 
