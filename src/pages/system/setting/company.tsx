@@ -133,7 +133,7 @@ const Company = () => {
       <FormFilter loading={loading} filterInfo={filterInfo} onSubmit={onSearch} reset />
 
       <Card className="mt-3">
-        <div>
+        <div className="mb-2">
           <Button
             type="primary"
             onClick={() => {

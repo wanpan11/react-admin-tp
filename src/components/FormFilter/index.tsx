@@ -1,52 +1,34 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { memo, useEffect } from "react";
-import { Form, Button, FormInstance } from "antd";
-import { getFormElement } from "@src/components/tools";
+import { memo, useRef } from "react";
+import { Button, FormInstance } from "antd";
 import classNames from "classnames";
+import FormList from "../FormList";
 
 export interface FormFilterProps {
+  reset?: boolean;
+  compact?: boolean;
+  loading?: boolean;
+  className?: string;
   searchBtn?: boolean;
+
   filterInfo: FormItem[];
   initialValues?: { [key: string]: unknown };
-  reset?: boolean;
-  loading?: boolean;
-  compact?: boolean;
-  className?: string;
   onSubmit?: (value: Record<string, string>) => void;
   onForm?: (form: FormInstance) => void;
   onValuesChange?: (changedValues: any, values: Record<string, string>) => void;
 }
 
 const FormFilter = ({ searchBtn = true, filterInfo, initialValues, reset, loading, compact = false, className, onSubmit, onForm, onValuesChange }: FormFilterProps) => {
-  const [form] = Form.useForm();
+  const formInstance = useRef<FormInstance<any> | null>(null);
 
-  const onFinish = (value: Record<string, string>) => {
-    onSubmit && onSubmit(value);
-  };
-
-  useEffect(() => {
-    if (initialValues) {
-      form.setFieldsValue(initialValues);
-    } else {
-      filterInfo.forEach(e => {
-        if (e.initialValue !== undefined && e.initialValue !== null) {
-          form.setFieldValue(e.name, e.initialValue);
-        }
-      });
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterInfo, form]);
-
-  useEffect(() => {
+  const getForm = (form: FormInstance<any>) => {
+    formInstance.current = form;
     onForm && onForm(form);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   const getBtn = () => {
     return (
-      <div className={compact ? "" : "absolute bottom-0 right-10"}>
-        {reset ? <Button htmlType="reset">清空</Button> : null}
+      <div className={compact ? "ml-10" : "absolute bottom-0 right-0"}>
+        {reset ? <Button htmlType="reset">重置</Button> : null}
 
         <Button htmlType="submit" type="primary" loading={loading} className="ml-6">
           查询
@@ -56,25 +38,19 @@ const FormFilter = ({ searchBtn = true, filterInfo, initialValues, reset, loadin
   };
 
   return (
-    <div className={classNames("box-border rounded-md bg-white p-6", className)}>
-      <Form form={form} colon={false} layout="inline" style={{ paddingRight: 200, position: "relative" }} onFinish={onFinish} onValuesChange={onValuesChange}>
-        {filterInfo.map(e =>
-          e.hide ? null : e.type === "blockNode" ? (
-            <span key={typeof e.name === "string" ? e.name : e.name.join("_")}>{e.label}</span>
-          ) : (
-            <Form.Item
-              key={typeof e.name === "string" ? e.name : e.name.join("_")}
-              name={e.name}
-              label={e.label}
-              valuePropName={e.type === "switch" ? "checked" : "value"}
-            >
-              {getFormElement(e.type, e)}
-            </Form.Item>
-          )
-        )}
-
-        {searchBtn && getBtn()}
-      </Form>
+    <div className={classNames("box-border rounded-md bg-white p-6 dark:border dark:border-dark_border dark:bg-dark_bg", className)}>
+      <FormList
+        layout="inline"
+        colon={false}
+        submitBtn={false}
+        className="relative"
+        itemInfo={filterInfo}
+        initialValues={initialValues}
+        searchBtn={searchBtn ? getBtn() : null}
+        onOk={onSubmit}
+        onForm={getForm}
+        onValuesChange={onValuesChange}
+      />
     </div>
   );
 };

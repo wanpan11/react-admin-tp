@@ -1,41 +1,29 @@
-import { Modal, Form, FormInstance } from "antd";
-import { memo, useEffect } from "react";
-import { getFormElement } from "@src/components/tools";
+import { Modal, FormInstance } from "antd";
+import { memo, useRef } from "react";
+import FormList from "../FormList";
 
 interface FormModalProps {
   open?: boolean;
   title?: string;
-  editInfo: FormItem[];
   noFooter?: boolean;
   maskClosable?: boolean;
+  onCancel?: () => void;
+
+  editInfo: FormItem[];
+  wrapperCol?: number;
   initialValues?: { [key: string]: unknown };
   onOk?: (value: { [key: string]: unknown }) => void;
   onForm?: (form: FormInstance) => void;
-  onCancel?: () => void;
   onValuesChange?: (value: { [key: string]: unknown }) => void;
 }
 
-const FormModal = ({ open, title, editInfo, noFooter, maskClosable = true, initialValues, onOk, onForm, onCancel, onValuesChange }: FormModalProps) => {
-  const [form] = Form.useForm();
+const FormModal = ({ open, title, noFooter, maskClosable = true, onCancel, editInfo, wrapperCol = 12, initialValues, onOk, onForm, onValuesChange }: FormModalProps) => {
+  const formInstance = useRef<FormInstance<any> | null>(null);
 
-  useEffect(() => {
-    if (!open || !editInfo.length) return;
-
-    if (initialValues) {
-      form.setFieldsValue(initialValues);
-    } else {
-      editInfo.forEach(e => {
-        if (e.initialValue) {
-          form.setFieldValue(e.name, e.initialValue);
-        }
-      });
-    }
-  }, [open, initialValues, form, editInfo]);
-
-  useEffect(() => {
+  const getForm = (form: FormInstance<any>) => {
+    formInstance.current = form;
     onForm && onForm(form);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   return (
     <Modal
@@ -44,38 +32,29 @@ const FormModal = ({ open, title, editInfo, noFooter, maskClosable = true, initi
       okText="确定"
       cancelText="取消"
       width={880}
-      closable={noFooter ? true : false}
       destroyOnClose
+      closable={noFooter ? true : false}
       maskClosable={maskClosable}
       onCancel={onCancel}
       onOk={() => {
-        form.submit();
+        formInstance.current && formInstance.current.submit();
       }}
       afterClose={() => {
-        form.resetFields();
+        formInstance.current && formInstance.current.resetFields();
       }}
       footer={noFooter ? null : undefined}
     >
       <div className="pt-6">
-        <Form form={form} labelCol={{ span: 5 }} labelAlign="right" onFinish={onOk} onValuesChange={onValuesChange}>
-          {editInfo.map(e =>
-            e.hide ? null : e.type === "blockNode" ? (
-              <span key={typeof e.name === "string" ? e.name : e.name.join("_")}>{e.label}</span>
-            ) : (
-              <Form.Item
-                key={typeof e.name === "string" ? e.name : e.name.join("_")}
-                name={e.name}
-                label={e.label}
-                rules={[e.rule]}
-                valuePropName={e.type === "switch" ? "checked" : "value"}
-                wrapperCol={{ span: e.type === "select" ? 8 : 12 }}
-                initialValue={e.type === "radio" ? e.options?.[0].value : undefined}
-              >
-                {getFormElement(e.type, e)}
-              </Form.Item>
-            )
-          )}
-        </Form>
+        <FormList
+          submitBtn={false}
+          itemInfo={editInfo}
+          labelCol={5}
+          wrapperCol={wrapperCol}
+          initialValues={initialValues}
+          onOk={onOk}
+          onForm={getForm}
+          onValuesChange={onValuesChange}
+        />
       </div>
     </Modal>
   );
