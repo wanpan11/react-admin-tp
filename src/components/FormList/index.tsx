@@ -14,10 +14,10 @@ export interface FormFilterProps {
   className?: string;
   labelCol?: number;
   wrapperCol?: number;
-  initialValues?: { [key: string]: unknown };
-  onOk?: (value: Record<string, string>) => void;
+  initialValues?: Record<string, any>;
+  onOk?: (value: Record<string, any>) => void;
   onForm?: (form: FormInstance) => void;
-  onValuesChange?: (changedValues: any, values: Record<string, string>) => void;
+  onValuesChange?: (changedValues: any, values: Record<string, any>) => void;
 }
 
 /**
@@ -42,7 +42,7 @@ const FormList = ({
 }: FormFilterProps) => {
   const [form] = Form.useForm();
 
-  const onFinish = (value: Record<string, string>) => {
+  const onFinish = (value: Record<string, any>) => {
     onOk && onOk(value);
   };
 

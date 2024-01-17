@@ -11,10 +11,10 @@ export interface FormFilterProps {
   searchBtn?: boolean;
 
   filterInfo: FormItem[];
-  initialValues?: { [key: string]: unknown };
-  onSubmit?: (value: Record<string, string>) => void;
+  initialValues?: Record<string, any>;
+  onSubmit?: (value: Record<string, any>) => void;
   onForm?: (form: FormInstance) => void;
-  onValuesChange?: (changedValues: any, values: Record<string, string>) => void;
+  onValuesChange?: (changedValues: any, values: Record<string, any>) => void;
 }
 
 const FormFilter = ({ searchBtn = true, filterInfo, initialValues, reset, loading, compact = false, className, onSubmit, onForm, onValuesChange }: FormFilterProps) => {

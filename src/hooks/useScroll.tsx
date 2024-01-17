@@ -12,7 +12,6 @@ export default function useScroll(contentRef: React.RefObject<HTMLDivElement>) {
   const onMouseMove = (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (mouseRef.current.start) {
       const { clientX } = evt;
-      console.log("name ===>", clientX);
       if (contentRef.current) {
         const { x } = mouseRef.current.mouse;
         const diff = clientX - x;
