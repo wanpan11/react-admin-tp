@@ -34,7 +34,6 @@ interface MenuItem {
   children?: MenuItem[];
 }
 interface FormItem {
-  // 公共
   name: string | (number | string)[];
   label?: string | JSX.Element;
   placeholder?: string;
@@ -42,14 +41,16 @@ interface FormItem {
   rule?: any;
   hide?: boolean;
   disable?: boolean;
-  extra?: string;
+  extra?: string | JSX.Element;
   type: "input" | "numberInput" | "select" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
-  // 私有
-  rightNode?: JSX.Element; // node
-  mode?: "multiple"; // select
+  // 特有属性
+  rightNode?: JSX.Element;
+  mode?: "multiple";
+  optionType?: "default" | "button";
   maxLength?: number;
-  showTime?: boolean; // date
-  options?: { label: string; value: any }[]; // select radio
+  showTime?: boolean;
+  options?: { label: string; value: any }[];
+  otherOptions?: Record<string, any>; // 组件额外属性
 }
 
 interface AxiosRes<T> {

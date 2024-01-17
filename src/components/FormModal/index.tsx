@@ -11,10 +11,10 @@ interface FormModalProps {
 
   editInfo: FormItem[];
   wrapperCol?: number;
-  initialValues?: { [key: string]: unknown };
-  onOk?: (value: { [key: string]: unknown }) => void;
+  initialValues?: Record<string, any>;
+  onOk?: (value: Record<string, any>) => void;
   onForm?: (form: FormInstance) => void;
-  onValuesChange?: (value: { [key: string]: unknown }) => void;
+  onValuesChange?: (value: Record<string, any>) => void;
 }
 
 const FormModal = ({ open, title, noFooter, maskClosable = true, onCancel, editInfo, wrapperCol = 12, initialValues, onOk, onForm, onValuesChange }: FormModalProps) => {
