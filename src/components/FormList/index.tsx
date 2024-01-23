@@ -72,6 +72,7 @@ const FormList = ({
         form={form}
         style={style}
         labelCol={labelCol ? { span: labelCol } : undefined}
+        wrapperCol={wrapperCol ? { span: wrapperCol } : undefined}
         labelAlign="right"
         colon={colon}
         layout={layout}
@@ -89,7 +90,6 @@ const FormList = ({
               extra={e.extra}
               rules={[e.rule]}
               valuePropName={e.type === "switch" ? "checked" : "value"}
-              wrapperCol={wrapperCol ? { span: e.type === "select" ? 8 : wrapperCol } : undefined}
               initialValue={e.type === "radio" ? e.options?.[0].value : undefined}
             >
               {getFormElement(e.type, e)}

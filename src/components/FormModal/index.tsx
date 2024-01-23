@@ -10,6 +10,7 @@ interface FormModalProps {
   onCancel?: () => void;
 
   editInfo: FormItem[];
+  labelCol?: number;
   wrapperCol?: number;
   initialValues?: Record<string, any>;
   onOk?: (value: Record<string, any>) => void;
@@ -17,7 +18,20 @@ interface FormModalProps {
   onValuesChange?: (value: Record<string, any>) => void;
 }
 
-const FormModal = ({ open, title, noFooter, maskClosable = true, onCancel, editInfo, wrapperCol = 12, initialValues, onOk, onForm, onValuesChange }: FormModalProps) => {
+const FormModal = ({
+  open,
+  title,
+  noFooter,
+  maskClosable = true,
+  onCancel,
+  editInfo,
+  wrapperCol = 12,
+  labelCol = 5,
+  initialValues,
+  onOk,
+  onForm,
+  onValuesChange,
+}: FormModalProps) => {
   const formInstance = useRef<FormInstance<any> | null>(null);
 
   const getForm = (form: FormInstance<any>) => {
@@ -48,7 +62,7 @@ const FormModal = ({ open, title, noFooter, maskClosable = true, onCancel, editI
         <FormList
           submitBtn={false}
           itemInfo={editInfo}
-          labelCol={5}
+          labelCol={labelCol}
           wrapperCol={wrapperCol}
           initialValues={initialValues}
           onOk={onOk}
