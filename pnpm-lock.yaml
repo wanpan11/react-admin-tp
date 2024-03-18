@@ -8,9 +8,6 @@ dependencies:
   '@ant-design/icons':
     specifier: ^5.3.4
     version: 5.3.4(react-dom@18.2.0)(react@18.2.0)
-  '@babel/runtime':
-    specifier: ^7.24.0
-    version: 7.24.0
   '@unocss/reset':
     specifier: ^0.53.6
     version: 0.53.6
@@ -26,9 +23,6 @@ dependencies:
   classnames:
     specifier: ^2.5.1
     version: 2.5.1
-  core-js:
-    specifier: ^3.36.0
-    version: 3.36.0
   mobx:
     specifier: ^6.12.0
     version: 6.12.0
@@ -1586,11 +1580,6 @@ packages:
     resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
     dependencies:
       toggle-selection: 1.0.6
-    dev: false
-
-  /core-js@3.36.0:
-    resolution: {integrity: sha512-mt7+TUBbTFg5+GngsAxeKBTl5/VS0guFeJacYge9OmHb+m058UwwIm41SE9T4Den7ClatV57B6TYTuJ0CX1MAw==}
-    requiresBuild: true
     dev: false
 
   /cross-env@7.0.3:

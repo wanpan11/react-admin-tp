@@ -1,6 +1,5 @@
 import path from "path";
 import { defineConfig, UserConfig } from "vite";
-import react from "@vitejs/plugin-react";
 
 export default defineConfig(async ({ command, mode }) => {
   const { default: entryConfig } = await import(`./${mode}.config.js`);
@@ -11,7 +10,6 @@ export default defineConfig(async ({ command, mode }) => {
     build: {
       outDir: path.resolve(__dirname, `../${entryConfig.outDir}`),
     },
-    plugins: [react()],
     envDir: path.resolve(__dirname, "../env/"),
     resolve: {
       alias: {
