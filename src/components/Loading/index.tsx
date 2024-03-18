@@ -4,16 +4,21 @@ import classnames from "classnames";
 
 interface LoadingProps {
   full?: boolean;
+  text?: string;
+  size?: "small" | "large" | "default";
+  className?: string;
 }
 
-const Loading = ({ full }: LoadingProps) => {
+const Loading = ({ full, text, size, className }: LoadingProps) => {
   return (
     <Layout
-      className={classnames({
-        "flex h-screen items-center justify-center": full,
+      className={classnames(className, "flex items-center justify-center", {
+        "h-screen": full,
+        "bg-transparent": !full,
       })}
     >
-      <Spin size="large" tip="数据加载中..." />
+      <Spin size={size} />
+      <div className="mt-3 text-primary">{text}</div>
     </Layout>
   );
 };
