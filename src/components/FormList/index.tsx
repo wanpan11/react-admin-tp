@@ -22,7 +22,7 @@ export interface FormFilterProps {
 
 /**
  *
- * @description itemInfo change component will rerender
+ * @description extend antd Form
  */
 const FormList = ({
   style,
@@ -36,6 +36,7 @@ const FormList = ({
   labelCol,
   wrapperCol,
   initialValues,
+
   onOk,
   onForm,
   onValuesChange,
@@ -47,6 +48,8 @@ const FormList = ({
   };
 
   useEffect(() => {
+    onForm && onForm(form);
+
     if (initialValues) {
       form.setFieldsValue(initialValues);
     } else {
@@ -56,12 +59,6 @@ const FormList = ({
         }
       });
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemInfo, form]);
-
-  useEffect(() => {
-    onForm && onForm(form);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
