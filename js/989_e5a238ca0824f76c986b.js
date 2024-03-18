@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[989],{7989:(n,s,t)=>{t.r(s),t.d(s,{default:()=>e});const e={content:"K1CsKynxnUkgrTUlnOg9",login_box:"lHkv7XYB9CsC8EompYzJ",box:"AWhXdE0cSvRqapOmrHIy",login_input:"Wna9IQF_mtFAMSL1p6GE"}}}]);
