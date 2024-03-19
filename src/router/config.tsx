@@ -1,7 +1,8 @@
-import { lazy } from "react";
+import { ComponentType, lazy } from "react";
 import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
 
-const getLazyLoad = (url: string) => lazy(() => import(/* @vite-ignore */ `../pages${url}.tsx`));
+const modules = import.meta.glob<{ default: ComponentType<any> }>("../pages/**/*.tsx");
+const getLazyLoad = (url: string) => lazy(modules[`../pages${url}.tsx`]);
 
 /**
  *

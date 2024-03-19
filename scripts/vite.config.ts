@@ -9,6 +9,7 @@ export default defineConfig(async ({ command, mode }) => {
     base: entryConfig.publicPath,
     build: {
       outDir: path.resolve(__dirname, `../${entryConfig.outDir}`),
+      emptyOutDir: true,
     },
     envDir: path.resolve(__dirname, "../env/"),
     resolve: {
