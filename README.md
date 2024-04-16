@@ -27,7 +27,7 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 - ahooks
 - tailwindcss
 - ant-design
-- mobx (轻微使用)
+- mobx
 
 #### scripts 打包相关
 
