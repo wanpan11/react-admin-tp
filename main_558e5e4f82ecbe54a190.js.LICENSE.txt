@@ -1,0 +1,100 @@
+/*!
+	    Mock - 模拟请求 & 模拟数据
+	    https://github.com/nuysoft/Mock
+	    墨智 mozhi.gyy@taobao.com nuysoft@gmail.com
+	*/
+
+/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+
+/**
+ * @license React
+ * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @remix-run/router v1.15.3
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+
+/**
+ * React Router DOM v6.22.3
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+
+/**
+ * React Router v6.22.3
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+
+/**![box-plot](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjY0IDY0IDg5NiA4OTYiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTk1MiAyMjRoLTUyYy00LjQgMC04IDMuNi04IDh2MjQ4aC05MlYzMDRjMC00LjQtMy42LTgtOC04SDIzMmMtNC40IDAtOCAzLjYtOCA4djE3NmgtOTJWMjMyYzAtNC40LTMuNi04LTgtOEg3MmMtNC40IDAtOCAzLjYtOCA4djU2MGMwIDQuNCAzLjYgOCA4IDhoNTJjNC40IDAgOC0zLjYgOC04VjU0OGg5MnYxNzJjMCA0LjQgMy42IDggOCA4aDU2MGM0LjQgMCA4LTMuNiA4LThWNTQ4aDkydjI0NGMwIDQuNCAzLjYgOCA4IDhoNTJjNC40IDAgOC0zLjYgOC04VjIzMmMwLTQuNC0zLjYtOC04LTh6TTI5NiAzNjhoODh2Mjg4aC04OFYzNjh6bTQzMiAyODhINDQ4VjM2OGgyODB2Mjg4eiIgLz48L3N2Zz4=) */
+
+/**![one-to-one](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjY0IDY0IDg5NiA4OTYiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHN0eWxlIC8+PC9kZWZzPjxwYXRoIGQ9Ik0zMTYgNjcyaDYwYzQuNCAwIDgtMy42IDgtOFYzNjBjMC00LjQtMy42LTgtOC04aC02MGMtNC40IDAtOCAzLjYtOCA4djMwNGMwIDQuNCAzLjYgOCA4IDh6bTE5Ni01MGMyMi4xIDAgNDAtMTcuOSA0MC0zOSAwLTIzLjEtMTcuOS00MS00MC00MXMtNDAgMTcuOS00MCA0MWMwIDIxLjEgMTcuOSAzOSA0MCAzOXptMC0xNDBjMjIuMSAwIDQwLTE3LjkgNDAtMzkgMC0yMy4xLTE3LjktNDEtNDAtNDFzLTQwIDE3LjktNDAgNDFjMCAyMS4xIDE3LjkgMzkgNDAgMzl6IiAvPjxwYXRoIGQ9Ik04ODAgMTEySDE0NGMtMTcuNyAwLTMyIDE0LjMtMzIgMzJ2NzM2YzAgMTcuNyAxNC4zIDMyIDMyIDMyaDczNmMxNy43IDAgMzItMTQuMyAzMi0zMlYxNDRjMC0xNy43LTE0LjMtMzItMzItMzJ6bS00MCA3MjhIMTg0VjE4NGg2NTZ2NjU2eiIgLz48cGF0aCBkPSJNNjQ4IDY3Mmg2MGM0LjQgMCA4LTMuNiA4LThWMzYwYzAtNC40LTMuNi04LTgtOGgtNjBjLTQuNCAwLTggMy42LTggOHYzMDRjMCA0LjQgMy42IDggOCA4eiIgLz48L3N2Zz4=) */
+
+/**![radar-chart](data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNjYWNhY2EiIHZpZXdCb3g9IjY0IDY0IDg5NiA4OTYiIGZvY3VzYWJsZT0iZmFsc2UiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTkyNi44IDM5Ny4xbC0zOTYtMjg4YTMxLjgxIDMxLjgxIDAgMDAtMzcuNiAwbC0zOTYgMjg4YTMxLjk5IDMxLjk5IDAgMDAtMTEuNiAzNS44bDE1MS4zIDQ2NmEzMiAzMiAwIDAwMzAuNCAyMi4xaDQ4OS41YzEzLjkgMCAyNi4xLTguOSAzMC40LTIyLjFsMTUxLjMtNDY2YzQuMi0xMy4yLS41LTI3LjYtMTEuNy0zNS44ek04MzguNiA0MTdsLTk4LjUgMzItMjAwLTE0NC43VjE5OS45TDgzOC42IDQxN3pNNDY2IDU2Ny4ybC04OS4xIDEyMi4zLTU1LjItMTY5LjJMNDY2IDU2Ny4yem0tMTE2LjMtOTYuOEw0ODQgMzczLjN2MTQwLjhsLTEzNC4zLTQzLjd6TTUxMiA1OTkuMmw5My45IDEyOC45SDQxOC4xTDUxMiA1OTkuMnptMjguMS0yMjUuOWwxMzQuMiA5Ny4xTDU0MC4xIDUxNFYzNzMuM3pNNTU4IDU2Ny4ybDE0NC4zLTQ2LjktNTUuMiAxNjkuMkw1NTggNTY3LjJ6bS03NC0zNjcuM3YxMDQuNEwyODMuOSA0NDlsLTk4LjUtMzJMNDg0IDE5OS45ek0xNjkuMyA0NzAuOGw4Ni41IDI4LjEgODAuNCAyNDYuNC01My44IDczLjktMTEzLjEtMzQ4LjR6TTMyNy4xIDg1M2w1MC4zLTY5aDI2OS4zbDUwLjMgNjlIMzI3LjF6bTQxNC41LTMzLjhsLTUzLjgtNzMuOSA4MC40LTI0Ni40IDg2LjUtMjguMS0xMTMuMSAzNDguNHoiIC8+PC9zdmc+) */

@@ -311,6 +311,10 @@
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
 }
 ::backdrop{
   --tw-border-spacing-x: 0;
@@ -360,6 +364,10 @@
   --tw-backdrop-opacity:  ;
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
 }
 .static{
   position: static !important;
@@ -631,14 +639,14 @@ li {
   border-width: 0;
   border-style: solid;
 }
-:is(.dark .dark\:border){
+.dark\:border:is(.dark *){
   border-width: 1px !important;
 }
-:is(.dark .dark\:border-dark_border){
+.dark\:border-dark_border:is(.dark *){
   --tw-border-opacity: 1 !important;
   border-color: rgb(48 48 48 / var(--tw-border-opacity)) !important;
 }
-:is(.dark .dark\:bg-dark_bg){
+.dark\:bg-dark_bg:is(.dark *){
   --tw-bg-opacity: 1 !important;
   background-color: rgb(20 20 20 / var(--tw-bg-opacity)) !important;
 }
