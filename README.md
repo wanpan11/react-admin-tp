@@ -17,7 +17,7 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 #### 主要依赖库
 
 - ant-design
-- mobx (轻微使用)
+- mobx
 - ahooks
 - axios
 - tailwindcss
