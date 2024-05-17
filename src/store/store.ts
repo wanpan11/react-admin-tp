@@ -1,26 +1,31 @@
 import { makeAutoObservable } from "mobx";
 import { getPathRecord, transformRouter } from "@src/router/config";
+import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "@src/config";
+import { getLocalStorage } from "@src/utils";
 
 export class MobxStore {
   darkMode = false;
-  dynamicRoutes: Route[] = [];
-  isLogin = localStorage.getItem("token") ? true : false;
-  userInfo: { account: string } | undefined = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo") as string) : undefined;
+
+  isLogin = getLocalStorage(LOCAL_TOKEN) ? true : false;
+
+  userInfo = getLocalStorage(LOCAL_USER_INFO);
+
+  dynamicRoutes: Route[] = getLocalStorage(LOCAL_DYNAMIC_ROUTER, "json") || [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
   // 获取菜单、路由
-  get getRouteMenu() {
+  get getRouteAndMenu() {
     console.log("getRouteMenu");
 
     return transformRouter(this.dynamicRoutes);
   }
 
   // 获取面包屑
-  get routerPath() {
-    return getPathRecord(this.getRouteMenu.router);
+  get routerPathMapping() {
+    return getPathRecord(this.getRouteAndMenu.router);
   }
 
   setTheme(boolean: boolean) {

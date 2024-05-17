@@ -8,10 +8,7 @@ import store from "@src/store/store";
 import GLOBAL_ROUTERS, { getRoute } from "@src/router/config";
 
 const AppRouter = observer(() => {
-  const {
-    darkMode,
-    getRouteMenu: { router },
-  } = store;
+  const { darkMode, getRouteAndMenu } = store;
 
   const currentThem = {
     algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
@@ -28,7 +25,7 @@ const AppRouter = observer(() => {
             <Routes>
               {getRoute(GLOBAL_ROUTERS.LOGIN_PAGE)}
               {getRoute(GLOBAL_ROUTERS.NOT_FOUND_PAGE)}
-              {getRoute(router)}
+              {getRoute(getRouteAndMenu.router)}
             </Routes>
           </ConfigProvider>
         </BrowserRouter>

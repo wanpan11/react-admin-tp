@@ -94,7 +94,10 @@ export function toLocaleString(num: number) {
 export function number2Chn(num: number) {
   if (!num) return "-";
 
-  const param: { value: string | number; unit: string } = { value: num, unit: "" };
+  const param: { value: string | number; unit: string } = {
+    value: num,
+    unit: "",
+  };
   const k = 10000;
   const sizes = ["", "万", "亿", "万亿"];
   let i = 0;
@@ -168,4 +171,9 @@ export function convertMinutesToHoursMinutesAndDays(minutes: number) {
 export const getUrlName = (url = "") => {
   const arr = url.split("/");
   return arr[arr.length - 1];
+};
+
+export const getLocalStorage = (key: string, type?: "json") => {
+  const data = localStorage.getItem(key) || undefined;
+  return data && type ? JSON.parse(data) : data;
 };

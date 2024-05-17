@@ -66,8 +66,8 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const {
     isLogin,
     userInfo,
-    routerPath,
-    getRouteMenu: { routerMenu },
+    routerPathMapping,
+    getRouteAndMenu: { routerMenu },
   } = store;
 
   // 获取当前选中 menu ID
@@ -90,7 +90,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
 
         <Layout>
           <Content className="m-3 mb-0 mt-0">
-            <BreadCrumb routerPath={routerPath} />
+            <BreadCrumb routerPath={routerPathMapping} />
 
             <div className="h-[calc(100%-4.5rem)] overflow-auto">
               <MobxContext.Provider value={{ isLogin, userInfo }}>{children}</MobxContext.Provider>

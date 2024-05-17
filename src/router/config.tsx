@@ -25,19 +25,19 @@ const GLOBAL_ROUTERS = {
   LOGIN_PAGE: {
     path: "/login",
     title: "登录",
-    component: getLazyLoad("/login/index"),
+    component: "/login/index",
   } as Route,
 
   // 动态路由页面
   APP_PAGE: [
     {
       path: "/",
-      component: getLazyLoad("/system/index"),
+      component: "/system/index",
       childrenList: [
         {
           index: true,
           title: "首页",
-          component: getLazyLoad("/system/home/index"),
+          component: "/system/home/index",
         },
         {
           path: "/data",
@@ -46,8 +46,8 @@ const GLOBAL_ROUTERS = {
             {
               index: true,
               title: "销售数据",
-              icon: <BarChartOutlined />,
-              component: getLazyLoad("/system/data/report"),
+              // icon: <BarChartOutlined />,
+              component: "/system/data/report",
             },
           ],
         },
@@ -62,34 +62,34 @@ const GLOBAL_ROUTERS = {
                 {
                   path: "/setting",
                   title: "参数配置",
-                  icon: <RadarChartOutlined />,
+                  // icon: <RadarChartOutlined />,
                   childrenList: [
                     {
                       index: true,
                       notMenu: true,
-                      component: getLazyLoad("/system/setting/params"),
+                      component: "/system/setting/params",
                     },
                     {
                       path: "/setting/detail",
                       notMenu: true,
                       title: "详情",
-                      component: getLazyLoad("/system/setting/detail"),
+                      component: "/system/setting/detail",
                     },
                   ],
                 },
                 {
                   path: "/setting/api",
                   title: "接口配置",
-                  icon: <BoxPlotOutlined />,
-                  component: getLazyLoad("/system/setting/api"),
+                  // icon: <BoxPlotOutlined />,
+                  component: "/system/setting/api",
                 },
               ],
             },
             {
               path: "/setting/company",
               title: "厂商管理",
-              icon: <OneToOneOutlined />,
-              component: getLazyLoad("/system/setting/company"),
+              // icon: <OneToOneOutlined />,
+              component: "/system/setting/company",
             },
           ],
         },
@@ -189,14 +189,16 @@ export const getPathRecord = (routes: Route[]) => {
 export const getRoute = (routers: Route[] | Route) => {
   const list = Array.isArray(routers) ? routers : [routers];
   return list.map(e => {
-    const { id = nanoid(), path, title, index, redirect, component: Component, childrenList = [] } = e;
+    const { id = nanoid(), path, title, index, redirect, component: componentPath, childrenList = [] } = e;
 
     let element: ReactNode = null;
+    if (redirect) {
+      element = <Redirect redirect={redirect}></Redirect>;
+    }
+    if (componentPath) {
+      const Component = getLazyLoad(componentPath);
 
-    if (Component || redirect) {
-      element = redirect ? (
-        <Redirect redirect={redirect}></Redirect>
-      ) : (
+      element = (
         <Suspense fallback={<Loading full />}>
           <Component title={title}>{childrenList.length ? <Outlet /> : null}</Component>
         </Suspense>
