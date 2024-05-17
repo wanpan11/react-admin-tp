@@ -5,6 +5,7 @@ import { loginReq } from "@src/api/account";
 import type { AccountApi } from "@src/types/api";
 import store from "@src/store/store";
 import lessStyle from "./index.module.less";
+import GLOBAL_ROUTERS from "@src/router/config";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,10 +14,13 @@ const Login = () => {
   const onFinish = async (values: AccountApi.Login) => {
     loadingHandle(true);
     const res = await loginReq(values);
-    loadingHandle(false);
+
     localStorage.setItem("token", res.data.token);
     localStorage.setItem("userInfo", JSON.stringify(res.data.userInfo));
-    store.setLogin(true, res.data.userInfo);
+
+    store.setLogin({ login: true, userInfo: res.data.userInfo, router: GLOBAL_ROUTERS.APP_PAGE });
+
+    loadingHandle(false);
     navigate("/");
   };
 

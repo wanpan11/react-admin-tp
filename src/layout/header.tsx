@@ -23,7 +23,7 @@ const MenuHeader = observer(({ tabId, tabList }: { tabId: string; tabList: MenuI
           className="p-3 pb-1 pt-1"
           onClick={() => {
             localStorage.clear();
-            store.setLogin(false);
+            store.setLogin({ login: false });
             store.setTheme(false);
             navigate("/login");
           }}
