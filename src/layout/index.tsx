@@ -80,8 +80,6 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
     token: { colorPrimary },
   };
 
-  console.log(userInfo);
-
   return (
     <div className={darkMode ? "dark" : ""}>
       <ConfigProvider theme={currentThem}>
