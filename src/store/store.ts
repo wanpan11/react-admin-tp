@@ -8,7 +8,7 @@ export class MobxStore {
 
   isLogin = !!getLocalStorage(LOCAL_TOKEN);
 
-  userInfo = getLocalStorage(LOCAL_USER_INFO);
+  userInfo = getLocalStorage(LOCAL_USER_INFO, "json");
 
   // 动态路由数据
   dynamicRoutes: Route[] = getLocalStorage(LOCAL_DYNAMIC_ROUTER, "json") || [];
@@ -27,18 +27,18 @@ export class MobxStore {
     return getPathRecord(this.routeAndMenu.router);
   }
 
-  setTheme(boolean: boolean) {
+  setDarkMode = (boolean: boolean) => {
     this.darkMode = boolean;
-  }
+  };
 
-  setLogin({ login, userInfo }: { login: boolean; userInfo?: any }) {
+  setLogin = ({ login, userInfo }: { login: boolean; userInfo?: any }) => {
     this.isLogin = login;
     this.userInfo = userInfo;
-  }
+  };
 
-  setDynamicRoutes(routes: Route[]) {
+  setDynamicRoutes = (routes: Route[]) => {
     this.dynamicRoutes = routes;
-  }
+  };
 }
 
 const store = new MobxStore();

@@ -3,16 +3,15 @@ import type { MenuProps } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import classnames from "classnames";
-import { observer } from "mobx-react-lite";
 import store from "@src/store/store";
 import dark_img from "@src/assets/images/dark.svg";
 import light_img from "@src/assets/images/light.svg";
 import lessStyle from "./index.module.less";
 
 const { Header } = Layout;
+const { setLogin, setDarkMode } = store;
 
-const MenuHeader = observer(({ tabId, tabList }: { tabId: string; tabList: MenuItem[] }) => {
-  const { darkMode } = store;
+const MenuHeader = ({ tabId, tabList, darkMode, userInfo }: { tabId: string; tabList: MenuItem[]; darkMode: boolean; userInfo?: any }) => {
   const navigate = useNavigate();
 
   const items: MenuProps["items"] = [
@@ -23,8 +22,8 @@ const MenuHeader = observer(({ tabId, tabList }: { tabId: string; tabList: MenuI
           className="p-3 pb-1 pt-1"
           onClick={() => {
             localStorage.clear();
-            store.setLogin({ login: false });
-            store.setTheme(false);
+            setLogin({ login: false });
+            setDarkMode(false);
             navigate("/login");
           }}
         >
@@ -73,7 +72,7 @@ const MenuHeader = observer(({ tabId, tabList }: { tabId: string; tabList: MenuI
               className="w-full"
               alt="暗黑模式"
               onClick={() => {
-                store.setTheme(false);
+                setDarkMode(false);
               }}
             />
           ) : (
@@ -82,7 +81,7 @@ const MenuHeader = observer(({ tabId, tabList }: { tabId: string; tabList: MenuI
               className="w-full"
               alt="明亮模式"
               onClick={() => {
-                store.setTheme(true);
+                setDarkMode(true);
               }}
             />
           )}
@@ -90,7 +89,7 @@ const MenuHeader = observer(({ tabId, tabList }: { tabId: string; tabList: MenuI
 
         <Dropdown menu={{ items }} placement="bottomRight" className="cursor-pointer" arrow={{ pointAtCenter: false }}>
           <div className="flex items-center leading-[32px]">
-            <div className="mr-3">{store.userInfo?.account}</div>
+            <div className="mr-3">{userInfo?.account}</div>
 
             <Avatar icon={<UserOutlined />} />
           </div>
@@ -98,6 +97,6 @@ const MenuHeader = observer(({ tabId, tabList }: { tabId: string; tabList: MenuI
       </div>
     </Header>
   );
-});
+};
 
 export default MenuHeader;

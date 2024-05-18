@@ -1,11 +1,11 @@
 import { useMemo } from "react";
-import { Layout } from "antd";
+import { ConfigProvider, Layout, theme } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import BreadCrumb from "@src/components/BreadCrumb";
 import MobxContext from "@src/store/context";
 import store from "@src/store/store";
-import { splitFlag } from "@src/config";
+import { colorPrimary, splitFlag } from "@src/config";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
 
@@ -64,6 +64,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const {
     isLogin,
+    darkMode,
     userInfo,
     routeAndMenu: { routerMenu },
     routerPathMapping,
@@ -74,24 +75,35 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
     return menuHandle(routerMenu, pathname);
   }, [pathname, routerMenu]);
 
+  const currentThem = {
+    algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    token: { colorPrimary },
+  };
+
+  console.log(userInfo);
+
   return (
-    <Layout>
-      <MenuHeader tabId={tabId} tabList={routerMenu}></MenuHeader>
-
-      <Layout className="h-[calc(100vh-3.5rem)] overflow-hidden">
-        {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
-
+    <div className={darkMode ? "dark" : ""}>
+      <ConfigProvider theme={currentThem}>
         <Layout>
-          <Content className="m-3 mb-0 mt-0">
-            <BreadCrumb routerPath={routerPathMapping} />
+          <MenuHeader tabId={tabId} tabList={routerMenu} darkMode={darkMode} userInfo={userInfo} />
 
-            <div className="h-[calc(100%-4.5rem)] overflow-auto">
-              <MobxContext.Provider value={{ isLogin, userInfo }}>{children}</MobxContext.Provider>
-            </div>
-          </Content>
+          <Layout className="h-[calc(100vh-3.5rem)] overflow-hidden">
+            {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
+
+            <Layout>
+              <Content className="m-3 mb-0 mt-0">
+                <BreadCrumb routerPath={routerPathMapping} />
+
+                <div className="h-[calc(100%-4.5rem)] overflow-auto">
+                  <MobxContext.Provider value={{ isLogin, userInfo }}>{children}</MobxContext.Provider>
+                </div>
+              </Content>
+            </Layout>
+          </Layout>
         </Layout>
-      </Layout>
-    </Layout>
+      </ConfigProvider>
+    </div>
   );
 });
 

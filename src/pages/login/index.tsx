@@ -9,6 +9,8 @@ import GLOBAL_ROUTERS from "@src/router/config";
 import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "@src/config";
 import { getLocalStorage } from "@src/utils";
 
+const { setLogin, setDynamicRoutes } = store;
+
 const Login = () => {
   const navigate = useNavigate();
   const [loading, loadingHandle] = useState(false);
@@ -22,8 +24,8 @@ const Login = () => {
     localStorage.setItem(LOCAL_DYNAMIC_ROUTER, JSON.stringify(GLOBAL_ROUTERS.APP_PAGE));
 
     // 设置登录态 用户信息 动态路由配置
-    store.setLogin({ login: true, userInfo: res.data.userInfo });
-    store.setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
+    setLogin({ login: true, userInfo: res.data.userInfo });
+    setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
 
     loadingHandle(false);
     navigate("/");
