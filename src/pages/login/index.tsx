@@ -21,20 +21,16 @@ const Login = () => {
     localStorage.setItem(LOCAL_USER_INFO, JSON.stringify(res.data.userInfo));
     localStorage.setItem(LOCAL_DYNAMIC_ROUTER, JSON.stringify(GLOBAL_ROUTERS.APP_PAGE));
 
-    store.setLogin({
-      login: true,
-      userInfo: res.data.userInfo,
-      router: GLOBAL_ROUTERS.APP_PAGE,
-    });
+    // 设置登录态 用户信息 动态路由配置
+    store.setLogin({ login: true, userInfo: res.data.userInfo });
+    store.setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
 
     loadingHandle(false);
     navigate("/");
   };
 
   useEffect(() => {
-    if (getLocalStorage(LOCAL_TOKEN)) {
-      navigate("/");
-    }
+    if (getLocalStorage(LOCAL_TOKEN)) navigate("/");
   }, [navigate]);
 
   return (

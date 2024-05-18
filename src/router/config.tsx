@@ -8,17 +8,26 @@ import { Outlet, Route } from "react-router-dom";
 const modules = import.meta.glob<{ default: ComponentType<any> }>("../pages/**/*.tsx");
 const getLazyLoad = (url: string) => lazy(modules[`../pages${url}.tsx`]);
 
+// 菜单图标映射
+const iconMapping: Record<string, ReactNode> = {
+  report: <BarChartOutlined />,
+  setting: <RadarChartOutlined />,
+  api: <BoxPlotOutlined />,
+  company: <OneToOneOutlined />,
+};
+
 /**
  *
  * @description 嵌套路由配置 react-router-dom V6
- * @param {path} * 表示无匹配时渲染此项
- * @param {index} 默认渲染此项 index path 不能同时存在
+ * @param {path} * 表示无匹配时渲染此项 嵌套路由 path 同父级即可
  * @param {title} 每个对应组件会接收到 title
+ * @param {index} 默认渲染此项 index path 不能同时存在
+ * @param {icon} 菜单图标 key
  * @param {notMenu} 非菜单项
  * @param {redirect} 重定向地址
- * @param {component} 对应组件 采用 lazy 懒加载模式
+ * @param {component} 对应组件路径 采用 lazy 懒加载模式
  * @param {childrenList} 嵌套路由 可以在父路由组件内嵌 渲染
- * @description routers[0].childrenList 作为菜单路由起始
+ *
  */
 const GLOBAL_ROUTERS = {
   // 登录页
@@ -35,8 +44,8 @@ const GLOBAL_ROUTERS = {
       component: "/system/index",
       childrenList: [
         {
-          index: true,
           title: "首页",
+          index: true,
           component: "/system/home/index",
         },
         {
@@ -44,9 +53,9 @@ const GLOBAL_ROUTERS = {
           title: "数据报表",
           childrenList: [
             {
-              index: true,
               title: "销售数据",
-              // icon: <BarChartOutlined />,
+              index: true,
+              icon: "report",
               component: "/system/data/report",
             },
           ],
@@ -62,7 +71,7 @@ const GLOBAL_ROUTERS = {
                 {
                   path: "/setting",
                   title: "参数配置",
-                  // icon: <RadarChartOutlined />,
+                  icon: "setting",
                   childrenList: [
                     {
                       index: true,
@@ -71,8 +80,8 @@ const GLOBAL_ROUTERS = {
                     },
                     {
                       path: "/setting/detail",
-                      notMenu: true,
                       title: "详情",
+                      notMenu: true,
                       component: "/system/setting/detail",
                     },
                   ],
@@ -80,7 +89,7 @@ const GLOBAL_ROUTERS = {
                 {
                   path: "/setting/api",
                   title: "接口配置",
-                  // icon: <BoxPlotOutlined />,
+                  icon: "api",
                   component: "/system/setting/api",
                 },
               ],
@@ -88,7 +97,7 @@ const GLOBAL_ROUTERS = {
             {
               path: "/setting/company",
               title: "厂商管理",
-              // icon: <OneToOneOutlined />,
+              icon: "company",
               component: "/system/setting/company",
             },
           ],
@@ -115,7 +124,7 @@ export function transformRouter(routers: Route[]) {
   function transform(arr: Route[], router: Route[], menu: MenuItem[], partePath = "") {
     arr.forEach(element => {
       const id = nanoid();
-      const { path, index, title, childrenList, notMenu, icon } = element;
+      const { path, title, index, icon, notMenu, childrenList } = element;
 
       let newPath = path as string;
 
@@ -135,22 +144,20 @@ export function transformRouter(routers: Route[]) {
         key: id,
         path: index ? partePath : (path as string),
         label: title ? title : "",
-        icon: icon,
+        icon: iconMapping[icon],
         children: [],
       };
 
       router.push(routeObj);
-      if (!notMenu) {
-        menu.push(menuObj);
-      }
+      if (!notMenu) menu.push(menuObj);
 
       if (childrenList?.length) {
         transform(childrenList, routeObj.childrenList, menuObj.children, newPath);
       }
     });
   }
-  transform(routers, router, routerMenu);
 
+  transform(routers, router, routerMenu);
   return { router, routerMenu: routerMenu[0]?.children as MenuItem[] };
 }
 
@@ -158,7 +165,7 @@ export function transformRouter(routers: Route[]) {
  * 获取路由面包屑路径
  */
 export const getPathRecord = (routes: Route[]) => {
-  const obj: { [key: string]: string } = {};
+  const obj: Record<string, string> = {};
 
   const getBreadCrumbConf = (arr: Route[], parentTitle = "") => {
     arr.forEach(e => {
@@ -178,8 +185,8 @@ export const getPathRecord = (routes: Route[]) => {
       }
     });
   };
-  getBreadCrumbConf(routes);
 
+  getBreadCrumbConf(routes);
   return obj;
 };
 
@@ -192,12 +199,9 @@ export const getRoute = (routers: Route[] | Route) => {
     const { id = nanoid(), path, title, index, redirect, component: componentPath, childrenList = [] } = e;
 
     let element: ReactNode = null;
-    if (redirect) {
-      element = <Redirect redirect={redirect}></Redirect>;
-    }
+    if (redirect) element = <Redirect redirect={redirect}></Redirect>;
     if (componentPath) {
       const Component = getLazyLoad(componentPath);
-
       element = (
         <Suspense fallback={<Loading full />}>
           <Component title={title}>{childrenList.length ? <Outlet /> : null}</Component>

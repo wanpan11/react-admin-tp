@@ -8,14 +8,14 @@ import store from "@src/store/store";
 import GLOBAL_ROUTERS, { getRoute } from "@src/router/config";
 
 const AppRouter = observer(() => {
-  const { darkMode, getRouteAndMenu } = store;
+  const { darkMode, routeAndMenu } = store;
 
   const currentThem = {
     algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
-    token: {
-      colorPrimary,
-    },
+    token: { colorPrimary },
   };
+
+  console.log(routeAndMenu.router);
 
   return (
     <div className={darkMode ? "dark" : ""}>
@@ -25,7 +25,7 @@ const AppRouter = observer(() => {
             <Routes>
               {getRoute(GLOBAL_ROUTERS.LOGIN_PAGE)}
               {getRoute(GLOBAL_ROUTERS.NOT_FOUND_PAGE)}
-              {getRoute(getRouteAndMenu.router)}
+              {getRoute(routeAndMenu.router)}
             </Routes>
           </ConfigProvider>
         </BrowserRouter>

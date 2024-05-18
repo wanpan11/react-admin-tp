@@ -6,36 +6,38 @@ import { getLocalStorage } from "@src/utils";
 export class MobxStore {
   darkMode = false;
 
-  isLogin = getLocalStorage(LOCAL_TOKEN) ? true : false;
+  isLogin = !!getLocalStorage(LOCAL_TOKEN);
 
   userInfo = getLocalStorage(LOCAL_USER_INFO);
 
+  // 动态路由数据
   dynamicRoutes: Route[] = getLocalStorage(LOCAL_DYNAMIC_ROUTER, "json") || [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  // 获取菜单、路由
-  get getRouteAndMenu() {
-    console.log("getRouteMenu");
-
+  // 获取动态路由、路由菜单
+  get routeAndMenu() {
     return transformRouter(this.dynamicRoutes);
   }
 
-  // 获取面包屑
+  // 获取页面路由地址
   get routerPathMapping() {
-    return getPathRecord(this.getRouteAndMenu.router);
+    return getPathRecord(this.routeAndMenu.router);
   }
 
   setTheme(boolean: boolean) {
     this.darkMode = boolean;
   }
 
-  setLogin({ login, userInfo, router = [] }: { login: boolean; userInfo?: any; router?: Route[] }) {
+  setLogin({ login, userInfo }: { login: boolean; userInfo?: any }) {
     this.isLogin = login;
     this.userInfo = userInfo;
-    this.dynamicRoutes = router;
+  }
+
+  setDynamicRoutes(routes: Route[]) {
+    this.dynamicRoutes = routes;
   }
 }
 

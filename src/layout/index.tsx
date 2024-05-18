@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Layout } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import BreadCrumb from "@src/components/BreadCrumb";
 import MobxContext from "@src/store/context";
@@ -62,24 +62,17 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
 
 const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const {
     isLogin,
     userInfo,
+    routeAndMenu: { routerMenu },
     routerPathMapping,
-    getRouteAndMenu: { routerMenu },
   } = store;
 
   // 获取当前选中 menu ID
   const [tabId, menuId, sideMenu] = useMemo(() => {
     return menuHandle(routerMenu, pathname);
   }, [pathname, routerMenu]);
-
-  useEffect(() => {
-    if (!isLogin) {
-      navigate("/login");
-    }
-  }, [isLogin, navigate]);
 
   return (
     <Layout>
