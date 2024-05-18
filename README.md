@@ -1,8 +1,7 @@
 ## 📊 react-admin-tp 后台管理系统项目模版
 
-react-typescript 后台管理系统项目模版、内置动态嵌套路由、数据 mock、tailwindcss、🌙 暗夜模式、动态面包屑、自定义 form 组件。<br/>
+react-typescript 后台管理系统项目模版、内置动态嵌套路由、数据 mock、tailwindcss、🌙 暗夜模式、动态面包屑、自定义 form 组件。 [EN](./README-EN.md)
 
-[![Security Status](https://www.murphysec.com/platform3/v31/badge/1673294894238294016.svg)](https://www.murphysec.com/console/report/1673294894200545280/1673294894238294016)<br/>
 ![Static Badge](https://img.shields.io/badge/react-black?logo=react&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/tailwindcss-black?logo=tailwindcss&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/antdesign-black?logo=antdesign&style=for-the-badge)
@@ -10,7 +9,7 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 ![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/vite-black?logo=vite&style=for-the-badge)
 
-<image src='./src/assets/images/admin.png' style='border-radius:10px' >
+<image src='./src/assets/images/admin.png' style='border-radius:10px' height='400px' >
 
 ### 🏠 项目概览
 
@@ -29,14 +28,16 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 - ant-design
 - mobx
 
-#### scripts 打包相关
+#### 打包/开发相关
 
 - 打包入口文件
   - webpack.config.js
   - vite.config.ts
 - xxxx.config.js 不同环境打包配置
+- 请求代理 devServer.proxy
+- src\api\request.ts 可添加请求拦截相关处理逻辑
 
-#### env 环境变量
+#### 环境变量
 
 - .env 全局环境变量
 - .env.xxxx 动态环境变量
@@ -46,11 +47,19 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 环境变量文件 你的环境名.config.js .env.你的环境名 即可自动加载
 ```
 
+#### 动态路由配置
+
+```ts
+// 动态路由配置参考
+GLOBAL_ROUTERS.APP_PAGE;
+
+// 调用这方法设置你的动态路由配置
+store.setDynamicRoutes(routerConfig);
+```
+
 ---
 
 ### 项目结构
-
-#### src
 
 - api 接口相关
 - assets 资源文件
@@ -64,17 +73,12 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 - types
 - utils
 
----
+> 需要安装 ESLint、Prettier、Tailwind CSS IntelliSense 插件（墙裂推荐安装）<br/>
+> 环境变量和打包配置动态加载 <br/>
+> 安装完项目依赖后再提交代码，保持项目整洁 <br/>
+> homepage 相关文件、构建指令皆可删除
 
-> 注意
-
-- 需要安装 ESLint、Prettier、Tailwind CSS IntelliSense
-  插件（墙裂推荐安装）
-- 环境变量和打包配置动态加载
-- 安装完项目依赖后再提交代码，保持项目整洁
-- homepage 相关文件、构建指令皆可删除
-
-安装依赖
+#### 安装依赖
 
 ```
 // 没有pnpm的话先安装pnpm
@@ -84,7 +88,7 @@ npm i pnpm -g
 pnpm i
 ```
 
-项目启动
+#### 项目启动
 
 ```
 // dev
@@ -94,11 +98,6 @@ pnpm start
 pnpm build
 ```
 
-> 打包/开发相关
+#### 如有问题请提 issue [仓库地址 issue☹ star★](https://github.com/wanpan11/react-admin-tp)
 
-- 请求代理 devServer.proxy
-- src\api\request.ts 可添加请求拦截相关处理逻辑
-
-> 如有问题请提 issue
-
-[仓库地址 issue☹ star★](https://github.com/wanpan11/react-admin-tp)
+[![Security Status](https://www.murphysec.com/platform3/v31/badge/1673294894238294016.svg)](https://www.murphysec.com/console/report/1673294894200545280/1673294894238294016)
