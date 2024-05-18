@@ -65,7 +65,7 @@ npm i pnpm -g
 pnpm i
 ```
 
-### run start
+### run
 
 ```
 // dev
@@ -73,6 +73,17 @@ pnpm start
 
 // pro
 pnpm build
+```
+
+### dynamic router
+
+```ts
+// Configuration reference
+GLOBAL_ROUTERS.APP_PAGE
+
+// set your router config
+store.setDynamicRoutes(routerConfig)
+
 ```
 
 > If you have any questions, please raise them issue

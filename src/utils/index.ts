@@ -1,77 +1,3 @@
-import { nanoid } from "nanoid";
-
-export function transformRouter(routers: Route[]) {
-  const router: Route[] = [];
-  const routerMenu: MenuItem[] = [];
-
-  function transform(arr: Route[], router: Route[], menu: MenuItem[], partePath = "") {
-    arr.forEach(element => {
-      const id = nanoid();
-      const { path, index, title, childrenList, notMenu, icon } = element;
-
-      let newPath = path as string;
-
-      // 多级嵌套 补全 /
-      if (path?.startsWith("/") && childrenList?.length) {
-        newPath = (path + "/").replace(/\/\/+/g, "/");
-      }
-
-      const routeObj = {
-        ...element,
-        id,
-        path: index ? partePath : newPath,
-        childrenList: [],
-      };
-
-      const menuObj = {
-        key: id,
-        path: index ? partePath : (path as string),
-        label: title ? title : "",
-        icon: icon,
-        children: [],
-      };
-
-      router.push(routeObj);
-      if (!notMenu) {
-        menu.push(menuObj);
-      }
-
-      if (childrenList?.length) {
-        transform(childrenList, routeObj.childrenList, menuObj.children, newPath);
-      }
-    });
-  }
-  transform(routers, router, routerMenu);
-
-  return { router, routerMenu: routerMenu[0].children as MenuItem[] };
-}
-
-export const getPathRecord = (routes: Route[]) => {
-  const obj: { [key: string]: string } = {};
-
-  const getBreadCrumbConf = (arr: Route[], parentTitle = "") => {
-    arr.forEach(e => {
-      let newTitle = "";
-      const { path, title = "", childrenList = [] } = e;
-
-      newTitle = parentTitle ? `${parentTitle}${title ? " / " + title : ""}` : title;
-
-      if (path) {
-        if (!obj[path] || obj[path].split("/").length < newTitle.split("/").length) {
-          obj[path] = newTitle;
-        }
-      }
-
-      if (childrenList.length) {
-        getBreadCrumbConf(childrenList, newTitle);
-      }
-    });
-  };
-  getBreadCrumbConf(routes);
-
-  return obj;
-};
-
 export function getFormData(obj: any) {
   const formData = new FormData();
 
@@ -168,7 +94,10 @@ export function toLocaleString(num: number) {
 export function number2Chn(num: number) {
   if (!num) return "-";
 
-  const param: { value: string | number; unit: string } = { value: num, unit: "" };
+  const param: { value: string | number; unit: string } = {
+    value: num,
+    unit: "",
+  };
   const k = 10000;
   const sizes = ["", "万", "亿", "万亿"];
   let i = 0;
@@ -242,4 +171,9 @@ export function convertMinutesToHoursMinutesAndDays(minutes: number) {
 export const getUrlName = (url = "") => {
   const arr = url.split("/");
   return arr[arr.length - 1];
+};
+
+export const getLocalStorage = (key: string, type?: "json") => {
+  const data = localStorage.getItem(key) || undefined;
+  return data && type ? JSON.parse(data) : data;
 };

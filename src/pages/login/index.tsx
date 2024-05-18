@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Layout, Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { loginReq } from "@src/api/account";
 import type { AccountApi } from "@src/types/api";
 import store from "@src/store/store";
 import lessStyle from "./index.module.less";
+import GLOBAL_ROUTERS from "@src/router/config";
+import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "@src/config";
+import { getLocalStorage } from "@src/utils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,12 +16,22 @@ const Login = () => {
   const onFinish = async (values: AccountApi.Login) => {
     loadingHandle(true);
     const res = await loginReq(values);
+
+    localStorage.setItem(LOCAL_TOKEN, res.data.token);
+    localStorage.setItem(LOCAL_USER_INFO, JSON.stringify(res.data.userInfo));
+    localStorage.setItem(LOCAL_DYNAMIC_ROUTER, JSON.stringify(GLOBAL_ROUTERS.APP_PAGE));
+
+    // 设置登录态 用户信息 动态路由配置
+    store.setLogin({ login: true, userInfo: res.data.userInfo });
+    store.setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
+
     loadingHandle(false);
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("userInfo", JSON.stringify(res.data.userInfo));
-    store.setLogin(true, res.data.userInfo);
     navigate("/");
   };
+
+  useEffect(() => {
+    if (getLocalStorage(LOCAL_TOKEN)) navigate("/");
+  }, [navigate]);
 
   return (
     <Layout className={lessStyle.content}>

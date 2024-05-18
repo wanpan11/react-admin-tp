@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Layout } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import BreadCrumb from "@src/components/BreadCrumb";
 import MobxContext from "@src/store/context";
@@ -62,24 +62,17 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
 
 const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const {
     isLogin,
     userInfo,
-    routerPath,
-    getRouteMenu: { routerMenu },
+    routeAndMenu: { routerMenu },
+    routerPathMapping,
   } = store;
 
   // 获取当前选中 menu ID
   const [tabId, menuId, sideMenu] = useMemo(() => {
     return menuHandle(routerMenu, pathname);
   }, [pathname, routerMenu]);
-
-  useEffect(() => {
-    if (!isLogin) {
-      navigate("/login");
-    }
-  }, [isLogin, navigate]);
 
   return (
     <Layout>
@@ -90,7 +83,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
 
         <Layout>
           <Content className="m-3 mb-0 mt-0">
-            <BreadCrumb routerPath={routerPath} />
+            <BreadCrumb routerPath={routerPathMapping} />
 
             <div className="h-[calc(100%-4.5rem)] overflow-auto">
               <MobxContext.Provider value={{ isLogin, userInfo }}>{children}</MobxContext.Provider>

@@ -1,34 +1,43 @@
 import { makeAutoObservable } from "mobx";
-import routers from "@src/router/config";
-import { getPathRecord } from "@src/utils/index";
-import { transformRouter } from "@src/utils/index";
+import { getPathRecord, transformRouter } from "@src/router/config";
+import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "@src/config";
+import { getLocalStorage } from "@src/utils";
 
 export class MobxStore {
   darkMode = false;
-  isLogin = localStorage.getItem("token") ? true : false;
-  userInfo: { account: string } | undefined = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo") as string) : undefined;
+
+  isLogin = !!getLocalStorage(LOCAL_TOKEN);
+
+  userInfo = getLocalStorage(LOCAL_USER_INFO);
+
+  // 动态路由数据
+  dynamicRoutes: Route[] = getLocalStorage(LOCAL_DYNAMIC_ROUTER, "json") || [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  // 获取菜单、路由
-  get getRouteMenu() {
-    return transformRouter(routers);
+  // 获取动态路由、路由菜单
+  get routeAndMenu() {
+    return transformRouter(this.dynamicRoutes);
   }
 
-  // 获取面包屑
-  get routerPath() {
-    return getPathRecord(this.getRouteMenu.router[0].childrenList!);
+  // 获取页面路由地址
+  get routerPathMapping() {
+    return getPathRecord(this.routeAndMenu.router);
   }
 
   setTheme(boolean: boolean) {
     this.darkMode = boolean;
   }
 
-  setLogin(val: boolean, userInfo?: { account: string }) {
-    this.isLogin = val;
+  setLogin({ login, userInfo }: { login: boolean; userInfo?: any }) {
+    this.isLogin = login;
     this.userInfo = userInfo;
+  }
+
+  setDynamicRoutes(routes: Route[]) {
+    this.dynamicRoutes = routes;
   }
 }
 
