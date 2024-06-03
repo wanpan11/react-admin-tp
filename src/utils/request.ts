@@ -18,7 +18,7 @@ export class Request {
     this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
       // 代理标识
       // const isHttp = config.url?.includes("http");
-      // if (process.env.ENV === "DEV" && !isHttp) {
+      // if (import.meta.env.MODE === "development" && !isHttp) {
       //   config.url = "/proxy" + config.url;
       // }
 
