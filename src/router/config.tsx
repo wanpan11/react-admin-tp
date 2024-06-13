@@ -169,10 +169,12 @@ export const getPathRecord = (routes: Route[]) => {
 
   const getBreadCrumbConf = (arr: Route[], parentTitle = "") => {
     arr.forEach(e => {
-      let newTitle = "";
       const { path, title = "", childrenList = [] } = e;
+      let newTitle = title;
 
-      newTitle = parentTitle ? `${parentTitle}${title ? " / " + title : ""}` : title;
+      if (parentTitle && title) {
+        newTitle = parentTitle.includes(title) ? parentTitle : `${parentTitle} / ${title}`;
+      }
 
       if (path) {
         if (!obj[path] || obj[path].split("/").length < newTitle.split("/").length) {
