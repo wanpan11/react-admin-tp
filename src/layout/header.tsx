@@ -4,8 +4,6 @@ import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import classnames from "classnames";
 import store from "@src/store/store";
-import dark_img from "@src/assets/images/dark.svg";
-import light_img from "@src/assets/images/light.svg";
 import lessStyle from "./index.module.less";
 
 const { Header } = Layout;
@@ -68,7 +66,7 @@ const MenuHeader = ({ tabId, tabList, darkMode, userInfo }: { tabId: string; tab
         <div className="mr-10 flex w-5 cursor-pointer items-center">
           {darkMode ? (
             <img
-              src={dark_img}
+              src="/dark.svg"
               className="w-full"
               alt="暗黑模式"
               onClick={() => {
@@ -77,7 +75,7 @@ const MenuHeader = ({ tabId, tabList, darkMode, userInfo }: { tabId: string; tab
             />
           ) : (
             <img
-              src={light_img}
+              src="/light.svg"
               className="w-full"
               alt="明亮模式"
               onClick={() => {
