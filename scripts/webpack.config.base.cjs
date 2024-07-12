@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const rootDir = path.resolve(__dirname, "../");
-const dynamicConf = require(`./${process.env.NODE_ENV}.config.cjs`); //  导入对应环境打包配置
+const dynamicConf = require(`./${process.env.NODE_ENV}.config.cjs`); //  加载对应环境打包配置
 console.log("NODE_ENV ===>", process.env.NODE_ENV);
 
 module.exports = {
@@ -59,7 +59,7 @@ module.exports = {
     alias: {
       "@src": path.resolve(rootDir, "./src"),
     },
-    extensions: [".ts", ".jsx", ".tsx", "..."], // 自动不全文件后缀
+    extensions: [".ts", ".jsx", ".tsx", "..."], // 自动补全文件后缀
   },
   plugins: [
     new webpack.ProgressPlugin(),
