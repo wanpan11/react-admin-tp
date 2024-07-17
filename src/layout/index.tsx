@@ -5,12 +5,18 @@ import { observer } from "mobx-react-lite";
 import BreadCrumb from "@src/components/BreadCrumb";
 import MobxContext from "@src/store/context";
 import store from "@src/store/store";
-import { colorPrimary, splitFlag } from "@src/config";
+import { COLOR_PRIMARY, SPLIT_FLAG } from "@src/config";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
 
 const { Content } = Layout;
 
+/**
+ * 处理路由菜单，根据当前路径匹配菜单项，并生成对应的tabId、menuId和侧边菜单。
+ * @param routerMenu 路由菜单数组，包含所有菜单项。
+ * @param pathname 当前页面的路径。
+ * @returns 返回一个包含tabId、menuId和侧边菜单的数组。
+ */
 function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, string, MenuItem[]] {
   let menuId = "";
   let parentStr = "";
@@ -19,7 +25,7 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
     if (arr.length < 0) return;
 
     arr.forEach(e => {
-      if (pathname.includes(e.path)) {
+      if (pathname.startsWith(e.path)) {
         parentStr = parent ? parent : `${e.key}`;
 
         if (!e.children?.length) {
@@ -30,7 +36,7 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
       let newParentStr = "";
       if (e.children?.length) {
         if (parent) {
-          newParentStr = `${parent + splitFlag + e.key}`;
+          newParentStr = `${parent + SPLIT_FLAG + e.key}`;
         } else {
           newParentStr = `${e.key}`;
         }
@@ -41,7 +47,7 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
   }
   getCurrentPathId(routerMenu);
 
-  const tabId = parentStr.split(splitFlag)?.[0] || `${routerMenu[0]?.key}`;
+  const tabId = parentStr.split(SPLIT_FLAG)?.[0] || `${routerMenu[0]?.key}`;
   const sider = routerMenu.filter(e => e.key === tabId)[0]?.children || [];
 
   function getSideMenu(arr: MenuItem[]): MenuItem[] {
@@ -77,7 +83,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
 
   const currentThem = {
     algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
-    token: { colorPrimary },
+    token: { colorPrimary: COLOR_PRIMARY },
   };
 
   return (
