@@ -5,7 +5,7 @@ import { Card, Button, Table, notification } from "antd";
 import { useRequest } from "ahooks";
 import { companyService } from "@src/api/setting";
 import type { CompanyApi } from "@src/types/api";
-import { defaultPageInfo } from "@src/config";
+import { DEFAULT_PAGE } from "@src/config";
 
 const filterInfo: FormItem[] = [{ name: "projectName", type: "input", label: "厂商名称" }];
 const editInfo: FormItem[] = [
@@ -51,7 +51,7 @@ const Company = () => {
   const [ModalOpen, ModalOpenHandle] = useState(false);
 
   const [searchInfo, searchInfoHandle] = useState<Record<string, any>>({});
-  const [pageInfo, pageInfoHandle] = useState(defaultPageInfo);
+  const [pageInfo, pageInfoHandle] = useState(DEFAULT_PAGE);
   const [editData, editDataHandle] = useState<any>(null);
 
   const { data, error, loading, run } = useRequest(companyService.list, {
@@ -63,7 +63,7 @@ const Company = () => {
   }
 
   const onSearch = (query: Record<string, any>) => {
-    run({ ...defaultPageInfo, ...query });
+    run({ ...DEFAULT_PAGE, ...query });
     searchInfoHandle(query);
   };
   const createOrEdit = async (value: CompanyApi.InsertReq) => {

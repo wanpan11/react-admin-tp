@@ -1,6 +1,6 @@
-export const colorPrimary = "#4096ff";
-export const defaultPageInfo = { pageNum: 1, pageSize: 10 };
-export const splitFlag = "@&@";
+export const COLOR_PRIMARY = "#4096ff";
+export const DEFAULT_PAGE = { pageNum: 1, pageSize: 10 };
+export const SPLIT_FLAG = "@&@";
 
 export const LOCAL_TOKEN = "LOCAL_TOKEN";
 export const LOCAL_USER_INFO = "LOCAL_USER_INFO";
