@@ -2,8 +2,6 @@ import path from "path";
 import { defineConfig, UserConfig } from "vite";
 import pak from "../package.json";
 
-console.log("[ `${pak.version}_${new Date().getTime()}` ] ===>", `${pak.version}_${new Date().getTime()}`);
-
 export default defineConfig(async ({ command, mode }) => {
   const { default: entryConfig } = await import(`./${mode}.config.js`);
 
