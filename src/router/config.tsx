@@ -122,7 +122,7 @@ export function transformRouter(routers: Route[]) {
 
   function transform(arr: Route[], router: Route[], menu: MenuItem[], partePath = "") {
     arr.forEach(element => {
-      const id = nanoid();
+      const key = nanoid();
       const { path, title, index, icon, notMenu, childrenList } = element;
 
       let newPath = path as string;
@@ -132,15 +132,15 @@ export function transformRouter(routers: Route[]) {
         newPath = (path + "/").replace(/\/\/+/g, "/");
       }
 
-      const routeObj = {
+      const routeObj: Route = {
         ...element,
-        id,
+        key,
         path: index ? partePath : newPath,
         childrenList: [],
       };
 
-      const menuObj = {
-        key: id,
+      const menuObj: MenuItem = {
+        key,
         path: index ? partePath : (path as string),
         label: title ? title : "",
         icon: iconMapping[icon],
@@ -151,12 +151,12 @@ export function transformRouter(routers: Route[]) {
       if (!notMenu) menu.push(menuObj);
 
       if (childrenList?.length) {
-        transform(childrenList, routeObj.childrenList, menuObj.children, newPath);
+        transform(childrenList, routeObj.childrenList!, menuObj.children!, newPath);
       }
     });
   }
-
   transform(routers, router, routerMenu);
+
   return { router, routerMenu: routerMenu[0]?.children as MenuItem[] };
 }
 
@@ -197,7 +197,7 @@ export const getPathRecord = (routes: Route[]) => {
 export const getRoute = (routers: Route[] | Route) => {
   const list = Array.isArray(routers) ? routers : [routers];
   return list.map(e => {
-    const { id = nanoid(), path, title, index, redirect, component: componentPath, childrenList = [] } = e;
+    const { key = nanoid(), path, title, index, redirect, component: componentPath, childrenList = [] } = e;
 
     let element: ReactNode = null;
     if (redirect) element = <Redirect redirect={redirect}></Redirect>;
@@ -211,9 +211,9 @@ export const getRoute = (routers: Route[] | Route) => {
     }
 
     const jsx = index ? (
-      <Route key={id} element={element} index></Route>
+      <Route key={key} element={element} index></Route>
     ) : (
-      <Route key={id} element={element} path={path}>
+      <Route key={key} element={element} path={path}>
         {childrenList.length ? getRoute(childrenList) : undefined}
       </Route>
     );

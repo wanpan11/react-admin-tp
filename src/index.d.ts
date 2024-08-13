@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 interface PathRoute {
-  id?: string;
+  key?: string;
   path: string;
   title?: string;
   index?: boolean;
@@ -11,7 +11,7 @@ interface PathRoute {
   childrenList?: Route[];
 }
 interface IndexRoute {
-  id?: string;
+  key?: string;
   path?: string;
   title?: string;
   index: boolean;
@@ -30,21 +30,22 @@ interface PageProps {
 interface MenuItem {
   key: string;
   path: string;
-  label: string | JSX.Element;
+  label: string | ReactNode;
+  icon?: ReactNode;
   children?: MenuItem[];
 }
 interface FormItem {
   name: string | (number | string)[];
-  label?: string | JSX.Element;
+  label?: string | ReactNode;
   placeholder?: string;
   initialValue?: unknown;
   rule?: any;
   hide?: boolean;
   disable?: boolean;
-  extra?: string | JSX.Element;
+  extra?: string | ReactNode;
   type: "input" | "numberInput" | "select" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
   // 特有属性
-  rightNode?: JSX.Element;
+  rightNode?: ReactNode;
   mode?: "multiple";
   optionType?: "default" | "button";
   maxLength?: number;
