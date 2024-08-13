@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 interface PathRoute {
-  key?: string;
+  key?: string | number;
   path: string;
   title?: string;
   index?: boolean;
@@ -11,7 +11,7 @@ interface PathRoute {
   childrenList?: Route[];
 }
 interface IndexRoute {
-  key?: string;
+  key?: string | number;
   path?: string;
   title?: string;
   index: boolean;
@@ -28,7 +28,7 @@ interface PageProps {
 }
 
 interface MenuItem {
-  key: string;
+  key: string | number;
   path: string;
   label: string | ReactNode;
   icon?: ReactNode;
