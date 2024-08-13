@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 require("../env/env.cjs"); // 导入对应环境变量
+const pak = require("../package.json");
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -68,6 +69,7 @@ module.exports = {
       title: dynamicConf.title,
       template: path.resolve(rootDir, "./template/index.html"),
       favicon: path.resolve(rootDir, "./template/favicon.svg"),
+      meta: { version: `${pak.version}_${new Date().getTime()}` },
     }),
     // css 分离
     new MiniCssExtractPlugin({
