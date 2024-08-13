@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[913],{8913:(e,s,t)=>{t.r(s),t.d(s,{default:()=>a});var c=t(3295),i=t(8354),l=t(6106);const a=({title:e})=>(0,l.jsx)("div",{children:(0,l.jsx)(c.A,{title:e,children:(0,l.jsx)(i.A,{active:!0})})})}}]);
