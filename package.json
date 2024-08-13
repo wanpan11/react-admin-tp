@@ -1,6 +1,6 @@
 {
   "name": "react-admin-tp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react-ts 后台管理系统项目模版内置菜单路由、状态管理多环境打包等工具开箱即用",
   "main": "index.js",
   "type": "module",
