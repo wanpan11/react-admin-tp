@@ -1,11 +1,12 @@
 import { useMemo } from "react";
 import { ConfigProvider, Layout, theme } from "antd";
-import { Link, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import BreadCrumb from "@src/components/BreadCrumb";
-import MobxContext from "@src/store/context";
-import store from "@src/store/store";
-import { COLOR_PRIMARY, SPLIT_FLAG } from "@src/config";
+import { Link, useLocation } from "react-router-dom";
+
+import BreadCrumb from "&src/components/BreadCrumb";
+import { COLOR_PRIMARY, SPLIT_FLAG } from "&src/config";
+import MobxContext from "&src/store/context";
+import store from "&src/store/store";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
 

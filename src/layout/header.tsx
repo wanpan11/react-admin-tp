@@ -1,11 +1,12 @@
-import { Layout, Avatar, Dropdown } from "antd";
-import type { MenuProps } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Avatar, Dropdown, Layout } from "antd";
+import type { MenuProps } from "antd";
 import classnames from "classnames";
-import store from "@src/store/store";
-import dark_img from "@src/assets/images/dark.svg";
-import light_img from "@src/assets/images/light.svg";
+import { useNavigate } from "react-router-dom";
+
+import dark_img from "&src/assets/images/dark.svg";
+import light_img from "&src/assets/images/light.svg";
+import store from "&src/store/store";
 import lessStyle from "./index.module.less";
 
 const { Header } = Layout;

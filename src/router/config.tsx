@@ -1,11 +1,12 @@
-import { nanoid } from "nanoid";
-import { ReactNode, Suspense, lazy } from "react";
+import { lazy, ReactNode, Suspense } from "react";
 import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
-import Redirect from "@src/components/Redirect";
-import Loading from "@src/components/Loading";
+import { nanoid } from "nanoid";
 import { Outlet, Route } from "react-router-dom";
 
-const getLazyLoad = (url: string) => lazy(() => import(`@src/pages${url}`));
+import Loading from "&src/components/Loading";
+import Redirect from "&src/components/Redirect";
+
+const getLazyLoad = (url: string) => lazy(() => import(`&src/pages${url}`));
 
 // 菜单图标映射
 const iconMapping: Record<string, ReactNode> = {

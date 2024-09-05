@@ -58,7 +58,7 @@ module.exports = {
   // 模块解析
   resolve: {
     alias: {
-      "@src": path.resolve(rootDir, "./src"),
+      "&src": path.resolve(rootDir, "./src"),
     },
     extensions: [".ts", ".jsx", ".tsx", "..."], // 自动补全文件后缀
   },

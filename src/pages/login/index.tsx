@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Card, Layout, Button, Form, Input } from "antd";
+import { Button, Card, Form, Input, Layout } from "antd";
 import { useNavigate } from "react-router-dom";
-import { loginReq } from "@src/api/account";
-import type { AccountApi } from "@src/types/api";
-import store from "@src/store/store";
+
+import { loginReq } from "&src/api/account";
+import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "&src/config";
+import GLOBAL_ROUTERS from "&src/router/config";
+import store from "&src/store/store";
+import type { AccountApi } from "&src/types/api";
+import { getLocalStorage } from "&src/utils";
 import lessStyle from "./index.module.less";
-import GLOBAL_ROUTERS from "@src/router/config";
-import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "@src/config";
-import { getLocalStorage } from "@src/utils";
 
 const { setLogin, setDynamicRoutes } = store;
 

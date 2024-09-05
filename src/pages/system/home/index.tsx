@@ -1,4 +1,4 @@
-import { Skeleton, Card } from "antd";
+import { Card, Skeleton } from "antd";
 
 const Home = ({ title }: PageProps) => {
   return (

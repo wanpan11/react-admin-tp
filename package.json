@@ -26,6 +26,7 @@
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
+    "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
     "@types/mockjs": "^1.0.10",
     "@types/node": "^18.19.24",
     "@types/react": "^18.2.66",

@@ -1,5 +1,6 @@
-import { Modal, FormInstance } from "antd";
 import { memo, useRef } from "react";
+import { FormInstance, Modal } from "antd";
+
 import FormList from "../FormList";
 
 interface FormModalProps {

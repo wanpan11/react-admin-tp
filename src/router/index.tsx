@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import ErrorBoundary from "@src/components/ErrorBoundary";
-import Error from "@src/components/Error";
-import store from "@src/store/store";
-import GLOBAL_ROUTERS, { getRoute } from "@src/router/config";
+import { BrowserRouter, Routes } from "react-router-dom";
+
+import Error from "&src/components/Error";
+import ErrorBoundary from "&src/components/ErrorBoundary";
+import GLOBAL_ROUTERS, { getRoute } from "&src/router/config";
+import store from "&src/store/store";
 
 const AppRouter = observer(() => {
   return (

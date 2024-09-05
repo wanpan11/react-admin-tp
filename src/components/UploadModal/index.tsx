@@ -1,7 +1,8 @@
 import { memo, useState } from "react";
+import { InboxOutlined } from "@ant-design/icons";
 import { notification, Upload } from "antd";
 import type { UploadProps } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
+
 import FormModal from "../FormModal";
 
 const { Dragger } = Upload;

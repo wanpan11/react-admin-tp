@@ -1,7 +1,8 @@
 import { makeAutoObservable } from "mobx";
-import { getPathRecord, transformRouter } from "@src/router/config";
-import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "@src/config";
-import { getLocalStorage } from "@src/utils";
+
+import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "&src/config";
+import { getPathRecord, transformRouter } from "&src/router/config";
+import { getLocalStorage } from "&src/utils";
 
 export class MobxStore {
   darkMode = false;

@@ -1,4 +1,4 @@
-import { Input, Select, Radio, DatePicker, Switch, InputNumber, Checkbox } from "antd";
+import { Checkbox, DatePicker, Input, InputNumber, Radio, Select, Switch } from "antd";
 
 const { RangePicker } = DatePicker;
 
