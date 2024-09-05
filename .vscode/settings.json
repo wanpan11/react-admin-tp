@@ -5,6 +5,7 @@
     "cssnano",
     "datetime",
     "tailwindcss",
-    "unocss"
+    "unocss",
+    "ianvs"
   ]
 }

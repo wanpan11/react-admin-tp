@@ -1,9 +1,10 @@
-import { Layout, Avatar, Dropdown } from "antd";
-import type { MenuProps } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Avatar, Dropdown, Layout } from "antd";
+import type { MenuProps } from "antd";
 import classnames from "classnames";
-import store from "@src/store/store";
+import { useNavigate } from "react-router-dom";
+
+import store from "~src/store/store";
 import lessStyle from "./index.module.less";
 
 const { Header } = Layout;

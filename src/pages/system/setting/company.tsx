@@ -1,11 +1,12 @@
 import { useState } from "react";
-import FormFilter from "@src/components/FormFilter";
-import FormModal from "@src/components/FormModal";
-import { Card, Button, Table, notification } from "antd";
 import { useRequest } from "ahooks";
-import { companyService } from "@src/api/setting";
-import type { CompanyApi } from "@src/types/api";
-import { DEFAULT_PAGE } from "@src/config";
+import { Button, Card, notification, Table } from "antd";
+
+import { companyService } from "~src/api/setting";
+import FormFilter from "~src/components/FormFilter";
+import FormModal from "~src/components/FormModal";
+import { DEFAULT_PAGE } from "~src/config";
+import type { CompanyApi } from "~src/types/api";
 
 const filterInfo: FormItem[] = [{ name: "projectName", type: "input", label: "厂商名称" }];
 const editInfo: FormItem[] = [

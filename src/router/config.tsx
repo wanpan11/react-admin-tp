@@ -1,9 +1,10 @@
-import { nanoid } from "nanoid";
-import { ComponentType, ReactNode, Suspense, lazy } from "react";
+import { ComponentType, lazy, ReactNode, Suspense } from "react";
 import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
-import Redirect from "@src/components/Redirect";
-import Loading from "@src/components/Loading";
+import { nanoid } from "nanoid";
 import { Outlet, Route } from "react-router-dom";
+
+import Loading from "~src/components/Loading";
+import Redirect from "~src/components/Redirect";
 
 const modules = import.meta.glob<{ default: ComponentType<any> }>("../pages/**/*.tsx");
 const getLazyLoad = (url: string) => lazy(modules[`../pages${url}.tsx`]);

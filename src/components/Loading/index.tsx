@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Spin, Layout } from "antd";
+import { Layout, Spin } from "antd";
 import classnames from "classnames";
 
 interface LoadingProps {

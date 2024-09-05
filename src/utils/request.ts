@@ -1,6 +1,6 @@
-import axios from "axios";
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig, AxiosError } from "axios";
 import { notification } from "antd";
+import axios from "axios";
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 export const BAD_REQ_CODE = 911;
 

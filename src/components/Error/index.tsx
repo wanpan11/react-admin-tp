@@ -1,5 +1,6 @@
 import { memo } from "react";
-import error from "@src/assets/images/error.png";
+
+import error from "~src/assets/images/error.png";
 
 const Error = () => {
   return (
