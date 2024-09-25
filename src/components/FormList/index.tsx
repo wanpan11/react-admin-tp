@@ -73,7 +73,7 @@ const FormList = (props: FormListProps) => {
         ) : (
           <Form.Item
             key={typeof e.name === "string" ? e.name : e.name.join("_")}
-            name={e.name}
+            name={e.name ? e.name : undefined}
             label={e.label}
             extra={e.extra}
             rules={[e.rule]}
