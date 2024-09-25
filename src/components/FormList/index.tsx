@@ -3,14 +3,9 @@ import { Button, Form, FormInstance, FormProps } from "antd";
 
 import { getFormElement } from "../tools";
 
-export interface FormListProps {
-  style?: any;
-  colon?: boolean;
-  className?: string;
-  layout?: FormProps["layout"];
+export interface FormListProps extends Pick<FormProps, "form" | "colon" | "className" | "style" | "layout" | "labelAlign" | "onValuesChange"> {
   labelCol?: number;
   wrapperCol?: number;
-  form?: FormProps["form"];
 
   // 搜索
   searchBtn?: null | ReactElement;
@@ -19,10 +14,9 @@ export interface FormListProps {
   submitNode?: ReactElement;
 
   itemInfo: FormItem[];
-  initialValues?: Record<string, any>;
+  initialValues?: FormProps["initialValues"];
   onOk?: FormProps["onFinish"];
   onForm?: (form: FormInstance) => void;
-  onValuesChange?: FormProps["onValuesChange"];
 }
 
 /**
@@ -31,22 +25,19 @@ export interface FormListProps {
  */
 const FormList = (props: FormListProps) => {
   const {
-    style,
-    colon,
     form,
-    layout,
-    searchBtn,
-    submitBtn = true,
-    submitNode,
     itemInfo,
-    className,
     labelCol,
     wrapperCol,
     initialValues,
 
+    searchBtn,
+    submitBtn = true,
+    submitNode,
+
     onOk,
     onForm,
-    onValuesChange,
+    ...restProps
   } = props;
 
   const [insideForm] = Form.useForm();
@@ -69,49 +60,43 @@ const FormList = (props: FormListProps) => {
   }, []);
 
   return (
-    <div className={className}>
-      <Form
-        form={form ? form : insideForm}
-        style={style}
-        colon={colon}
-        layout={layout}
-        labelAlign="right"
-        labelCol={labelCol ? { span: labelCol } : undefined}
-        wrapperCol={wrapperCol ? { span: wrapperCol } : undefined}
-        onFinish={onOk}
-        onValuesChange={onValuesChange}
-      >
-        {itemInfo.map(e =>
-          e.hide ? null : e.type === "blockNode" ? (
-            <span key={typeof e.name === "string" ? e.name : e.name.join("_")}>{e.label}</span>
-          ) : (
-            <Form.Item
-              key={typeof e.name === "string" ? e.name : e.name.join("_")}
-              name={e.name}
-              label={e.label}
-              extra={e.extra}
-              rules={[e.rule]}
-              valuePropName={e.type === "switch" ? "checked" : "value"}
-              initialValue={e.type === "radio" ? e.options?.[0].value : e.type === "switch" ? true : undefined}
-            >
-              {getFormElement(e.type, e)}
-            </Form.Item>
-          )
-        )}
+    <Form
+      form={form ? form : insideForm}
+      labelCol={labelCol ? { span: labelCol } : undefined}
+      wrapperCol={wrapperCol ? { span: wrapperCol } : undefined}
+      onFinish={onOk}
+      {...restProps}
+    >
+      {itemInfo.map(e =>
+        e.hide ? null : e.type === "blockNode" ? (
+          <span key={typeof e.name === "string" ? e.name : e.name.join("_")}>{e.label}</span>
+        ) : (
+          <Form.Item
+            key={typeof e.name === "string" ? e.name : e.name.join("_")}
+            name={e.name}
+            label={e.label}
+            extra={e.extra}
+            rules={[e.rule]}
+            valuePropName={e.type === "switch" ? "checked" : "value"}
+            initialValue={e.type === "radio" ? e.options?.[0].value : e.type === "switch" ? true : undefined}
+          >
+            {getFormElement(e.type, e)}
+          </Form.Item>
+        )
+      )}
 
-        {searchBtn}
+      {searchBtn}
 
-        {submitBtn ? (
-          submitNode ? (
-            submitNode
-          ) : (
-            <Button htmlType="submit" type="primary" block>
-              保存
-            </Button>
-          )
-        ) : null}
-      </Form>
-    </div>
+      {submitBtn ? (
+        submitNode ? (
+          submitNode
+        ) : (
+          <Button htmlType="submit" type="primary" block>
+            保存
+          </Button>
+        )
+      ) : null}
+    </Form>
   );
 };
 
