@@ -1,43 +1,25 @@
 import { memo, useRef } from "react";
 import { FormInstance, Modal } from "antd";
 
-import FormList from "../FormList";
+import FormList, { FormListProps } from "../FormList";
 
-interface FormModalProps {
+interface FormModalProps
+  extends Pick<FormListProps, "form" | "itemInfo" | "wrapperCol" | "labelCol" | "className" | "initialValues" | "onOk" | "onForm" | "onValuesChange"> {
   open?: boolean;
   title?: string;
   noFooter?: boolean;
   maskClosable?: boolean;
   onCancel?: () => void;
-
-  editInfo: FormItem[];
-  labelCol?: number;
-  wrapperCol?: number;
-  initialValues?: Record<string, any>;
-  onOk?: (value: Record<string, any>) => void;
-  onForm?: (form: FormInstance) => void;
-  onValuesChange?: (value: Record<string, any>) => void;
 }
 
-const FormModal = ({
-  open,
-  title,
-  noFooter,
-  maskClosable = true,
-  onCancel,
-  editInfo,
-  wrapperCol = 12,
-  labelCol = 5,
-  initialValues,
-  onOk,
-  onForm,
-  onValuesChange,
-}: FormModalProps) => {
+const FormModal = (props: FormModalProps) => {
+  const { open, title, noFooter, maskClosable = true, onCancel, wrapperCol = 12, labelCol = 5, onForm, ...resetProps } = props;
+
   const formInstance = useRef<FormInstance<any> | null>(null);
 
   const getForm = (form: FormInstance<any>) => {
     formInstance.current = form;
-    onForm && onForm(form);
+    onForm?.(form);
   };
 
   return (
@@ -60,16 +42,7 @@ const FormModal = ({
       footer={noFooter ? null : undefined}
     >
       <div className="pt-6">
-        <FormList
-          submitBtn={false}
-          itemInfo={editInfo}
-          labelCol={labelCol}
-          wrapperCol={wrapperCol}
-          initialValues={initialValues}
-          onOk={onOk}
-          onForm={getForm}
-          onValuesChange={onValuesChange}
-        />
+        <FormList submitBtn={false} labelCol={labelCol} wrapperCol={wrapperCol} onForm={getForm} {...resetProps} />
       </div>
     </Modal>
   );

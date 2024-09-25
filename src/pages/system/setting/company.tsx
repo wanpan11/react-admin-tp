@@ -9,7 +9,7 @@ import { DEFAULT_PAGE } from "~src/config";
 import type { CompanyApi } from "~src/types/api";
 
 const filterInfo: FormItem[] = [{ name: "projectName", type: "input", label: "厂商名称" }];
-const editInfo: FormItem[] = [
+const itemInfo: FormItem[] = [
   {
     name: "category",
     label: "类型",
@@ -49,24 +49,23 @@ const editInfo: FormItem[] = [
 ];
 
 const Company = () => {
-  const [ModalOpen, ModalOpenHandle] = useState(false);
-
   const [searchInfo, searchInfoHandle] = useState<Record<string, any>>({});
   const [pageInfo, pageInfoHandle] = useState(DEFAULT_PAGE);
-  const [editData, editDataHandle] = useState<any>(null);
 
-  const { data, error, loading, run } = useRequest(companyService.list, {
-    defaultParams: [{ ...pageInfo, ...searchInfo }],
-    loadingDelay: 300,
+  const { data, error, loading } = useRequest(() => companyService.list({ ...pageInfo, ...searchInfo }), {
+    refreshDeps: [searchInfo, pageInfo],
   });
   if (error) {
     console.error("companyService.list ===> ", error);
   }
 
   const onSearch = (query: Record<string, any>) => {
-    run({ ...DEFAULT_PAGE, ...query });
     searchInfoHandle(query);
+    pageInfoHandle(DEFAULT_PAGE);
   };
+
+  const [ModalOpen, ModalOpenHandle] = useState(false);
+  const [editData, editDataHandle] = useState<any>(null);
   const createOrEdit = async (value: CompanyApi.InsertReq) => {
     try {
       const res = await companyService.insert(value);
@@ -131,7 +130,7 @@ const Company = () => {
 
   return (
     <div>
-      <FormFilter loading={loading} filterInfo={filterInfo} onSubmit={onSearch} reset />
+      <FormFilter loading={loading} filterInfo={filterInfo} onOk={onSearch} reset />
 
       <Card className="mt-3">
         <div className="mb-2">
@@ -145,13 +144,23 @@ const Company = () => {
           </Button>
         </div>
 
-        <Table dataSource={data?.data.list} columns={columns} rowKey="id" loading={loading} />
+        <Table
+          rowKey="id"
+          columns={columns}
+          loading={loading}
+          dataSource={data?.data.list}
+          pagination={{
+            onChange: (pageNum, pageSize) => {
+              pageInfoHandle({ pageNum, pageSize });
+            },
+          }}
+        />
       </Card>
 
       <FormModal
-        open={ModalOpen}
         title="厂商编辑"
-        editInfo={editInfo}
+        open={ModalOpen}
+        itemInfo={itemInfo}
         initialValues={editData}
         onCancel={() => {
           clearEdit();

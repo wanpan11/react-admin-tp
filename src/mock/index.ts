@@ -3,11 +3,13 @@ import { nanoid } from "nanoid";
 
 Mock.setup({ timeout: 1000 });
 
-Mock.mock(/company\/list/, () => {
+Mock.mock(/company\/list/, data => {
+  console.log("[ Mock company/list ] ===>", data);
+
   return Mock.mock({
     code: 1,
     data: {
-      "list|5": [
+      "list|15": [
         {
           id: "@id",
           "category|1-3": 1,
