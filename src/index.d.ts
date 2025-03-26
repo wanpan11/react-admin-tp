@@ -61,6 +61,8 @@ interface AxiosRes<T> {
   data: T;
 }
 
+type AnyObject = Record<PropertyKey, any>;
+
 declare module "*.module.scss" {
   const classes: { [key: string]: string };
   export default classes;
