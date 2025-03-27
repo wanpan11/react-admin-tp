@@ -5,6 +5,9 @@
     "cssnano",
     "datetime",
     "ianvs",
+    "rsbuild",
+    "rsdoctor",
+    "rspack",
     "tailwindcss",
     "unocss"
   ]
