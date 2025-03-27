@@ -1,5 +1,6 @@
 import path from "path";
 import { defineConfig, UserConfig } from "vite";
+
 import pak from "../package.json";
 
 export default defineConfig(async ({ command, mode }) => {
@@ -29,7 +30,7 @@ export default defineConfig(async ({ command, mode }) => {
     envDir: path.resolve(__dirname, "../env/"),
     resolve: {
       alias: {
-        "~src": path.resolve(__dirname, "../src/"),
+        "&src": path.resolve(__dirname, "../src/"),
       },
     },
     define: {

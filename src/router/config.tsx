@@ -3,8 +3,8 @@ import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined
 import { nanoid } from "nanoid";
 import { Outlet, Route } from "react-router-dom";
 
-import Loading from "~src/components/Loading";
-import Redirect from "~src/components/Redirect";
+import Loading from "&src/components/Loading";
+import Redirect from "&src/components/Redirect";
 
 const modules = import.meta.glob<{ default: ComponentType<any> }>("../pages/**/*.tsx");
 const getLazyLoad = (url: string) => lazy(modules[`../pages${url}.tsx`]);
