@@ -5,16 +5,19 @@ React typescript backend management system project template, built-in dynamic ne
 ![Static Badge](https://img.shields.io/badge/react-black?logo=react&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/tailwindcss-black?logo=tailwindcss&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/antdesign-black?logo=antdesign&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/swr-black?logo=swr&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/mobx-black?logo=mobx&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/vite-black?logo=vite&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/rsbuild-black?style=for-the-badge)
 
 <image src='./src/assets/images/admin.png' style='border-radius:10px' >
 
-### webpack or vite
+### webpack or vite or rsbuild
 
 ![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/vite-black?logo=vite&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/rsbuild-black?style=for-the-badge)
 
 > Recommend using [react-tp-cli](https://github.com/wanpan11/react-template-cli)
 

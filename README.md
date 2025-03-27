@@ -5,18 +5,21 @@ react-typescript 后台管理系统项目模版、内置动态嵌套路由、数
 ![Static Badge](https://img.shields.io/badge/react-black?logo=react&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/tailwindcss-black?logo=tailwindcss&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/antdesign-black?logo=antdesign&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/swr-black?logo=swr&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/mobx-black?logo=mobx&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/vite-black?logo=vite&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/rsbuild-black?style=for-the-badge)
 
 <image src='./src/assets/images/admin.png' style='border-radius:10px' height='400px' >
 
 ### 🏠 项目概览
 
-#### 构建工具任选 webpack vite
+#### 构建工具任选 webpack vite rsbuild
 
 ![Static Badge](https://img.shields.io/badge/webpack-black?logo=webpack&style=for-the-badge)
 ![Static Badge](https://img.shields.io/badge/vite-black?logo=vite&style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/rsbuild-black?style=for-the-badge)
 
 > 推荐使用脚手架安装模版 [react-tp-cli](https://github.com/wanpan11/react-template-cli)
 

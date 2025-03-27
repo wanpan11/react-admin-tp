@@ -42,8 +42,9 @@ module.exports = {
     "no-use-before-define": "error",
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
     "@typescript-eslint/no-empty-interface": 0,
   },
   // 过滤文件
-  ignorePatterns: ["dist", "node_modules", "pnpm-lock", "env"],
+  ignorePatterns: ["dist", "node_modules", "pnpm-lock", "env", "prettier.config.cjs"],
 };
