@@ -7,7 +7,7 @@ Mock.mock(/company\/list/, data => {
   console.log("[ Mock company/list ] ===>", data);
 
   return Mock.mock({
-    code: 1,
+    code: 0,
     data: {
       "list|15": [
         {
@@ -20,6 +20,15 @@ Mock.mock(/company\/list/, data => {
         },
       ],
     },
+  });
+});
+
+Mock.mock(/company\/insert/, data => {
+  console.log("[ Mock company/insert ] ===>", data);
+
+  return Mock.mock({
+    code: 0,
+    data: "新建成功！",
   });
 });
 
