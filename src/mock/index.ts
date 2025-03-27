@@ -1,12 +1,17 @@
 import Mock from "mockjs";
 import { nanoid } from "nanoid";
 
-Mock.setup({ timeout: 1000 });
+const sleep = (time = 1000) => {
+  const start = Date.now();
+  while (Date.now() - start < time) {
+    // Busy-wait loop to simulate delay
+  }
+};
 
 Mock.mock(/company\/list/, data => {
   console.log("[ Mock company/list ] ===>", data);
 
-  return Mock.mock({
+  const response = Mock.mock({
     code: 0,
     data: {
       "list|15": [
@@ -21,6 +26,9 @@ Mock.mock(/company\/list/, data => {
       ],
     },
   });
+
+  sleep();
+  return response;
 });
 
 Mock.mock(/company\/insert/, data => {
