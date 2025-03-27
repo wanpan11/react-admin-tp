@@ -369,6 +369,9 @@
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
 }
+.visible{
+  visibility: visible !important;
+}
 .static{
   position: static !important;
 }
@@ -438,6 +441,9 @@
 .mt-0{
   margin-top: 0px !important;
 }
+.mt-1{
+  margin-top: 0.25rem !important;
+}
 .mt-3{
   margin-top: 0.75rem !important;
 }
@@ -461,6 +467,9 @@
 }
 .flex{
   display: flex !important;
+}
+.hidden{
+  display: none !important;
 }
 .h-1\/2{
   height: 50% !important;
@@ -535,18 +544,18 @@
 }
 .border-neutral-200{
   --tw-border-opacity: 1 !important;
-  border-color: rgb(229 229 229 / var(--tw-border-opacity)) !important;
+  border-color: rgb(229 229 229 / var(--tw-border-opacity, 1)) !important;
 }
 .bg-slate-900{
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity, 1)) !important;
 }
 .bg-transparent{
   background-color: transparent !important;
 }
 .bg-white{
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1)) !important;
 }
 .p-3{
   padding: 0.75rem !important;
@@ -613,16 +622,19 @@
 }
 .text-neutral-400{
   --tw-text-opacity: 1 !important;
-  color: rgb(163 163 163 / var(--tw-text-opacity)) !important;
+  color: rgb(163 163 163 / var(--tw-text-opacity, 1)) !important;
 }
 .text-primary{
   --tw-text-opacity: 1 !important;
-  color: rgb(64 150 255 / var(--tw-text-opacity)) !important;
+  color: rgb(64 150 255 / var(--tw-text-opacity, 1)) !important;
 }
 .shadow-ch{
   --tw-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1) !important;
   --tw-shadow-colored: 0px 0px 20px var(--tw-shadow-color) !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+.outline{
+  outline-style: solid !important;
 }
 .filter{
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow) !important;
@@ -638,16 +650,5 @@ li {
 ::after {
   border-width: 0;
   border-style: solid;
-}
-.dark\:border:is(.dark *){
-  border-width: 1px !important;
-}
-.dark\:border-dark_border:is(.dark *){
-  --tw-border-opacity: 1 !important;
-  border-color: rgb(48 48 48 / var(--tw-border-opacity)) !important;
-}
-.dark\:bg-dark_bg:is(.dark *){
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(20 20 20 / var(--tw-bg-opacity)) !important;
 }
 
