@@ -1,11 +1,11 @@
-import { Checkbox, DatePicker, Input, InputNumber, Radio, Select, Switch } from "antd";
+import { Checkbox, DatePicker, Input, InputNumber, Radio, Select, Switch, TreeSelect } from "antd";
 
 const { RangePicker } = DatePicker;
 
-export const getFormElement = (type: string, info: FormItem) => {
+export const getFormElement = (type: FormItem["type"], info: FormItem) => {
   switch (type) {
     case "radio":
-      return <Radio.Group options={info.options || []} optionType={info.optionType || "button"} buttonStyle="solid" disabled={info.disable} {...info.otherOptions} />;
+      return <Radio.Group options={info.options || []} optionType={info.optionType || "button"} buttonStyle="outline" disabled={info.disable} {...info.otherOptions} />;
 
     case "checkbox":
       return <Checkbox.Group style={{ width: "100%" }} options={info.options || []} {...info.otherOptions} />;
@@ -49,5 +49,8 @@ export const getFormElement = (type: string, info: FormItem) => {
       return (
         <Input.TextArea placeholder={info.placeholder} disabled={info.disable} showCount maxLength={info.maxLength || 500} className="mb-6 h-32" {...info.otherOptions} />
       );
+
+    case "treeSelect":
+      return <TreeSelect allowClear placeholder={info.placeholder} disabled={info.disable} treeDefaultExpandAll className="w-full" {...info.otherOptions} />;
   }
 };

@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { useRequest } from "ahooks";
-import { Button, Card, notification, Table } from "antd";
+import { Button, Card, message, notification, Table } from "antd";
 
 import { companyService } from "&src/api/setting";
 import FormFilter from "&src/components/FormFilter";
 import FormModal from "&src/components/FormModal";
-import { DEFAULT_PAGE } from "&src/config";
+import { useSwrData } from "&src/hooks/useSwrData";
 import type { CompanyApi } from "&src/types/api";
 
 const filterInfo: FormItem[] = [{ name: "projectName", type: "input", label: "厂商名称" }];
-const editInfo: FormItem[] = [
+const itemInfo: FormItem[] = [
   {
     name: "category",
     label: "类型",
@@ -49,36 +48,27 @@ const editInfo: FormItem[] = [
 ];
 
 const Company = () => {
-  const [ModalOpen, ModalOpenHandle] = useState(false);
-
-  const [searchInfo, searchInfoHandle] = useState<Record<string, any>>({});
-  const [pageInfo, pageInfoHandle] = useState(DEFAULT_PAGE);
-  const [editData, editDataHandle] = useState<any>(null);
-
-  const { data, error, loading, run } = useRequest(companyService.list, {
-    defaultParams: [{ ...pageInfo, ...searchInfo }],
-    loadingDelay: 300,
+  const { data, isLoading, onSearch, setPage } = useSwrData({
+    reqKey: "companyService.list",
+    req: companyService.list,
+    paging: true,
   });
-  if (error) {
-    console.error("companyService.list ===> ", error);
-  }
 
-  const onSearch = (query: Record<string, any>) => {
-    run({ ...DEFAULT_PAGE, ...query });
-    searchInfoHandle(query);
-  };
+  const [modalOpen, modalOpenHandle] = useState(false);
+  const [editData, editDataHandle] = useState<any>(null);
   const createOrEdit = async (value: CompanyApi.InsertReq) => {
     try {
-      const res = await companyService.insert(value);
+      const { data } = await companyService.insert(value);
+      message.success(data);
     } catch (error: any) {
       notification.error({
         message: "companyService.insert ===> " + error.message,
       });
     }
-    ModalOpenHandle(false);
+    modalOpenHandle(false);
   };
   const clearEdit = () => {
-    ModalOpenHandle(false);
+    modalOpenHandle(false);
     editDataHandle(null);
   };
 
@@ -117,7 +107,7 @@ const Company = () => {
             <Button
               type="link"
               onClick={() => {
-                ModalOpenHandle(true);
+                modalOpenHandle(true);
                 editDataHandle(record);
               }}
             >
@@ -131,27 +121,37 @@ const Company = () => {
 
   return (
     <div>
-      <FormFilter loading={loading} filterInfo={filterInfo} onSubmit={onSearch} reset />
+      <FormFilter loading={isLoading} filterInfo={filterInfo} onOk={onSearch} reset />
 
-      <Card className="mt-3">
+      <Card className="mt-1">
         <div className="mb-2">
           <Button
             type="primary"
             onClick={() => {
-              ModalOpenHandle(true);
+              modalOpenHandle(true);
             }}
           >
             新建厂商
           </Button>
         </div>
 
-        <Table dataSource={data?.data.list} columns={columns} rowKey="id" loading={loading} />
+        <Table
+          rowKey="id"
+          columns={columns}
+          loading={isLoading}
+          dataSource={data?.list}
+          pagination={{
+            onChange: (pageNum, pageSize) => {
+              setPage({ pageNum, pageSize });
+            },
+          }}
+        />
       </Card>
 
       <FormModal
-        open={ModalOpen}
         title="厂商编辑"
-        editInfo={editInfo}
+        open={modalOpen}
+        itemInfo={itemInfo}
         initialValues={editData}
         onCancel={() => {
           clearEdit();

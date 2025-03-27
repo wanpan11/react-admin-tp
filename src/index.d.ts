@@ -41,16 +41,18 @@ interface FormItem {
   initialValue?: unknown;
   rule?: any;
   hide?: boolean;
+  visible?: boolean;
   disable?: boolean;
   extra?: string | ReactNode;
-  type: "input" | "numberInput" | "select" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
+  type: "input" | "numberInput" | "select" | "treeSelect" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
+  valuePropName?: string;
   // 特有属性
-  rightNode?: ReactNode;
+  rightNode?: ReactNode; // node
   mode?: "multiple";
   optionType?: "default" | "button";
   maxLength?: number;
   showTime?: boolean;
-  options?: { label: string; value: any }[];
+  options?: { label: string | ReactNode; value: any }[];
   otherOptions?: Record<string, any>; // 组件额外属性
 }
 
@@ -58,6 +60,8 @@ interface AxiosRes<T> {
   code: number;
   data: T;
 }
+
+type AnyObject = Record<PropertyKey, any>;
 
 declare module "*.module.scss" {
   const classes: { [key: string]: string };

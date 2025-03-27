@@ -8,6 +8,6 @@ export const companyService = {
     });
   },
   list: (data: CompanyApi.ListReq) => {
-    return request.send<CompanyApi.ListRes>("/company/list", "get", data);
+    return request.send<CompanyApi.ListRes>("/company/list", "post", data);
   },
 };
