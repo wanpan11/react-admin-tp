@@ -69,7 +69,7 @@ const UploadModal = ({
     <FormModal
       open={open}
       title={title}
-      editInfo={importConf}
+      itemInfo={importConf}
       onCancel={() => {
         onCancel && onCancel();
       }}

@@ -1,76 +1,47 @@
 import { memo, useRef } from "react";
-import { FormInstance, Modal } from "antd";
+import { FormInstance, Modal, ModalProps } from "antd";
 
-import FormList from "../FormList";
+import FormList, { FormListProps } from "../FormList";
 
-interface FormModalProps {
-  open?: boolean;
-  title?: string;
+interface FormModalProps
+  extends Pick<ModalProps, "open" | "title" | "classNames" | "className" | "maskClosable" | "onCancel" | "okButtonProps">,
+    Pick<FormListProps, "form" | "itemInfo" | "wrapperCol" | "labelCol" | "initialValues" | "stageValues" | "onOk" | "onForm" | "onValuesChange"> {
   noFooter?: boolean;
-  maskClosable?: boolean;
-  onCancel?: () => void;
-
-  editInfo: FormItem[];
-  labelCol?: number;
-  wrapperCol?: number;
-  initialValues?: Record<string, any>;
-  onOk?: (value: Record<string, any>) => void;
-  onForm?: (form: FormInstance) => void;
-  onValuesChange?: (value: Record<string, any>) => void;
 }
 
-const FormModal = ({
-  open,
-  title,
-  noFooter,
-  maskClosable = true,
-  onCancel,
-  editInfo,
-  wrapperCol = 12,
-  labelCol = 5,
-  initialValues,
-  onOk,
-  onForm,
-  onValuesChange,
-}: FormModalProps) => {
+const FormModal = (props: FormModalProps) => {
+  const { open, title, noFooter, okButtonProps, className, classNames, maskClosable = true, onCancel, wrapperCol = 12, labelCol = 5, onForm, ...resetProps } = props;
+
   const formInstance = useRef<FormInstance<any> | null>(null);
 
   const getForm = (form: FormInstance<any>) => {
     formInstance.current = form;
-    onForm && onForm(form);
+    onForm?.(form);
   };
 
   return (
     <Modal
-      open={open}
-      title={title}
-      okText="确定"
-      cancelText="取消"
       width={880}
+      open={open}
+      okText="确定"
+      title={title}
       destroyOnClose
-      closable={noFooter ? true : false}
+      cancelText="取消"
+      className={className}
       maskClosable={maskClosable}
+      okButtonProps={okButtonProps}
+      closable={noFooter ? true : false}
+      footer={noFooter ? null : undefined}
+      classNames={classNames ? classNames : { body: "pt-6" }}
+      afterClose={() => {
+        formInstance.current && formInstance.current.resetFields();
+      }}
       onCancel={onCancel}
       onOk={() => {
         formInstance.current && formInstance.current.submit();
       }}
-      afterClose={() => {
-        formInstance.current && formInstance.current.resetFields();
-      }}
-      footer={noFooter ? null : undefined}
     >
-      <div className="pt-6">
-        <FormList
-          submitBtn={false}
-          itemInfo={editInfo}
-          labelCol={labelCol}
-          wrapperCol={wrapperCol}
-          initialValues={initialValues}
-          onOk={onOk}
-          onForm={getForm}
-          onValuesChange={onValuesChange}
-        />
-      </div>
+      <FormList submitBtn={false} labelCol={labelCol} wrapperCol={wrapperCol} onForm={getForm} {...resetProps} />
     </Modal>
   );
 };

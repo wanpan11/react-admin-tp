@@ -21,7 +21,7 @@ React typescript backend management system project template, built-in dynamic ne
 #### main dependency
 
 - axios
-- ahooks
+- swr
 - tailwindcss
 - ant-design
 - mobx
