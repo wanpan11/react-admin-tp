@@ -46,5 +46,5 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": 0,
   },
   // 过滤文件
-  ignorePatterns: ["dist", "node_modules", "pnpm-lock", "env", "prettier.config.cjs"],
+  ignorePatterns: ["dist", "node_modules", "pnpm-lock", "env", "prettier.config.cjs", "scripts"],
 };
