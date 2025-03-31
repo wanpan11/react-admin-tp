@@ -7,7 +7,7 @@ export const BAD_REQ_CODE = 911;
 export class Request {
   instance: AxiosInstance;
   baseConfig: AxiosRequestConfig = {
-    baseURL: process.env.BASE_REQUEST_URL,
+    baseURL: process.env.PUBLIC_BASE_REQUEST_URL,
     timeout: 30000,
   };
 
@@ -18,7 +18,7 @@ export class Request {
     this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
       // 代理标识
       // const isHttp = config.url?.includes("http");
-      // if (process.env.ENV === "DEV" && !isHttp) {
+      // if (process.env.PUBLIC_ENV === "DEV" && !isHttp) {
       //   config.url = "/proxy" + config.url;
       // }
 
@@ -31,10 +31,7 @@ export class Request {
         return res.data;
       },
       (err: AxiosError) => {
-        console.error("请求异常 ===> ", err.message);
-        notification.error({
-          message: `请求异常 ===> ${err.message}`,
-        });
+        notification.error({ message: `请求异常 ===> ${err.message}` });
         return { code: BAD_REQ_CODE, data: {} };
       }
     );

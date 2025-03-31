@@ -13,9 +13,9 @@
   "license": "ISC",
   "homepage": "https://wanpan11.github.io/react-admin-tp/",
   "scripts": {
-    "start": "cross-env NODE_ENV=development rsbuild dev --config ./scripts/rsbuild.config.ts --mode=development",
-    "build": "cross-env NODE_ENV=production rsbuild build --config ./scripts/rsbuild.config.ts --mode=production",
-    "dev:build": "cross-env NODE_ENV=development rsbuild build --config ./scripts/rsbuild.config.ts --mode=development",
+    "start": "cross-env NODE_ENV=development rsbuild dev -c ./scripts/rsbuild.config.ts -m development",
+    "build": "cross-env NODE_ENV=production rsbuild build -c ./scripts/rsbuild.config.ts -m production",
+    "dev:build": "cross-env NODE_ENV=development rsbuild build - ./scripts/rsbuild.config.ts -m development",
     "lint": "eslint --fix --ext js,jsx,ts,tsx src/ && tsc --noEmit",
     "prepare": "husky install"
   },
@@ -34,7 +34,6 @@
     "compression-webpack-plugin": "^11.1.0",
     "cross-env": "^7.0.3",
     "cssnano": "^7.0.6",
-    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.34.1",

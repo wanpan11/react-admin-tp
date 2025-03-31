@@ -9,7 +9,7 @@ import store from "&src/store/store";
 const AppRouter = observer(() => {
   return (
     <ErrorBoundary errComponent={<Error />}>
-      <BrowserRouter basename={process.env.ROUTER_BASE_NAME} future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+      <BrowserRouter basename={process.env.PUBLIC_ROUTER_BASE_NAME || undefined} future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <Routes>
           {getRoute(GLOBAL_ROUTERS.LOGIN_PAGE)}
           {getRoute(GLOBAL_ROUTERS.NOT_FOUND_PAGE)}
