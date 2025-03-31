@@ -8,7 +8,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const rootDir = path.resolve(__dirname, "../");
 const dynamicConf = require(`./${process.env.NODE_ENV}.config.cjs`); //  加载对应环境打包配置
-console.log("NODE_ENV ===>", process.env.NODE_ENV);
+
+const publicVars = Object.keys(process.env)
+  .filter((key) => key.startsWith("PUBLIC_"))
+  .reduce((env, key) => {
+    env[key] = process.env[key];
+    return env;
+  }, {});
 
 module.exports = {
   context: path.resolve(rootDir, "./src"),
@@ -76,7 +82,7 @@ module.exports = {
       filename: "styles/[name].css",
     }),
     new webpack.DefinePlugin({
-      "process.env": JSON.stringify(process.env),
+      "process.env": JSON.stringify(publicVars),
     }),
   ],
   devServer: {
