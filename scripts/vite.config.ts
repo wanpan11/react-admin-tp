@@ -27,6 +27,7 @@ export default defineConfig(async ({ command, mode }) => {
         },
       },
     },
+    envPrefix: "PUBLIC",
     envDir: path.resolve(__dirname, "../env/"),
     resolve: {
       alias: {

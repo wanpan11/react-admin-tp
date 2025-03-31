@@ -7,7 +7,7 @@ export const BAD_REQ_CODE = 911;
 export class Request {
   instance: AxiosInstance;
   baseConfig: AxiosRequestConfig = {
-    baseURL: import.meta.env.VITE_BASE_REQUEST_URL,
+    baseURL: import.meta.env.PUBLIC_BASE_REQUEST_URL,
     timeout: 30000,
   };
 
@@ -18,7 +18,7 @@ export class Request {
     this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
       // 代理标识
       // const isHttp = config.url?.includes("http");
-      // if (import.meta.env.MODE === "development" && !isHttp) {
+      // if (import.meta.env.PUBLIC_ENV === "DEV" && !isHttp) {
       //   config.url = "/proxy" + config.url;
       // }
 
