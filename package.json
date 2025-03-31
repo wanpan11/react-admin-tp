@@ -13,10 +13,10 @@
   "license": "ISC",
   "homepage": "https://wanpan11.github.io/react-admin-tp/",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack serve --config ./scripts/webpack.config.cjs --mode=development",
-    "build": "cross-env NODE_ENV=production webpack --config ./scripts/webpack.config.cjs --mode=production",
-    "build:homepage": "cross-env NODE_ENV=homepage webpack --config ./scripts/webpack.config.cjs --mode=production",
-    "dev:build": "cross-env NODE_ENV=development webpack --config ./scripts/webpack.config.cjs --mode=development",
+    "start": "cross-env NODE_ENV=development webpack serve -c ./scripts/webpack.config.cjs --mode development",
+    "build": "cross-env NODE_ENV=production webpack -c ./scripts/webpack.config.cjs --mode production",
+    "build:homepage": "cross-env NODE_ENV=homepage webpack -c ./scripts/webpack.config.cjs --mode production",
+    "dev:build": "cross-env NODE_ENV=development webpack -c ./scripts/webpack.config.cjs --mode development",
     "lint": "eslint --fix --ext js,jsx,ts,tsx src/ && tsc --noEmit",
     "prepare": "husky install"
   },
