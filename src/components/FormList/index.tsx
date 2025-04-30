@@ -71,6 +71,7 @@ const FormList = (props: FormListProps) => {
   // 该值变化后会触发表单值更新
   useEffect(() => {
     if (stageValues && realForm) {
+      realForm.resetFields();
       realForm.setFieldsValue(stageValues);
     }
 
