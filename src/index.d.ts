@@ -46,6 +46,7 @@ interface FormItem {
   extra?: string | ReactNode;
   type: "input" | "numberInput" | "select" | "treeSelect" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
   valuePropName?: string;
+  getValueFromEvent?: (...args: EventArgs) => StoreValue;
   // 特有属性
   rightNode?: ReactNode; // node
   mode?: "multiple";

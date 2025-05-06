@@ -51,6 +51,16 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
       );
 
     case "treeSelect":
-      return <TreeSelect allowClear placeholder={info.placeholder} disabled={info.disable} treeDefaultExpandAll className="w-full" {...info.otherOptions} />;
+      return (
+        <TreeSelect
+          allowClear
+          placeholder={info.placeholder}
+          treeData={info.options}
+          disabled={info.disable}
+          treeDefaultExpandAll
+          className="w-full"
+          {...info.otherOptions}
+        />
+      );
   }
 };
