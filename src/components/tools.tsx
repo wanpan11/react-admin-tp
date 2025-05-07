@@ -47,7 +47,16 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
 
     case "textArea":
       return (
-        <Input.TextArea placeholder={info.placeholder} disabled={info.disable} showCount maxLength={info.maxLength || 500} className="mb-6 h-32" {...info.otherOptions} />
+        <Input.TextArea
+          showCount
+          disabled={info.disable}
+          placeholder={info.placeholder}
+          maxLength={info.maxLength || 500}
+          classNames={{
+            textarea: "h-40 resize-none",
+          }}
+          {...info.otherOptions}
+        />
       );
 
     case "treeSelect":
