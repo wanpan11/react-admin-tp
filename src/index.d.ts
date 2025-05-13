@@ -23,15 +23,15 @@ interface IndexRoute {
 }
 type Route = PathRoute | IndexRoute;
 interface PageProps {
-  children: ReactNode;
+  children: React.ReactNode;
   title: string;
 }
 
 interface MenuItem {
   key: string | number;
   path: string;
-  label: string | ReactNode;
-  icon?: ReactNode;
+  label: string | React.ReactNode;
+  icon?: React.ReactNode;
   children?: MenuItem[];
 }
 
