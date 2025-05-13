@@ -3,7 +3,7 @@ import { Button, Form, FormInstance, FormProps } from "antd";
 
 import { getFormElement } from "../tools";
 
-export interface FormListProps extends Pick<FormProps, "form" | "colon" | "className" | "style" | "layout" | "labelAlign" | "onValuesChange"> {
+export interface FormListProps extends Pick<FormProps, "form" | "colon" | "className" | "style" | "layout" | "labelAlign" | "onValuesChange" | "disabled"> {
   labelCol?: number;
   wrapperCol?: number;
 
@@ -71,6 +71,7 @@ const FormList = (props: FormListProps) => {
   // 该值变化后会触发表单值更新
   useEffect(() => {
     if (stageValues && realForm) {
+      realForm.resetFields();
       realForm.setFieldsValue(stageValues);
     }
 
@@ -112,9 +113,10 @@ const FormList = (props: FormListProps) => {
             rules={[e.rule]}
             hidden={!(e.visible ?? true)}
             name={e.name ? e.name : undefined}
-            valuePropName={e.type === "switch" ? "checked" : "value"}
             key={typeof e.name === "string" ? e.name || idx : e.name.join("_")}
+            valuePropName={e.valuePropName ? e.valuePropName : e.type === "switch" ? "checked" : "value"}
             initialValue={e.type === "radio" ? e.options?.[0].value : e.type === "switch" ? true : undefined}
+            {...e.formItemProps}
           >
             {getFormElement(e.type, e)}
           </Form.Item>

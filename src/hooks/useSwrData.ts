@@ -49,10 +49,10 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R> & { paging?:
  * @param {UseSwrDataProps<P, R>} props - Hook 的属性。
  * @param {string | any[]} props.reqKey - SWR 请求的 key，用于缓存。
  * @param {(params: P) => Promise<R>} props.req - 用于获取数据的请求函数。
- * @param {P} [props.params] - 请求函数的参数。
+ * @param {P} [props.params] - 请求函数的参数 受控参数。
  * @param {boolean} [props.ready=true] - 标志请求是否准备好发送。
  * @param {boolean} [props.paging=false] - 标志是否启用分页。
- * @param {Partial<P>} [props.defaultSearch={}] - 默认的搜索参数。
+ * @param {Partial<P>} [props.defaultSearch={}] - 默认的搜索参数 初始参数。
  * @param {PageInfo} [props.defaultPage=defaultPageInfo] - 默认的分页信息。
  * @param {SWRConfiguration} [props.swrConfig] - SWR 配置选项。
  *
