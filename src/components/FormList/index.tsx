@@ -3,7 +3,7 @@ import { Button, Form, FormInstance, FormProps } from "antd";
 
 import { getFormElement } from "../tools";
 
-export interface FormListProps extends Pick<FormProps, "form" | "colon" | "className" | "style" | "layout" | "labelAlign" | "onValuesChange"> {
+export interface FormListProps extends Pick<FormProps, "form" | "colon" | "className" | "style" | "layout" | "labelAlign" | "onValuesChange" | "disabled"> {
   labelCol?: number;
   wrapperCol?: number;
 
@@ -116,7 +116,7 @@ const FormList = (props: FormListProps) => {
             key={typeof e.name === "string" ? e.name || idx : e.name.join("_")}
             valuePropName={e.valuePropName ? e.valuePropName : e.type === "switch" ? "checked" : "value"}
             initialValue={e.type === "radio" ? e.options?.[0].value : e.type === "switch" ? true : undefined}
-            getValueFromEvent={e.getValueFromEvent}
+            {...e.otherOptions}
           >
             {getFormElement(e.type, e)}
           </Form.Item>

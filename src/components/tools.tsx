@@ -5,7 +5,15 @@ const { RangePicker } = DatePicker;
 export const getFormElement = (type: FormItem["type"], info: FormItem) => {
   switch (type) {
     case "radio":
-      return <Radio.Group options={info.options || []} optionType={info.optionType || "button"} buttonStyle="outline" disabled={info.disable} {...info.otherOptions} />;
+      return (
+        <Radio.Group
+          options={info.options || []}
+          optionType={info.otherOptions?.optionType || "button"}
+          buttonStyle="outline"
+          disabled={info.disable}
+          {...info.otherOptions}
+        />
+      );
 
     case "checkbox":
       return <Checkbox.Group style={{ width: "100%" }} options={info.options || []} {...info.otherOptions} />;
@@ -27,7 +35,7 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
         <Select
           showSearch
           allowClear
-          mode={info.mode}
+          mode={info.otherOptions?.mode}
           placeholder={info.placeholder}
           disabled={info.disable}
           options={info.options as { value: string }[]}
@@ -40,10 +48,10 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
       );
 
     case "rangePick":
-      return <RangePicker disabled={info.disable} showTime={info.showTime} placeholder={["开始时间", "结束时间"]} {...info.otherOptions} />;
+      return <RangePicker disabled={info.disable} showTime={info.otherOptions?.showTime} placeholder={["开始时间", "结束时间"]} {...info.otherOptions} />;
 
     case "datePick":
-      return <DatePicker disabled={info.disable} showTime={info.showTime} {...info.otherOptions} />;
+      return <DatePicker disabled={info.disable} showTime={info.otherOptions?.showTime} {...info.otherOptions} />;
 
     case "textArea":
       return (
@@ -51,7 +59,7 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
           showCount
           disabled={info.disable}
           placeholder={info.placeholder}
-          maxLength={info.maxLength || 500}
+          maxLength={info.otherOptions?.maxLength || 500}
           classNames={{
             textarea: "h-40 resize-none",
           }}
