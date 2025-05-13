@@ -116,7 +116,7 @@ const FormList = (props: FormListProps) => {
             key={typeof e.name === "string" ? e.name || idx : e.name.join("_")}
             valuePropName={e.valuePropName ? e.valuePropName : e.type === "switch" ? "checked" : "value"}
             initialValue={e.type === "radio" ? e.options?.[0].value : e.type === "switch" ? true : undefined}
-            {...e.otherOptions}
+            {...e.formItemProps}
           >
             {getFormElement(e.type, e)}
           </Form.Item>
