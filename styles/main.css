@@ -402,9 +402,6 @@
 .mb-4{
   margin-bottom: 1rem !important;
 }
-.mb-6{
-  margin-bottom: 1.5rem !important;
-}
 .mb-9{
   margin-bottom: 2.25rem !important;
 }
@@ -477,8 +474,8 @@
 .h-14{
   height: 3.5rem !important;
 }
-.h-32{
-  height: 8rem !important;
+.h-40{
+  height: 10rem !important;
 }
 .h-\[calc\(100\%-4\.5rem\)\]{
   height: calc(100% - 4.5rem) !important;
@@ -517,6 +514,9 @@
   -webkit-user-select: none !important;
      -moz-user-select: none !important;
           user-select: none !important;
+}
+.resize-none{
+  resize: none !important;
 }
 .flex-col{
   flex-direction: column !important;
