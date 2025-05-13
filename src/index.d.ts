@@ -23,37 +23,16 @@ interface IndexRoute {
 }
 type Route = PathRoute | IndexRoute;
 interface PageProps {
-  children: ReactNode;
+  children: React.ReactNode;
   title: string;
 }
 
 interface MenuItem {
   key: string | number;
   path: string;
-  label: string | ReactNode;
-  icon?: ReactNode;
+  label: string | React.ReactNode;
+  icon?: React.ReactNode;
   children?: MenuItem[];
-}
-interface FormItem {
-  name: string | (number | string)[];
-  label?: string | ReactNode;
-  placeholder?: string;
-  initialValue?: unknown;
-  rule?: any;
-  hide?: boolean;
-  visible?: boolean;
-  disable?: boolean;
-  extra?: string | ReactNode;
-  type: "input" | "numberInput" | "select" | "treeSelect" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
-  valuePropName?: string;
-  // 特有属性
-  rightNode?: ReactNode; // node
-  mode?: "multiple";
-  optionType?: "default" | "button";
-  maxLength?: number;
-  showTime?: boolean;
-  options?: { label: string | ReactNode; value: any }[];
-  otherOptions?: Record<string, any>; // 组件额外属性
 }
 
 interface AxiosRes<T> {
