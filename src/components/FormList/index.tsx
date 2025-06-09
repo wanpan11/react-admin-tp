@@ -98,22 +98,24 @@ const FormList = (props: FormListProps) => {
   return (
     <Form form={realForm} labelCol={labelCol ? { span: labelCol } : undefined} wrapperCol={wrapperCol ? { span: wrapperCol } : undefined} onFinish={onOk} {...restProps}>
       {itemInfo.map((e, idx) => {
+        const key = e.name instanceof Array ? e.name.join("_") : e.name || idx;
+
         if (e.hide) {
           return null;
         }
 
         if (e.type === "blockNode") {
-          return <span key={typeof e.name === "string" ? e.name || idx : e.name.join("_")}>{e.label}</span>;
+          return <span key={key}>{e.label}</span>;
         }
 
         return (
           <Form.Item
+            key={key}
+            name={e.name}
             label={e.label}
             extra={e.extra}
             rules={[e.rule]}
             hidden={!(e.visible ?? true)}
-            name={e.name ? e.name : undefined}
-            key={typeof e.name === "string" ? e.name || idx : e.name.join("_")}
             valuePropName={e.valuePropName ? e.valuePropName : e.type === "switch" ? "checked" : "value"}
             initialValue={e.type === "radio" ? e.options?.[0].value : e.type === "switch" ? true : undefined}
             {...e.formItemProps}

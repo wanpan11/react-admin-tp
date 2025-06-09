@@ -1,5 +1,5 @@
 declare interface FormItem {
-  name: string | (number | string)[];
+  name?: string | (number | string)[];
   label?: string | React.ReactNode;
   placeholder?: string;
   initialValue?: unknown;
