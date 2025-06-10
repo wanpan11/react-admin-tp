@@ -3,12 +3,13 @@ import { Button, Form, FormInstance, FormProps } from "antd";
 
 import { getFormElement } from "../tools";
 
-export interface FormListProps extends Pick<FormProps, "form" | "colon" | "className" | "style" | "layout" | "labelAlign" | "onValuesChange" | "disabled"> {
+export interface FormListProps extends Omit<FormProps, "labelCol" | "wrapperCol"> {
   labelCol?: number;
   wrapperCol?: number;
 
   // 搜索
   searchBtn?: null | ReactElement;
+
   // 提交
   submitBtn?: boolean;
   submitNode?: ReactElement;

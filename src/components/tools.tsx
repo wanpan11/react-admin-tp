@@ -41,7 +41,9 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
           options={info.options as { value: string }[]}
           className="min-w-[150px]"
           filterOption={(input, option: any) => {
-            return (option.label as string).includes(input);
+            if (typeof option.label === "string") {
+              return option.label.includes(input);
+            }
           }}
           {...info.otherOptions}
         />

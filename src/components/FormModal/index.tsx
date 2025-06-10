@@ -25,7 +25,7 @@ const FormModal = (props: FormModalProps) => {
       open={open}
       okText="确定"
       title={title}
-      destroyOnClose
+      destroyOnHidden
       cancelText="取消"
       className={className}
       maskClosable={maskClosable}
