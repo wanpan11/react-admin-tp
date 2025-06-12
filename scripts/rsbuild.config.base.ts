@@ -17,7 +17,6 @@ const getBaseConfig = async () => {
   const config: RsbuildConfig = {
     plugins: [pluginLess(), pluginReact()],
     source: {
-      alias: { "&src": sourceDir },
       entry: { index: path.resolve(sourceDir, entry) },
       define: loadEnv({ cwd: envDir }).publicVars,
     },
@@ -26,12 +25,22 @@ const getBaseConfig = async () => {
       template: path.resolve(rootDir, "./template/index.html"),
       favicon: path.resolve(rootDir, "./template/favicon.svg"),
       meta: { version: pak.version },
+      tags:
+        process.env.NODE_ENV === "development"
+          ? [
+              {
+                tag: "script",
+                append: false,
+                attrs: { src: "https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" },
+              },
+            ]
+          : undefined,
     },
     output: {
       assetPrefix: publicPath,
       cleanDistPath: true,
       distPath: { root: path.resolve(rootDir, outDir) },
-      filename: { css: "[name].[contenthash:8].css" },
+      filename: { css: process.env.NODE_ENV === "production" ? "[name].[contenthash:8].css" : "[name].css" },
     },
     server: {
       port: devServer?.port,
@@ -48,6 +57,9 @@ const getBaseConfig = async () => {
         }
         appendPlugins(new CompressionPlugin({}));
       },
+    },
+    resolve: {
+      alias: { "&src": sourceDir },
     },
   };
 
