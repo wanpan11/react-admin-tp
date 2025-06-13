@@ -1,15 +1,15 @@
 declare interface FormItem {
-  name: string | (number | string)[];
+  name?: string | (number | string)[];
   label?: string | React.ReactNode;
   placeholder?: string;
   initialValue?: unknown;
-  rule?: any;
+  rule?: import("antd").FormItemProps["rules"][number];
   hide?: boolean;
   visible?: boolean;
   disable?: boolean;
   extra?: string | React.ReactNode;
   type: "input" | "numberInput" | "select" | "treeSelect" | "datePick" | "rangePick" | "radio" | "checkbox" | "textArea" | "switch" | "blockNode" | "node";
-  valuePropName?: string;
+  valuePropName?: import("antd").FormItemProps["valuePropName"];
   formItemProps?: import("antd").FormItemProps;
   // 特有属性
   rightNode?: React.ReactNode; // node

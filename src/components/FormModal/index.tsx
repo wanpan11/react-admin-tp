@@ -10,7 +10,7 @@ interface FormModalProps
 }
 
 const FormModal = (props: FormModalProps) => {
-  const { open, title, noFooter, okButtonProps, className, classNames, maskClosable = true, onCancel, wrapperCol = 12, labelCol = 5, onForm, ...resetProps } = props;
+  const { open, title, noFooter, okButtonProps, className, classNames, maskClosable = true, onCancel, wrapperCol = 21, labelCol = 3, onForm, ...resetProps } = props;
 
   const formInstance = useRef<FormInstance<any> | null>(null);
 
@@ -25,7 +25,7 @@ const FormModal = (props: FormModalProps) => {
       open={open}
       okText="确定"
       title={title}
-      destroyOnClose
+      destroyOnHidden
       cancelText="取消"
       className={className}
       maskClosable={maskClosable}
@@ -41,7 +41,9 @@ const FormModal = (props: FormModalProps) => {
         formInstance.current && formInstance.current.submit();
       }}
     >
-      <FormList submitBtn={false} labelCol={labelCol} wrapperCol={wrapperCol} onForm={getForm} {...resetProps} />
+      <div className="overflow-hidden">
+        <FormList submitBtn={false} labelCol={labelCol} wrapperCol={wrapperCol} onForm={getForm} {...resetProps} />
+      </div>
     </Modal>
   );
 };
