@@ -44,6 +44,7 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
             if (typeof option.label === "string") {
               return option.label.includes(input);
             }
+            return false;
           }}
           {...info.otherOptions}
         />
