@@ -31,7 +31,7 @@ const getBaseConfig = async () => {
               {
                 tag: "script",
                 append: false,
-                attrs: { src: "https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" },
+                attrs: { crossOrigin: "anonymous", src: "https://unpkg.com/react-scan/dist/auto.global.js" },
               },
             ]
           : undefined,
