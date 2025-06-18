@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Button, Card, Form, Input, Layout } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 
 import { loginReq } from "&src/api/account";
 import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "&src/config";
 import GLOBAL_ROUTERS from "&src/router/config";
-import store from "&src/store/store";
+import useRootStore from "&src/store";
 import type { AccountApi } from "&src/types/api";
 import { getLocalStorage } from "&src/utils";
 import lessStyle from "./index.module.less";
 
-const { setLogin, setDynamicRoutes } = store;
-
 const Login = () => {
   const navigate = useNavigate();
+  const { setLogin, setDynamicRoutes } = useRootStore(useShallow(store => ({ setLogin: store.setLogin, setDynamicRoutes: store.setDynamicRoutes })));
+
   const [loading, loadingHandle] = useState(false);
 
   const onFinish = async (values: AccountApi.Login) => {
     loadingHandle(true);
     const res = await loginReq(values);
-
     localStorage.setItem(LOCAL_TOKEN, res.data.token);
     localStorage.setItem(LOCAL_USER_INFO, JSON.stringify(res.data.userInfo));
     localStorage.setItem(LOCAL_DYNAMIC_ROUTER, JSON.stringify(GLOBAL_ROUTERS.APP_PAGE));
@@ -27,13 +27,14 @@ const Login = () => {
     // 设置登录态 用户信息 动态路由配置
     setLogin({ login: true, userInfo: res.data.userInfo });
     setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
-
     loadingHandle(false);
     navigate("/");
   };
 
   useEffect(() => {
-    if (getLocalStorage(LOCAL_TOKEN)) navigate("/");
+    if (getLocalStorage(LOCAL_TOKEN)) {
+      navigate("/");
+    }
   }, [navigate]);
 
   return (
@@ -65,4 +66,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);
