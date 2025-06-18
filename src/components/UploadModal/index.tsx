@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
-import { notification, Upload } from "antd";
+import { message, Upload } from "antd";
 import type { UploadProps } from "antd";
 
 import FormModal from "../FormModal";
@@ -75,7 +75,7 @@ const UploadModal = ({
       }}
       onOk={() => {
         if (!file.length) {
-          notification.error({ message: "请上传文件！" });
+          message.error("请上传文件！");
           return;
         }
 

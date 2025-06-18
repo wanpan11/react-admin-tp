@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Card, message, notification, Table } from "antd";
+import { Button, Card, message, Table } from "antd";
 
 import { companyService } from "&src/api/setting";
 import FormFilter from "&src/components/FormFilter";
@@ -57,14 +57,8 @@ const Company = () => {
   const [modalOpen, modalOpenHandle] = useState(false);
   const [editData, editDataHandle] = useState<any>(null);
   const createOrEdit = async (value: CompanyApi.InsertReq) => {
-    try {
-      const { data } = await companyService.insert(value);
-      message.success(data);
-    } catch (error: any) {
-      notification.error({
-        message: "companyService.insert ===> " + error.message,
-      });
-    }
+    const { data } = await companyService.insert(value);
+    message.success(data);
     modalOpenHandle(false);
   };
   const clearEdit = () => {
