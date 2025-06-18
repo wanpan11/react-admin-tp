@@ -1,6 +1,5 @@
 import { memo, useRef } from "react";
-import { Button, FormInstance } from "antd";
-import classNames from "classnames";
+import { Button, Card, FormInstance } from "antd";
 
 import FormList, { FormListProps } from "../FormList";
 
@@ -34,7 +33,7 @@ const FormFilter = (props: FormFilterProps) => {
   );
 
   return (
-    <div className={classNames("box-border rounded-md bg-white p-6", className)}>
+    <Card classNames={{ body: className }}>
       <FormList
         colon={false}
         layout="inline"
@@ -45,7 +44,7 @@ const FormFilter = (props: FormFilterProps) => {
         onForm={getForm}
         {...resetProps}
       />
-    </div>
+    </Card>
   );
 };
 
