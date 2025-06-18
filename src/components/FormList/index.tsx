@@ -115,8 +115,8 @@ const FormList = (props: FormListProps) => {
             name={e.name}
             label={e.label}
             extra={e.extra}
-            rules={[e.rule]}
             hidden={!(e.visible ?? true)}
+            rules={e.rule ? [e.rule] : undefined}
             valuePropName={e.valuePropName ? e.valuePropName : e.type === "switch" ? "checked" : "value"}
             initialValue={e.type === "radio" ? e.options?.[0].value : e.type === "switch" ? true : undefined}
             {...e.formItemProps}

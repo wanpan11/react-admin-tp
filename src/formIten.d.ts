@@ -3,7 +3,7 @@ declare interface FormItem {
   label?: string | React.ReactNode;
   placeholder?: string;
   initialValue?: unknown;
-  rule?: import("antd").FormItemProps["rules"][number];
+  rule?: import("antd").FormRule;
   hide?: boolean;
   visible?: boolean;
   disable?: boolean;

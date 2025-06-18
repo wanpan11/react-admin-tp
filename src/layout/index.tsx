@@ -1,12 +1,10 @@
 import { useMemo } from "react";
 import { ConfigProvider, Layout, theme } from "antd";
-import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
 
 import BreadCrumb from "&src/components/BreadCrumb";
 import { COLOR_PRIMARY, SPLIT_FLAG } from "&src/config";
-import MobxContext from "&src/store/context";
-import store from "&src/store/store";
+import useRootStore, { useGetRouterConfig } from "&src/store";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
 
@@ -67,15 +65,10 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
   return [tabId, menuId, sideMenu];
 }
 
-const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
-  const {
-    isLogin,
-    darkMode,
-    userInfo,
-    routeAndMenu: { routerMenu },
-    routerPathMapping,
-  } = store;
+  const darkMode = useRootStore(store => store.darkMode);
+  const { routerMenu, routerPathMapping } = useGetRouterConfig();
 
   // 获取当前选中 menu ID
   const [tabId, menuId, sideMenu] = useMemo(() => {
@@ -91,7 +84,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
     <div className={darkMode ? "dark" : ""}>
       <ConfigProvider theme={currentThem}>
         <Layout>
-          <MenuHeader tabId={tabId} tabList={routerMenu} darkMode={darkMode} userInfo={userInfo} />
+          <MenuHeader tabId={tabId} tabList={routerMenu} />
 
           <Layout className="h-[calc(100vh-3.5rem)] overflow-hidden">
             {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
@@ -100,9 +93,7 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
               <Content className="m-3 mb-0 mt-0">
                 <BreadCrumb routerPath={routerPathMapping} />
 
-                <div className="h-[calc(100%-4.5rem)] overflow-auto">
-                  <MobxContext.Provider value={{ isLogin, userInfo }}>{children}</MobxContext.Provider>
-                </div>
+                <div className="h-[calc(100%-4.5rem)] overflow-auto">{children}</div>
               </Content>
             </Layout>
           </Layout>
@@ -110,6 +101,6 @@ const AppLayout = observer(({ children }: { children: React.ReactNode }) => {
       </ConfigProvider>
     </div>
   );
-});
+};
 
 export default AppLayout;

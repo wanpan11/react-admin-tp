@@ -4,13 +4,27 @@ import { FormInstance, Modal, ModalProps } from "antd";
 import FormList, { FormListProps } from "../FormList";
 
 interface FormModalProps
-  extends Pick<ModalProps, "open" | "title" | "classNames" | "className" | "maskClosable" | "onCancel" | "okButtonProps">,
+  extends Pick<ModalProps, "open" | "width" | "title" | "classNames" | "className" | "maskClosable" | "onCancel" | "okButtonProps">,
     Pick<FormListProps, "form" | "itemInfo" | "wrapperCol" | "labelCol" | "initialValues" | "stageValues" | "onOk" | "onForm" | "onValuesChange"> {
   noFooter?: boolean;
 }
 
 const FormModal = (props: FormModalProps) => {
-  const { open, title, noFooter, okButtonProps, className, classNames, maskClosable = true, onCancel, wrapperCol = 21, labelCol = 3, onForm, ...resetProps } = props;
+  const {
+    open,
+    width = 880,
+    title,
+    noFooter,
+    className,
+    classNames,
+    okButtonProps,
+    wrapperCol = 21,
+    labelCol = 3,
+    maskClosable = true,
+    onForm,
+    onCancel,
+    ...resetProps
+  } = props;
 
   const formInstance = useRef<FormInstance<any> | null>(null);
 
@@ -21,9 +35,9 @@ const FormModal = (props: FormModalProps) => {
 
   return (
     <Modal
-      width={880}
       open={open}
       okText="确定"
+      width={width}
       title={title}
       destroyOnHidden
       cancelText="取消"
