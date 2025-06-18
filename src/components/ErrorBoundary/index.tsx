@@ -1,7 +1,5 @@
 import { Component, ReactElement } from "react";
 
-// import { notification } from "antd";
-
 class ErrorBoundary extends Component<{
   children: ReactElement;
   errComponent: ReactElement;
@@ -9,18 +7,6 @@ class ErrorBoundary extends Component<{
   state = {
     hasError: false,
   };
-
-  // componentDidMount() {
-  //   addEventListener(
-  //     "error",
-  //     err => {
-  //       notification.error({
-  //         message: "ErrorBoundary 异常报错 ===>" + err.message,
-  //       });
-  //     },
-  //     false
-  //   );
-  // }
 
   static getDerivedStateFromError(error: any) {
     return { hasError: true, errMsg: error };

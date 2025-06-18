@@ -3,17 +3,30 @@ import { Avatar, Dropdown, Layout } from "antd";
 import type { MenuProps } from "antd";
 import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 
 import dark_img from "&src/assets/images/dark.svg";
 import light_img from "&src/assets/images/light.svg";
-import store from "&src/store/store";
+import useRootStore from "&src/store";
 import lessStyle from "./index.module.less";
 
 const { Header } = Layout;
-const { setLogin, setDarkMode } = store;
 
-const MenuHeader = ({ tabId, tabList, darkMode, userInfo }: { tabId: string; tabList: MenuItem[]; darkMode: boolean; userInfo?: any }) => {
+interface MenuHeaderProps {
+  tabId: string;
+  tabList: MenuItem[];
+}
+
+const MenuHeader = ({ tabId, tabList }: MenuHeaderProps) => {
   const navigate = useNavigate();
+  const { userInfo, darkMode, setLogin, setDarkMode } = useRootStore(
+    useShallow(store => ({
+      darkMode: store.darkMode,
+      userInfo: store.userInfo,
+      setLogin: store.setLogin,
+      setDarkMode: store.setDarkMode,
+    }))
+  );
 
   const items: MenuProps["items"] = [
     {
