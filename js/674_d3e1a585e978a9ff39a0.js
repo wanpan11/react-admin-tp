@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[674],{2674:(e,t,s)=>{s.r(t),s.d(t,{default:()=>a});var i=s(2817),l=s(9627),c=s(1259),d=s(6106);const a=({title:e})=>(0,d.jsxs)(i.A,{title:e||"参数配置",children:[(0,d.jsx)("div",{children:(0,d.jsx)(c.N_,{to:"/setting/detail",children:"detail"})}),(0,d.jsx)(l.A,{active:!0})]})}}]);

@@ -536,9 +536,6 @@
 .overflow-hidden{
   overflow: hidden !important;
 }
-.rounded-md{
-  border-radius: 0.375rem !important;
-}
 .border-b{
   border-bottom-width: 1px !important;
 }
@@ -559,9 +556,6 @@
 }
 .p-3{
   padding: 0.75rem !important;
-}
-.p-6{
-  padding: 1.5rem !important;
 }
 .p-7{
   padding: 1.75rem !important;
