@@ -94,7 +94,7 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R>): UseSwrData
         return req(data);
       }
     },
-    swrConfig ? swrConfig : { revalidateOnFocus: false }
+    swrConfig ? swrConfig : { revalidateOnFocus: false },
   );
 
   const onSearch = useCallback(
@@ -102,7 +102,7 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R>): UseSwrData
       setSearch(value);
       setPage(defaultPage);
     },
-    [defaultPage]
+    [defaultPage],
   );
 
   if (paging) {

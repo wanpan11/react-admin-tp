@@ -25,7 +25,7 @@ const MenuHeader = ({ tabId, tabList }: MenuHeaderProps) => {
       userInfo: store.userInfo,
       setLogin: store.setLogin,
       setDarkMode: store.setDarkMode,
-    }))
+    })),
   );
 
   const items: MenuProps["items"] = [

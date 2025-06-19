@@ -33,7 +33,7 @@ export class Request {
       (err: AxiosError) => {
         notification.error({ message: `请求异常 ===> ${err.message}` });
         return { code: BAD_REQ_CODE, data: {} };
-      }
+      },
     );
   }
 
