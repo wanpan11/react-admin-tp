@@ -1,5 +1,6 @@
-import path from "path";
-import { loadEnv, RsbuildConfig } from "@rsbuild/core";
+import type { RsbuildConfig } from "@rsbuild/core";
+import path from "node:path";
+import { loadEnv } from "@rsbuild/core";
 import { pluginLess } from "@rsbuild/plugin-less";
 import { pluginReact } from "@rsbuild/plugin-react";
 import { RsdoctorRspackPlugin } from "@rsdoctor/rspack-plugin";
@@ -11,7 +12,7 @@ const rootDir = path.resolve(__dirname, "../");
 const sourceDir = path.resolve(rootDir, "./src");
 const envDir = path.resolve(rootDir, "./env");
 
-const getBaseConfig = async () => {
+async function getBaseConfig() {
   const { entry, title, publicPath, outDir, devServer } = await import(`./${process.env.NODE_ENV}.config.ts`);
 
   const config: RsbuildConfig = {
@@ -64,6 +65,6 @@ const getBaseConfig = async () => {
   };
 
   return config;
-};
+}
 
 export default getBaseConfig;

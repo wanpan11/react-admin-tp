@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Button, Card, message, Table } from "antd";
-
+import type { CompanyApi } from "&src/types/api";
 import { companyService } from "&src/api/setting";
+
 import FormFilter from "&src/components/FormFilter";
 import FormModal from "&src/components/FormModal";
 import { useSwrData } from "&src/hooks/useSwrData";
-import type { CompanyApi } from "&src/types/api";
+import { Button, Card, message, Table } from "antd";
+import { useState } from "react";
 
 const filterInfo: FormItem[] = [{ name: "projectName", type: "input", label: "厂商名称" }];
 const itemInfo: FormItem[] = [
@@ -42,12 +42,12 @@ const itemInfo: FormItem[] = [
     rule: {
       required: true,
       message: "请输入正确的厂商联系电话！",
-      pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
+      pattern: /^(13\d|14[014-9]|15[0-35-9]|16[2567]|17[0-8]|18\d|19[0-35-9])\d{8}$/,
     },
   },
 ];
 
-const Company = () => {
+function Company() {
   const { data, isLoading, onSearch, setPage } = useSwrData({
     reqKey: "companyService.list",
     req: companyService.list,
@@ -150,12 +150,12 @@ const Company = () => {
         onCancel={() => {
           clearEdit();
         }}
-        onOk={value => {
+        onOk={(value) => {
           createOrEdit(value as CompanyApi.InsertReq);
         }}
       />
     </div>
   );
-};
+}
 
 export default Company;

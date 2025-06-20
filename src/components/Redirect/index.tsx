@@ -1,8 +1,8 @@
-import { useEffect } from "react";
 import { Skeleton } from "antd";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Redirect = ({ redirect }: { redirect: string }) => {
+function Redirect({ redirect }: { redirect: string }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,6 +12,6 @@ const Redirect = ({ redirect }: { redirect: string }) => {
   }, [redirect, navigate]);
 
   return <Skeleton />;
-};
+}
 
 export default Redirect;

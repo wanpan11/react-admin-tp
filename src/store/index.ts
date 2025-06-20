@@ -1,12 +1,12 @@
-import { useMemo } from "react";
-import { create } from "zustand";
-import { useShallow } from "zustand/react/shallow";
-
 import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "&src/config";
 import { getPathRecord, transformRouter } from "&src/router/config";
 import { getLocalStorage } from "&src/utils";
 
-type RootStore = {
+import { useMemo } from "react";
+import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
+
+interface RootStore {
   darkMode: boolean; // 是否开启暗黑模式
   isLogin: boolean; // 是否登录
   userInfo: Record<string, any>; // 用户信息
@@ -15,7 +15,7 @@ type RootStore = {
   setDarkMode: (boolean: boolean) => void; // 设置暗黑模式
   setLogin: (params: { login: boolean; userInfo?: Record<string, any> }) => void; // 设置登录状态和用户信息
   setDynamicRoutes: (routes: Route[]) => void; // 设置动态路由
-};
+}
 
 const useRootStore = create<RootStore>()(set => ({
   darkMode: false,
@@ -27,7 +27,7 @@ const useRootStore = create<RootStore>()(set => ({
   setDynamicRoutes: (dynamicRoutes: Route[]) => set(() => ({ dynamicRoutes })),
 }));
 
-export const useGetRouterConfig = () => {
+export function useGetRouterConfig() {
   const dynamicRoutes = useRootStore(useShallow(store => store.dynamicRoutes));
 
   // 转换后的路由和菜单
@@ -41,6 +41,6 @@ export const useGetRouterConfig = () => {
   }, [router]);
 
   return { router, routerMenu, routerPathMapping };
-};
+}
 
 export default useRootStore;

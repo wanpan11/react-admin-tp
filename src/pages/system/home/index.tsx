@@ -1,6 +1,6 @@
 import { Card, Skeleton } from "antd";
 
-const Home = ({ title }: PageProps) => {
+function Home({ title }: PageProps) {
   return (
     <div>
       <Card title={title}>
@@ -8,6 +8,6 @@ const Home = ({ title }: PageProps) => {
       </Card>
     </div>
   );
-};
+}
 
 export default Home;

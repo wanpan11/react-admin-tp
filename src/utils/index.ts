@@ -1,7 +1,7 @@
 export function getFormData(obj: any) {
   const formData = new FormData();
 
-  Object.keys(obj).forEach(e => {
+  Object.keys(obj).forEach((e) => {
     formData.append(e, obj[e]);
   });
 
@@ -18,12 +18,13 @@ export function getParam(name?: string) {
 
   for (let i = 0; i < vars.length; i++) {
     const pair = vars[i].split("=");
-    value[pair[0]] = pair[1] + (pair[2] ? "=" + pair[2] : "");
+    value[pair[0]] = pair[1] + (pair[2] ? `=${pair[2]}` : "");
   }
 
   if (name) {
     return value[name];
-  } else {
+  }
+  else {
     return value;
   }
 }
@@ -31,7 +32,7 @@ export function getParam(name?: string) {
 export function getCookie(key: string) {
   return (
     decodeURIComponent(
-      document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1"),
+      document.cookie.replace(new RegExp(`(?:(?:^|.*;)\\s*${encodeURIComponent(key).replace(/[-.+*]/g, "\\$&")}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1"),
     ) || ""
   );
 }
@@ -40,7 +41,7 @@ export function getRoutesPath(title: string, routes: Route[] = []): Route | null
   let info: Route | null = null;
 
   function find(arr: Route[]) {
-    arr.some(e => {
+    arr.some((e) => {
       if (e.title === title) {
         info = e;
         return true;
@@ -49,6 +50,8 @@ export function getRoutesPath(title: string, routes: Route[] = []): Route | null
       if (e.childrenList?.length) {
         return find(e.childrenList);
       }
+
+      return false;
     });
   }
   find(routes);
@@ -57,7 +60,7 @@ export function getRoutesPath(title: string, routes: Route[] = []): Route | null
 }
 
 export function checkPhoneNum(num: string) {
-  const reg = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+  const reg = /^(?:13\d|14[014-9]|15[0-35-9]|16[2567]|17[0-8]|18\d|19[0-35-9])\d{8}$/;
 
   return reg.test(num);
 }
@@ -76,8 +79,8 @@ export function resolveBlob(res: any, fileName: string) {
 export function downloadFile(url: string, fileName?: string) {
   const a = document.createElement("a");
   a.style.display = "none";
-  a.href = url + "?response-content-type=application/octet-stream";
-  a.download = fileName ? fileName : "";
+  a.href = `${url}?response-content-type=application/octet-stream`;
+  a.download = fileName || "";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -86,13 +89,15 @@ export function downloadFile(url: string, fileName?: string) {
 export function toLocaleString(num: number) {
   if (typeof num === "number") {
     return num.toLocaleString();
-  } else {
+  }
+  else {
     return "0";
   }
 }
 
 export function number2Chn(num: number) {
-  if (!num) return "-";
+  if (!num)
+    return "-";
 
   const param: { value: string | number; unit: string } = {
     value: num,
@@ -105,9 +110,10 @@ export function number2Chn(num: number) {
   if (num < k) {
     param.value = num;
     param.unit = "";
-  } else {
+  }
+  else {
     i = Math.floor(Math.log(num) / Math.log(k));
-    param.value = (num / Math.pow(k, i)).toFixed(2);
+    param.value = (num / k ** i).toFixed(2);
     param.unit = sizes[i];
   }
   return param.value + param.unit;
@@ -144,11 +150,11 @@ export function getRandomNumber(min: number, max: number) {
 // 图片的代理
 export function proxyImgPreview(url: string) {
   // return `${(url as string).includes(".avif") ? "http://m.sky.test/api/market/seo/select/img?url=" + url : url}`;
-  return `${(url as string).includes(".avif") ? "/api/market/seo/select/img?url=" + url : url}`;
+  return `${(url).includes(".avif") ? `/api/market/seo/select/img?url=${url}` : url}`;
 }
 
 export function convertMinutesToHoursMinutesAndDays(minutes: number) {
-  if (isNaN(minutes) || minutes < 0) {
+  if (Number.isNaN(minutes) || minutes < 0) {
     return {
       days: 0,
       hours: 0,
@@ -161,19 +167,19 @@ export function convertMinutesToHoursMinutesAndDays(minutes: number) {
   const remainingMinutes = Math.floor(minutes % 60);
 
   return {
-    days: days,
-    hours: hours,
+    days,
+    hours,
     minutes: remainingMinutes,
   };
 }
 
 // 获取url的文件名
-export const getUrlName = (url = "") => {
+export function getUrlName(url = "") {
   const arr = url.split("/");
   return arr[arr.length - 1];
-};
+}
 
-export const getLocalStorage = (key: string, type?: "json") => {
+export function getLocalStorage(key: string, type?: "json") {
   const data = localStorage.getItem(key) || undefined;
   return data && type ? JSON.parse(data) : data;
-};
+}

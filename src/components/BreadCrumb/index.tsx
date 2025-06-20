@@ -1,12 +1,12 @@
-import { memo, useMemo } from "react";
 import classNames from "classnames";
+import { memo, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface BreadCrumbProps {
   routerPath: { [prop: string]: string };
 }
 
-const BreadCrumb = ({ routerPath = {} }: BreadCrumbProps) => {
+function BreadCrumb({ routerPath }: BreadCrumbProps) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const currentPath = routerPath[Object.keys(routerPath).find(item => item.startsWith(pathname)) || ""];
@@ -14,7 +14,7 @@ const BreadCrumb = ({ routerPath = {} }: BreadCrumbProps) => {
   const pathMap = useMemo(() => {
     const temp: Record<string, string> = {};
 
-    Object.keys(routerPath).map(e => {
+    Object.keys(routerPath).forEach((e) => {
       const arr = routerPath[e].split("/");
       temp[arr[arr.length - 1].trim()] = e;
     });
@@ -48,6 +48,6 @@ const BreadCrumb = ({ routerPath = {} }: BreadCrumbProps) => {
       })}
     </div>
   );
-};
+}
 
 export default memo(BreadCrumb);

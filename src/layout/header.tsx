@@ -1,13 +1,13 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Layout } from "antd";
 import type { MenuProps } from "antd";
-import classnames from "classnames";
-import { useNavigate } from "react-router-dom";
-import { useShallow } from "zustand/react/shallow";
-
 import dark_img from "&src/assets/images/dark.svg";
 import light_img from "&src/assets/images/light.svg";
 import useRootStore from "&src/store";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown, Layout } from "antd";
+
+import classnames from "classnames";
+import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 import lessStyle from "./index.module.less";
 
 const { Header } = Layout;
@@ -17,7 +17,7 @@ interface MenuHeaderProps {
   tabList: MenuItem[];
 }
 
-const MenuHeader = ({ tabId, tabList }: MenuHeaderProps) => {
+function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
   const navigate = useNavigate();
   const { userInfo, darkMode, setLogin, setDarkMode } = useRootStore(
     useShallow(store => ({
@@ -59,7 +59,7 @@ const MenuHeader = ({ tabId, tabList }: MenuHeaderProps) => {
           管理系统
         </h1>
 
-        {tabList.map(e => {
+        {tabList.map((e) => {
           return (
             <div
               key={e.key}
@@ -80,25 +80,27 @@ const MenuHeader = ({ tabId, tabList }: MenuHeaderProps) => {
 
       <div className="flex items-center">
         <div className="mr-10 flex w-5 cursor-pointer items-center">
-          {darkMode ? (
-            <img
-              src={dark_img}
-              className="w-full"
-              alt="暗黑模式"
-              onClick={() => {
-                setDarkMode(false);
-              }}
-            />
-          ) : (
-            <img
-              src={light_img}
-              className="w-full"
-              alt="明亮模式"
-              onClick={() => {
-                setDarkMode(true);
-              }}
-            />
-          )}
+          {darkMode
+            ? (
+                <img
+                  src={dark_img}
+                  className="w-full"
+                  alt="暗黑模式"
+                  onClick={() => {
+                    setDarkMode(false);
+                  }}
+                />
+              )
+            : (
+                <img
+                  src={light_img}
+                  className="w-full"
+                  alt="明亮模式"
+                  onClick={() => {
+                    setDarkMode(true);
+                  }}
+                />
+              )}
         </div>
 
         <Dropdown menu={{ items }} placement="bottomRight" className="cursor-pointer" arrow={{ pointAtCenter: false }}>
@@ -111,6 +113,6 @@ const MenuHeader = ({ tabId, tabList }: MenuHeaderProps) => {
       </div>
     </Header>
   );
-};
+}
 
 export default MenuHeader;

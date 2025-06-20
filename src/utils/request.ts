@@ -1,6 +1,6 @@
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { notification } from "antd";
 import axios from "axios";
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 export const BAD_REQ_CODE = 911;
 
@@ -37,14 +37,15 @@ export class Request {
     );
   }
 
-  send<T>(url: string, method = "get", data?: any, config?: AxiosRequestConfig): Promise<AxiosRes<T>> {
+  async send<T>(url: string, method = "get", data?: any, config?: AxiosRequestConfig): Promise<AxiosRes<T>> {
     const axiosConfig = { ...config };
     axiosConfig.url = url;
     axiosConfig.method = method;
 
     if (method.toLocaleLowerCase() === "get") {
       axiosConfig.params = data;
-    } else {
+    }
+    else {
       axiosConfig.data = data;
     }
 

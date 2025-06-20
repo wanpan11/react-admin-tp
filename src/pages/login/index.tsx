@@ -1,17 +1,17 @@
-import { memo, useEffect, useState } from "react";
-import { Button, Card, Form, Input, Layout } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useShallow } from "zustand/react/shallow";
-
+import type { AccountApi } from "&src/types/api";
 import { loginReq } from "&src/api/account";
 import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "&src/config";
 import GLOBAL_ROUTERS from "&src/router/config";
+
 import useRootStore from "&src/store";
-import type { AccountApi } from "&src/types/api";
 import { getLocalStorage } from "&src/utils";
+import { Button, Card, Form, Input, Layout } from "antd";
+import { memo, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 import lessStyle from "./index.module.less";
 
-const Login = () => {
+function Login() {
   const navigate = useNavigate();
   const { setLogin, setDynamicRoutes } = useRootStore(useShallow(store => ({ setLogin: store.setLogin, setDynamicRoutes: store.setDynamicRoutes })));
 
@@ -64,6 +64,6 @@ const Login = () => {
       </Card>
     </Layout>
   );
-};
+}
 
 export default memo(Login);

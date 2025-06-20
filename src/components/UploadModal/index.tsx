@@ -1,13 +1,13 @@
-import { memo, useState } from "react";
+import type { UploadProps } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
-import type { UploadProps } from "antd";
+import { memo, useState } from "react";
 
 import FormModal from "../FormModal";
 
 const { Dragger } = Upload;
 
-const UploadModal = ({
+function UploadModal({
   open,
   title,
   maxCount = 1,
@@ -19,7 +19,7 @@ const UploadModal = ({
   maxCount?: number;
   onCancel?: () => void;
   onOk?: (value: any) => void;
-}) => {
+}) {
   const [file, fileHandle] = useState<any>([]);
 
   // 批量导入
@@ -27,7 +27,7 @@ const UploadModal = ({
     name: "file",
     accept: ".xls,.xlsx",
     fileList: file,
-    maxCount: maxCount,
+    maxCount,
     onChange({ fileList }) {
       fileHandle(fileList);
     },
@@ -51,7 +51,11 @@ const UploadModal = ({
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
-            <p className="ant-upload-text">点击或将文件拖至此处上传 最多{maxCount}个文件</p>
+            <p className="ant-upload-text">
+              点击或将文件拖至此处上传 最多
+              {maxCount}
+              个文件
+            </p>
             <p className="ant-upload-hint">仅支持 .xls,.xlsx 格式文件</p>
           </Dragger>
 
@@ -83,6 +87,6 @@ const UploadModal = ({
       }}
     />
   );
-};
+}
 
 export default memo(UploadModal);
