@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 import Loading from "&src/components/Loading";
 import Redirect from "&src/components/Redirect";
 import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
@@ -7,7 +7,8 @@ import { nanoid } from "nanoid";
 import { lazy, Suspense } from "react";
 import { Outlet, Route } from "react-router-dom";
 
-const getLazyLoad = (url: string) => lazy(async () => import(`&src/pages${url}`));
+const modules = import.meta.glob<{ default: ComponentType<any> }>("../pages/**/*.tsx");
+const getLazyLoad = (url: string) => lazy(modules[`../pages${url}.tsx`]);
 
 // 菜单图标映射
 const iconMapping: Record<string, ReactNode> = {

@@ -1,6 +1,4 @@
 import type { MenuProps } from "antd";
-import dark_img from "&src/assets/images/dark.svg";
-import light_img from "&src/assets/images/light.svg";
 import useRootStore from "&src/store";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Dropdown, Layout } from "antd";
@@ -83,7 +81,7 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
           {darkMode
             ? (
                 <img
-                  src={dark_img}
+                  src="/dark.svg"
                   className="w-full"
                   alt="暗黑模式"
                   onClick={() => {
@@ -93,7 +91,7 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
               )
             : (
                 <img
-                  src={light_img}
+                  src="/light.svg"
                   className="w-full"
                   alt="明亮模式"
                   onClick={() => {

@@ -4,7 +4,7 @@ import tailwind from "eslint-plugin-tailwindcss";
 export default antfu({
   formatters: false,
   react: true,
-  ignores: ["README.md"],
+  ignores: ["./*.md"],
   typescript: {
     tsconfigPath: "tsconfig.json",
   },

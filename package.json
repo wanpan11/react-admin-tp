@@ -16,7 +16,7 @@
     "start": "vite -c ./scripts/vite.config.ts",
     "build": "vite build -c ./scripts/vite.config.ts",
     "dev:build": "vite build -c ./scripts/vite.config.ts -m development --minify false",
-    "lint": "eslint --fix --ext js,jsx,ts,tsx src/ && tsc --noEmit",
+    "lint": "eslint --fix && tsc --noEmit",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -39,6 +39,7 @@
     "@types/node": "^18.19.24",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.5.2",
     "autoprefixer": "^10.4.18",
     "cross-env": "^7.0.3",
     "cssnano": "^6.1.0",

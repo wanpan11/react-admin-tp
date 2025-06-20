@@ -1,5 +1,7 @@
-import path from "path";
-import { defineConfig, UserConfig } from "vite";
+import type { UserConfig } from "vite";
+import path from "node:path";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 import pak from "../package.json";
 
@@ -38,12 +40,14 @@ export default defineConfig(async ({ command, mode }) => {
       "import.meta.env.HTML_TITLE": JSON.stringify(entryConfig.title),
       "import.meta.env.BUILD_VERSION": JSON.stringify(`${pak.version}_${new Date().getTime()}`),
     },
+    plugins: [react()]
   };
 
   if (command === "serve") {
     config.server = entryConfig.devServer;
     return config;
-  } else {
+  }
+  else {
     return config;
   }
 });
