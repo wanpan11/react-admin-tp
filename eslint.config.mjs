@@ -1,57 +1,31 @@
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
-import prettierPlugin from "eslint-plugin-prettier";
-import reactPlugin from "eslint-plugin-react";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
+import antfu from "@antfu/eslint-config";
 
-const baseConfig = {
-  ignores: ["dist/**"],
-  plugins: {
-    react: reactPlugin,
-    "react-hooks": reactHooksPlugin,
-    prettier: prettierPlugin,
+export default antfu({
+  formatters: false,
+  react: true,
+  ignores: ["README.md"],
+  typescript: {
+    tsconfigPath: "tsconfig.json",
   },
-  languageOptions: {
-    ecmaVersion: 2022,
-    sourceType: "module",
-    parserOptions: {
-      ecmaFeatures: { jsx: true },
-    },
-    globals: {
-      React: "readonly",
-      document: "readonly",
-      window: "readonly",
-    },
+  globals: {
+    process: true,
   },
-  settings: { react: { version: "detect" } },
+  stylistic: {
+    quotes: "double", // or 'double'
+    semi: true,
+  },
   rules: {
-    ...reactPlugin.configs.recommended.rules,
-    ...reactHooksPlugin.configs.recommended.rules,
-    "prettier/prettier": "error",
+    "ts/no-namespace": 0,
+    "ts/no-unsafe-call": 0,
+    "ts/no-unsafe-return": 0,
+    "ts/no-unsafe-argument": 0,
+    "ts/no-misused-promises": 0,
+    "ts/no-floating-promises": 0,
+    "ts/no-unsafe-assignment": 0,
+    "ts/no-unsafe-member-access": 0,
+    "ts/strict-boolean-expressions": 0,
+    "ts/switch-exhaustiveness-check": 0,
+    "react-hooks-extra/no-direct-set-state-in-use-effect": 0,
+    "n/prefer-global/process": 0, // Allow process in browser context
   },
-};
-
-/** @type {import('@eslint/js').FlatConfig[]} */
-export default [
-  { ...baseConfig, files: ["**/*.{js,mjs,cjs,jsx}"] },
-  {
-    ...baseConfig,
-    files: ["**/*.{ts,tsx}"],
-    plugins: { ...baseConfig.plugins, "@typescript-eslint": tseslint },
-    languageOptions: {
-      ...baseConfig.languageOptions,
-      parser: tsParser,
-      parserOptions: {
-        ...baseConfig.languageOptions.parserOptions,
-        project: "./tsconfig.json",
-      },
-    },
-    rules: {
-      ...baseConfig.rules,
-      ...tseslint.configs["recommended"].rules,
-      "no-redeclare": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-unused-expressions": 0,
-    },
-  },
-];
+});
