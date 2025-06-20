@@ -18,7 +18,8 @@ export default function useScroll(contentRef: React.RefObject<HTMLDivElement>) {
 
         if (diff > 0) {
           contentRef.current.scrollLeft -= diff;
-        } else {
+        }
+        else {
           contentRef.current.scrollLeft += Math.abs(diff);
         }
       }

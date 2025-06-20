@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 require("../env/env.cjs"); // 导入对应环境变量
-const pak = require("../package.json");
-const path = require("path");
-const webpack = require("webpack");
+const path = require("node:path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
+const pak = require("../package.json");
 
 const rootDir = path.resolve(__dirname, "../");
 const dynamicConf = require(`./${process.env.NODE_ENV}.config.cjs`); //  加载对应环境打包配置
 
 const publicVars = Object.keys(process.env)
-  .filter((key) => key.startsWith("PUBLIC_"))
+  .filter(key => key.startsWith("PUBLIC_"))
   .reduce((env, key) => {
     env[key] = process.env[key];
     return env;

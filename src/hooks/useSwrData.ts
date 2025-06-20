@@ -1,5 +1,6 @@
+import type { KeyedMutator, SWRConfiguration } from "swr";
 import { useCallback, useMemo, useState } from "react";
-import useSwr, { KeyedMutator, SWRConfiguration } from "swr";
+import useSwr from "swr";
 
 interface PageInfo {
   pageNum: number;
@@ -50,10 +51,10 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R> & { paging?:
  * @param {string | any[]} props.reqKey - SWR 请求的 key，用于缓存。
  * @param {(params: P) => Promise<R>} props.req - 用于获取数据的请求函数。
  * @param {P} [props.params] - 请求函数的参数 受控参数。
- * @param {boolean} [props.ready=true] - 标志请求是否准备好发送。
- * @param {boolean} [props.paging=false] - 标志是否启用分页。
- * @param {Partial<P>} [props.defaultSearch={}] - 默认的搜索参数 初始参数。
- * @param {PageInfo} [props.defaultPage=defaultPageInfo] - 默认的分页信息。
+ * @param {boolean} [props.ready] - 标志请求是否准备好发送。
+ * @param {boolean} [props.paging] - 标志是否启用分页。
+ * @param {Partial<P>} [props.defaultSearch] - 默认的搜索参数 初始参数。
+ * @param {PageInfo} [props.defaultPage] - 默认的分页信息。
  * @param {SWRConfiguration} [props.swrConfig] - SWR 配置选项。
  *
  * @returns {UseSwrData<R> | UseSwrPagIngDataPage<P, R>} - 如果启用了分页，则返回 SWR 数据和分页信息。
@@ -70,10 +71,12 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R>): UseSwrData
 
     if (paging) {
       mergeParams = { key: mergeParams, ...pageInfo, ...searchInfo, ...params };
-    } else {
+    }
+    else {
       if (typeof params === "object" && params !== null) {
         mergeParams = { key: mergeParams, ...params };
-      } else {
+      }
+      else {
         mergeParams = [mergeParams, params];
       }
     }
@@ -84,17 +87,18 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R>): UseSwrData
   // 发送请求
   const { data, isLoading, error, mutate } = useSwr(
     ready ? key : null,
-    (data: (P & { key?: string }) | P[]) => {
+    async (data: (P & { key?: string }) | P[]) => {
       // 判断请求参数类型
       if (Array.isArray(data)) {
         const sendData = [...data.slice(1)] as [P];
         return req(...sendData);
-      } else {
+      }
+      else {
         delete data.key;
         return req(data);
       }
     },
-    swrConfig ? swrConfig : { revalidateOnFocus: false }
+    swrConfig || { revalidateOnFocus: false }
   );
 
   const onSearch = useCallback(

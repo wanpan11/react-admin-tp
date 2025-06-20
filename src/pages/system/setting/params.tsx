@@ -1,7 +1,7 @@
 import { Card, Skeleton } from "antd";
 import { Link } from "react-router-dom";
 
-const Params = ({ title }: PageProps) => {
+function Params({ title }: PageProps) {
   return (
     <Card title={title || "参数配置"}>
       <div>
@@ -10,6 +10,6 @@ const Params = ({ title }: PageProps) => {
       <Skeleton active />
     </Card>
   );
-};
+}
 
 export default Params;

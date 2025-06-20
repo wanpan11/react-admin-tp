@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 interface PathRoute {
   key?: string | number;
   path: string;

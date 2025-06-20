@@ -2,7 +2,7 @@ import { Checkbox, DatePicker, Input, InputNumber, Radio, Select, Switch, TreeSe
 
 const { RangePicker } = DatePicker;
 
-export const getFormElement = (type: FormItem["type"], info: FormItem) => {
+export function getFormElement(type: FormItem["type"], info: FormItem) {
   switch (type) {
     case "radio":
       return (
@@ -83,4 +83,4 @@ export const getFormElement = (type: FormItem["type"], info: FormItem) => {
         />
       );
   }
-};
+}

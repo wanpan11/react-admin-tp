@@ -1,32 +1,31 @@
-/* eslint-disable @typescript-eslint/no-namespace */
-type PageInfo<T> = {
+interface PageInfo<T> {
   pageNum: number;
   pageSize: number;
   total: number;
   totalPage: number;
   list: T[];
-};
+}
 
 export namespace AccountApi {
-  export type Login = {
+  export interface Login {
     account: string;
     password: string;
-  };
+  }
 }
 
 export namespace CompanyApi {
-  export type InsertReq = {
+  export interface InsertReq {
     category: number;
     contact: string;
     name: string;
     mobile: string;
-  };
+  }
 
-  export type ListReq = {
+  export interface ListReq {
     pageNum: number;
     pageSize: number;
     name?: string;
-  };
+  }
 
   export type ListRes = PageInfo<InsertReq & { id: number; updateTime: string }>;
 }

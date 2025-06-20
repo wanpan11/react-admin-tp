@@ -1,13 +1,13 @@
-import request from "&src/utils/request";
 import type { CompanyApi } from "../types/api";
+import request from "&src/utils/request";
 
 export const companyService = {
-  insert: (data: CompanyApi.InsertReq) => {
+  insert: async (data: CompanyApi.InsertReq) => {
     return request.send<string>("/company/insert", "post", data, {
       headers: { "Content-Type": "application/json" },
     });
   },
-  list: (data: CompanyApi.ListReq) => {
+  list: async (data: CompanyApi.ListReq) => {
     return request.send<CompanyApi.ListRes>("/company/list", "post", data);
   },
 };

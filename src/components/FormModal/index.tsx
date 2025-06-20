@@ -1,15 +1,17 @@
-import { memo, useRef } from "react";
-import { FormInstance, Modal, ModalProps } from "antd";
+import type { FormInstance, ModalProps } from "antd";
+import type { FormListProps } from "../FormList";
+import { Modal } from "antd";
 
-import FormList, { FormListProps } from "../FormList";
+import { memo, useRef } from "react";
+import FormList from "../FormList";
 
 interface FormModalProps
   extends Pick<ModalProps, "open" | "width" | "title" | "classNames" | "className" | "maskClosable" | "onCancel" | "okButtonProps">,
-    Pick<FormListProps, "form" | "itemInfo" | "wrapperCol" | "labelCol" | "initialValues" | "stageValues" | "onOk" | "onForm" | "onValuesChange"> {
+  Pick<FormListProps, "form" | "itemInfo" | "wrapperCol" | "labelCol" | "initialValues" | "stageValues" | "onOk" | "onForm" | "onValuesChange"> {
   noFooter?: boolean;
 }
 
-const FormModal = (props: FormModalProps) => {
+function FormModal(props: FormModalProps) {
   const {
     open,
     width = 880,
@@ -44,9 +46,9 @@ const FormModal = (props: FormModalProps) => {
       className={className}
       maskClosable={maskClosable}
       okButtonProps={okButtonProps}
-      closable={noFooter ? true : false}
+      closable={!!noFooter}
       footer={noFooter ? null : undefined}
-      classNames={classNames ? classNames : { body: "pt-6" }}
+      classNames={classNames || { body: "pt-6" }}
       afterClose={() => {
         formInstance.current && formInstance.current.resetFields();
       }}
@@ -60,6 +62,6 @@ const FormModal = (props: FormModalProps) => {
       </div>
     </Modal>
   );
-};
+}
 
 export default memo(FormModal);
