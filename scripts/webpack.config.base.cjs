@@ -96,5 +96,6 @@ module.exports = {
       progress: true,
       overlay: true,
     },
+    hot: true
   },
 };

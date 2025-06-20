@@ -1,3 +1,4 @@
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const webpack = require("webpack");
 const baseConfig = require("./webpack.config.base.cjs");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
@@ -6,7 +7,7 @@ module.exports = (_, argv) => {
   console.log("MODE ===>", argv.mode);
 
   if (argv.mode === "development") {
-    baseConfig.plugins.push(new webpack.SourceMapDevToolPlugin({}));
+    baseConfig.plugins.push(new webpack.SourceMapDevToolPlugin({}), new ReactRefreshWebpackPlugin());
   }
 
   if (argv.mode === "production") {

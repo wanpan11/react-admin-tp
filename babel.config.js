@@ -1,3 +1,9 @@
+const plugins = ["@babel/plugin-transform-runtime"];
+
+if (process.env.NODE_ENV === "development") {
+  plugins.push("react-refresh/babel");
+}
+
 export default {
   presets: [
     [
@@ -16,5 +22,5 @@ export default {
     ],
     ["@babel/preset-typescript", { isTSX: true, allExtensions: true }],
   ],
-  plugins: ["@babel/plugin-transform-runtime"],
+  plugins,
 };
