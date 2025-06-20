@@ -1,13 +1,13 @@
-import { ComponentType, lazy, ReactNode, Suspense } from "react";
-import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
-import { nanoid } from "nanoid";
-import { Outlet, Route } from "react-router-dom";
-
+import type { ReactNode } from "react";
 import Loading from "&src/components/Loading";
 import Redirect from "&src/components/Redirect";
+import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
+import { nanoid } from "nanoid";
 
-const modules = import.meta.glob<{ default: ComponentType<any> }>("../pages/**/*.tsx");
-const getLazyLoad = (url: string) => lazy(modules[`../pages${url}.tsx`]);
+import { lazy, Suspense } from "react";
+import { Outlet, Route } from "react-router-dom";
+
+const getLazyLoad = (url: string) => lazy(async () => import(`&src/pages${url}`));
 
 // 菜单图标映射
 const iconMapping: Record<string, ReactNode> = {
@@ -123,7 +123,7 @@ export function transformRouter(routers: Route[]) {
   const routerMenu: MenuItem[] = [];
 
   function transform(arr: Route[], router: Route[], menu: MenuItem[], partePath = "") {
-    arr.forEach(element => {
+    arr.forEach((element) => {
       const key = nanoid();
       const { path, title, index, icon, notMenu, childrenList } = element;
 
@@ -131,7 +131,7 @@ export function transformRouter(routers: Route[]) {
 
       // 多级嵌套 补全 /
       if (path?.startsWith("/") && childrenList?.length) {
-        newPath = (path + "/").replace(/\/\/+/g, "/");
+        newPath = (`${path}/`).replace(/\/{2,}/g, "/");
       }
 
       const routeObj: Route = {
@@ -144,13 +144,14 @@ export function transformRouter(routers: Route[]) {
       const menuObj: MenuItem = {
         key,
         path: index ? partePath : (path as string),
-        label: title ? title : "",
+        label: title || "",
         icon: iconMapping[icon],
         children: [],
       };
 
       router.push(routeObj);
-      if (!notMenu) menu.push(menuObj);
+      if (!notMenu)
+        menu.push(menuObj);
 
       if (childrenList?.length) {
         transform(childrenList, routeObj.childrenList!, menuObj.children!, newPath);
@@ -165,11 +166,11 @@ export function transformRouter(routers: Route[]) {
 /**
  * 获取路由面包屑路径
  */
-export const getPathRecord = (routes: Route[]) => {
+export function getPathRecord(routes: Route[]) {
   const obj: Record<string, string> = {};
 
   const getBreadCrumbConf = (arr: Route[], parentTitle = "") => {
-    arr.forEach(e => {
+    arr.forEach((e) => {
       const { path, title = "", childrenList = [] } = e;
       let newTitle = title;
 
@@ -191,18 +192,19 @@ export const getPathRecord = (routes: Route[]) => {
 
   getBreadCrumbConf(routes);
   return obj;
-};
+}
 
 /**
  * 获取 <Route/> 组件
  */
-export const getRoute = (routers: Route[] | Route) => {
+export function getRoute(routers: Route[] | Route) {
   const list = Array.isArray(routers) ? routers : [routers];
-  return list.map(e => {
+  return list.map((e) => {
     const { key = nanoid(), path, title, index, redirect, component: componentPath, childrenList = [] } = e;
 
     let element: ReactNode = null;
-    if (redirect) element = <Redirect redirect={redirect}></Redirect>;
+    if (redirect)
+      element = <Redirect redirect={redirect}></Redirect>;
     if (componentPath) {
       const Component = getLazyLoad(componentPath);
       element = (
@@ -212,16 +214,18 @@ export const getRoute = (routers: Route[] | Route) => {
       );
     }
 
-    const jsx = index ? (
-      <Route key={key} element={element} index></Route>
-    ) : (
-      <Route key={key} element={element} path={path}>
-        {childrenList.length ? getRoute(childrenList) : undefined}
-      </Route>
-    );
+    const jsx = index
+      ? (
+          <Route key={key} element={element} index></Route>
+        )
+      : (
+          <Route key={key} element={element} path={path}>
+            {childrenList.length ? getRoute(childrenList) : undefined}
+          </Route>
+        );
 
     return jsx;
   });
-};
+}
 
 export default GLOBAL_ROUTERS;

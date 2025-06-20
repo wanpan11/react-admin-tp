@@ -1,7 +1,9 @@
-import { memo, useRef } from "react";
-import { Button, Card, FormInstance } from "antd";
+import type { FormInstance } from "antd";
+import type { FormListProps } from "../FormList";
+import { Button, Card } from "antd";
 
-import FormList, { FormListProps } from "../FormList";
+import { memo, useRef } from "react";
+import FormList from "../FormList";
 
 export interface FormFilterProps extends Pick<FormListProps, "form" | "onOk" | "onForm" | "onValuesChange" | "initialValues" | "stageValues"> {
   className?: string;
@@ -12,7 +14,7 @@ export interface FormFilterProps extends Pick<FormListProps, "form" | "onOk" | "
   searchBtn?: boolean;
 }
 
-const FormFilter = (props: FormFilterProps) => {
+function FormFilter(props: FormFilterProps) {
   const { className, filterInfo, reset, loading, compact = false, searchBtn = true, onForm, ...resetProps } = props;
 
   const formInstance = useRef<FormInstance<any> | null>(null);
@@ -46,6 +48,6 @@ const FormFilter = (props: FormFilterProps) => {
       />
     </Card>
   );
-};
+}
 
 export default memo(FormFilter);

@@ -1,5 +1,7 @@
-import { memo, ReactElement, useEffect, useMemo } from "react";
-import { Button, Form, FormInstance, FormProps } from "antd";
+import type { FormInstance, FormProps } from "antd";
+import type { ReactElement } from "react";
+import { Button, Form } from "antd";
+import { memo, useEffect, useMemo } from "react";
 
 import { getFormElement } from "../tools";
 
@@ -31,7 +33,7 @@ export interface FormListProps extends Omit<FormProps, "labelCol" | "wrapperCol"
  *
  * @description extend antd Form
  */
-const FormList = (props: FormListProps) => {
+function FormList(props: FormListProps) {
   const {
     form,
     itemInfo,
@@ -50,7 +52,7 @@ const FormList = (props: FormListProps) => {
   } = props;
 
   const [insideForm] = Form.useForm();
-  const realForm = form ? form : insideForm;
+  const realForm = form || insideForm;
 
   // 只在初始化时生效
   useEffect(() => {
@@ -58,8 +60,9 @@ const FormList = (props: FormListProps) => {
 
     if (initialValues) {
       realForm.setFieldsValue(initialValues);
-    } else {
-      itemInfo.forEach(e => {
+    }
+    else {
+      itemInfo.forEach((e) => {
         if (e.initialValue !== undefined && e.initialValue !== null) {
           realForm.setFieldValue(e.name, e.initialValue);
         }
@@ -84,14 +87,16 @@ const FormList = (props: FormListProps) => {
     if (submitBtn) {
       if (submitNode) {
         return submitNode;
-      } else {
+      }
+      else {
         return (
           <Button htmlType="submit" type="primary" block>
             保存
           </Button>
         );
       }
-    } else {
+    }
+    else {
       return null;
     }
   }, [submitBtn, submitNode]);
@@ -99,7 +104,7 @@ const FormList = (props: FormListProps) => {
   return (
     <Form form={realForm} labelCol={labelCol ? { span: labelCol } : undefined} wrapperCol={wrapperCol ? { span: wrapperCol } : undefined} onFinish={onOk} {...restProps}>
       {itemInfo.map((e, idx) => {
-        const key = e.name instanceof Array ? e.name.join("_") : e.name || idx;
+        const key = Array.isArray(e.name) ? e.name.join("_") : e.name || idx;
 
         if (e.hide) {
           return null;
@@ -131,6 +136,6 @@ const FormList = (props: FormListProps) => {
       {submitBtnNode}
     </Form>
   );
-};
+}
 
 export default memo(FormList);

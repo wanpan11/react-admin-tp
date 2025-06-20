@@ -1,4 +1,5 @@
 import antfu from "@antfu/eslint-config";
+import tailwind from "eslint-plugin-tailwindcss";
 
 export default antfu({
   formatters: false,
@@ -13,6 +14,9 @@ export default antfu({
   stylistic: {
     quotes: "double", // or 'double'
     semi: true,
+    overrides: {
+      "style/comma-dangle": "off",
+    },
   },
   rules: {
     "ts/no-namespace": 0,
@@ -28,4 +32,4 @@ export default antfu({
     "react-hooks-extra/no-direct-set-state-in-use-effect": 0,
     "n/prefer-global/process": 0, // Allow process in browser context
   },
-});
+}, ...tailwind.configs["flat/recommended"]);

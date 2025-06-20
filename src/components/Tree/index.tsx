@@ -1,8 +1,8 @@
-import { useMemo } from "react";
 import { Checkbox } from "antd";
 import classNames from "classnames";
+import { useMemo } from "react";
 
-type TreeProps = {
+interface TreeProps {
   treeData: {
     id: number | string;
     name: string;
@@ -10,11 +10,12 @@ type TreeProps = {
   }[];
   selectKeys: (number | string)[];
   onChange: (keys: string[]) => void;
-};
+}
 
-const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
+function Tree({ treeData, selectKeys = [], onChange }: TreeProps) {
   const mapKeys = useMemo(() => {
-    if (!selectKeys.length) return [];
+    if (!selectKeys.length)
+      return [];
 
     const strKeys = selectKeys.map(e => e.toString());
     const tempArr: string[] = [];
@@ -22,14 +23,16 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
     const addKeys = (arr: TreeProps["treeData"], parentPath: string) => {
       arr.forEach((ele: any) => {
         const next = strKeys.indexOf(`${ele.id}`);
-        if (!~next) return;
+        if (!~next)
+          return;
 
-        const newPath = `${parentPath ? parentPath + "_" : ""}${ele.id}`;
+        const newPath = `${parentPath ? `${parentPath}_` : ""}${ele.id}`;
 
         if (ele.children.length) {
           tempArr.push(newPath);
           addKeys(ele.children, newPath);
-        } else {
+        }
+        else {
           tempArr.push(newPath);
         }
       });
@@ -42,7 +45,7 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
   const change = (arr: string[]) => {
     let tempArr: string[] = [];
 
-    arr.forEach(keys => {
+    arr.forEach((keys) => {
       tempArr = [...tempArr, ...keys.split("_")];
     });
 
@@ -51,12 +54,12 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
 
   return useMemo(() => {
     const getEle = (roleConf: TreeProps["treeData"], deep: number, parentId = "") => {
-      return roleConf.map(conf => {
+      return roleConf.map((conf) => {
         const newPath = parentId ? `${parentId}_${conf.id}` : `${conf.id}`;
 
         const idx = mapKeys.indexOf(newPath);
-        const parentArr = mapKeys.filter(str => {
-          return str.indexOf(newPath) === 0 ? true : false;
+        const parentArr = mapKeys.filter((str) => {
+          return str.indexOf(newPath) === 0;
         });
 
         if (conf.children.length) {
@@ -68,23 +71,25 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
                   style={{
                     color: `rgba(0, 0, 0, ${0.2 * deep + 0.4})`,
                   }}
-                  onChange={evn => {
+                  onChange={(evn) => {
                     const check = evn.target.checked;
                     const keys: string[] = [];
 
                     if (check) {
                       // 添加子项
-                      const addKeys = (arr: any, newPath: string) => {
+                      const addKeys = (arr: any[], newPath: string) => {
                         arr.forEach((element: any) => {
                           if (element.children.length) {
                             addKeys(element.children, `${newPath}_${element.id}`);
-                          } else {
+                          }
+                          else {
                             keys.push(`${newPath}_${element.id}`);
                           }
                         });
                       };
                       addKeys(conf.children, newPath);
-                    } else {
+                    }
+                    else {
                       // 删除子项
                       mapKeys.forEach((key, idx) => {
                         const match = key.indexOf(newPath);
@@ -104,20 +109,22 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
               <div className="ml-8">{getEle(conf.children, deep + 1, newPath)}</div>
             </div>
           );
-        } else {
+        }
+        else {
           return (
             <div key={conf.id} className={classNames(deep === 0 ? "block border-b border-neutral-200 pb-3 pt-3" : "inline-block pb-2 pr-5 pt-2")}>
               <Checkbox
-                checked={idx > -1 ? true : false}
+                checked={idx > -1}
                 style={{
                   color: conf.children.length ? `rgba(0, 0, 0, ${0.2 * deep + 0.4})` : `rgba(0, 0, 0, 0.8)`,
                 }}
-                onChange={evn => {
+                onChange={(evn) => {
                   const check = evn.target.checked;
 
                   if (check) {
                     mapKeys.push(newPath);
-                  } else {
+                  }
+                  else {
                     // 保留父级
                     const currentKeyArr = mapKeys[idx].split("_");
                     currentKeyArr.pop();
@@ -140,6 +147,6 @@ const Tree = ({ treeData, selectKeys = [], onChange }: TreeProps) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapKeys, treeData]);
-};
+}
 
 export default Tree;

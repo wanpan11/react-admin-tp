@@ -1,11 +1,11 @@
-import { BrowserRouter, Routes } from "react-router-dom";
-
 import Error from "&src/components/Error";
+
 import ErrorBoundary from "&src/components/ErrorBoundary";
 import GLOBAL_ROUTERS, { getRoute } from "&src/router/config";
 import { useGetRouterConfig } from "&src/store";
+import { BrowserRouter, Routes } from "react-router-dom";
 
-const AppRouter = () => {
+function AppRouter() {
   const { router } = useGetRouterConfig();
 
   return (
@@ -19,6 +19,6 @@ const AppRouter = () => {
       </BrowserRouter>
     </ErrorBoundary>
   );
-};
+}
 
 export default AppRouter;

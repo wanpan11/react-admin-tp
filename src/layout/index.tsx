@@ -1,10 +1,10 @@
-import { useMemo } from "react";
-import { ConfigProvider, Layout, theme } from "antd";
-import { Link, useLocation } from "react-router-dom";
-
 import BreadCrumb from "&src/components/BreadCrumb";
 import { COLOR_PRIMARY, SPLIT_FLAG } from "&src/config";
 import useRootStore, { useGetRouterConfig } from "&src/store";
+
+import { ConfigProvider, Layout, theme } from "antd";
+import { useMemo } from "react";
+import { Link, useLocation } from "react-router-dom";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
 
@@ -21,11 +21,12 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
   let parentStr = "";
 
   function getCurrentPathId(arr: MenuItem[], parent?: string) {
-    if (arr.length < 0) return;
+    if (arr.length < 0)
+      return;
 
-    arr.forEach(e => {
+    arr.forEach((e) => {
       if (pathname.startsWith(e.path)) {
-        parentStr = parent ? parent : `${e.key}`;
+        parentStr = parent || `${e.key}`;
 
         if (!e.children?.length) {
           menuId = parent ? `${e.key}` : "";
@@ -36,7 +37,8 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
       if (e.children?.length) {
         if (parent) {
           newParentStr = `${parent + SPLIT_FLAG + e.key}`;
-        } else {
+        }
+        else {
           newParentStr = `${e.key}`;
         }
 
@@ -50,12 +52,19 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
   const sider = routerMenu.filter(e => e.key === tabId)[0]?.children || [];
 
   function getSideMenu(arr: MenuItem[]): MenuItem[] {
-    return arr.map(ele => {
+    return arr.map((ele) => {
       const { path, children } = ele;
 
       return {
         ...ele,
-        label: children?.length ? ele.label : <Link to={path}> {ele.label}</Link>,
+        label: children?.length
+          ? ele.label
+          : (
+              <Link to={path}>
+                {" "}
+                {ele.label}
+              </Link>
+            ),
         children: children?.length ? getSideMenu(children) : undefined,
       };
     });
@@ -65,7 +74,7 @@ function menuHandle(routerMenu: MenuItem[] = [], pathname: string): [string, str
   return [tabId, menuId, sideMenu];
 }
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+function AppLayout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const darkMode = useRootStore(store => store.darkMode);
   const { routerMenu, routerPathMapping } = useGetRouterConfig();
@@ -90,7 +99,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
 
             <Layout>
-              <Content className="m-3 mb-0 mt-0">
+              <Content className="m-3 my-0">
                 <BreadCrumb routerPath={routerPathMapping} />
 
                 <div className="h-[calc(100%-4.5rem)] overflow-auto">{children}</div>
@@ -101,6 +110,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       </ConfigProvider>
     </div>
   );
-};
+}
 
 export default AppLayout;
