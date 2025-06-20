@@ -82,7 +82,7 @@ setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
 - types
 - utils
 
-> 需要安装 ESLint、Prettier、Tailwind CSS IntelliSense 插件（墙裂推荐安装）<br/>
+> 需要安装 ESLint、Tailwind CSS IntelliSense 插件（墙裂推荐安装）<br/>
 > 环境变量和打包配置动态加载 <br/>
 > 安装完项目依赖后再提交代码，保持项目整洁 <br/>
 > homepage 相关文件、构建指令皆可删除
