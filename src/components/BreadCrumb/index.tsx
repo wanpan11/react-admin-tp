@@ -42,7 +42,7 @@ function BreadCrumb({ routerPath }: BreadCrumbProps) {
               {text}
             </span>
 
-            {isLast ? null : <span className="ml-2 mr-2">/</span>}
+            {isLast ? null : <span className="mx-2">/</span>}
           </span>
         );
       })}

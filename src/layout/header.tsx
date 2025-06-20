@@ -33,7 +33,7 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
       key: "1",
       label: (
         <div
-          className="p-3 pb-1 pt-1"
+          className="p-3 py-1"
           onClick={() => {
             localStorage.clear();
             setLogin({ login: false });
@@ -52,7 +52,7 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
   };
 
   return (
-    <Header className={`relative z-[999] box-border flex h-14 items-center justify-between p-7 pb-3 pt-3 shadow-ch ${darkMode ? "bg-slate-900" : "bg-white"} `}>
+    <Header className={`relative z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch ${darkMode ? "bg-slate-900" : "bg-white"} `}>
       <div className="flex items-center">
         <h1 className="mr-28 flex items-center text-lg">
           <img alt="logo" className="mr-2 w-8" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
@@ -66,7 +66,7 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
               onClick={() => {
                 itemClick(e.path);
               }}
-              className={classnames("relative ml-4 mr-4 h-14 cursor-pointer select-none pl-3 pr-3 text-base leading-[56px]", {
+              className={classnames("relative mx-4 h-14 cursor-pointer select-none px-3 text-base leading-[56px]", {
                 [`${lessStyle.tabItem_active} text-primary`]: e.key === tabId,
               })}
             >

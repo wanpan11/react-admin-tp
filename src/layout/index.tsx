@@ -99,7 +99,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
             {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
 
             <Layout>
-              <Content className="m-3 mb-0 mt-0">
+              <Content className="m-3 my-0">
                 <BreadCrumb routerPath={routerPathMapping} />
 
                 <div className="h-[calc(100%-4.5rem)] overflow-auto">{children}</div>
