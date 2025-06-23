@@ -19,6 +19,7 @@ export default antfu({
     },
   },
   rules: {
+    "no-console": "warn",
     "ts/no-namespace": 0,
     "ts/no-unsafe-call": 0,
     "ts/no-unsafe-return": 0,
