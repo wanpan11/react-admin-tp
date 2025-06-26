@@ -535,6 +535,10 @@ video {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .mb-2 {
   margin-bottom: 0.5rem;
 }
