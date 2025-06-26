@@ -21,7 +21,7 @@ function Error() {
             window.location.reload();
           }}
         >
-          重置路由
+          重置路由缓存
         </Button>
       </div>
     </div>
