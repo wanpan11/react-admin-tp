@@ -36,14 +36,13 @@ const GLOBAL_ROUTERS = {
   LOGIN_PAGE: {
     path: "/login",
     title: "登录",
-    component: "/login/index",
+    component: "/login",
   } as Route,
-
   // 动态路由页面
   APP_PAGE: [
     {
       path: "/",
-      component: "/system/index",
+      component: "/index",
       childrenList: [
         {
           title: "首页",
@@ -107,12 +106,11 @@ const GLOBAL_ROUTERS = {
       ],
     },
   ] as Route[],
-
   // 404
   NOT_FOUND_PAGE: {
     path: "*",
     redirect: "/login",
-  } as Route,
+  } as Route
 };
 
 /**
@@ -132,7 +130,7 @@ export function transformRouter(routers: Route[]) {
 
       // 多级嵌套 补全 /
       if (path?.startsWith("/") && childrenList?.length) {
-        newPath = (`${path}/`).replace(/\/{2,}/g, "/");
+        newPath = `${path}/`.replace(/\/{2,}/g, "/");
       }
 
       const routeObj: Route = {
