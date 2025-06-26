@@ -112,6 +112,12 @@ pnpm build
 ```
 
 ---
+### 常见问题
+
+ - 修改路由后无法正常工作
+   - 清空 localStorage 重置路由配置
+
+---
 
 ### [仓库地址 issue ☹ star ★](https://github.com/wanpan11/react-admin-tp)
 
