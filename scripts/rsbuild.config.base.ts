@@ -41,7 +41,6 @@ async function getBaseConfig() {
       assetPrefix: publicPath,
       cleanDistPath: true,
       distPath: { root: path.resolve(rootDir, outDir) },
-      filename: { css: process.env.NODE_ENV === "production" ? "[name].[contenthash:8].css" : "[name].css" },
     },
     server: {
       port: devServer?.port,
