@@ -36,7 +36,7 @@ const GLOBAL_ROUTERS = {
   LOGIN_PAGE: {
     path: "/login",
     title: "登录",
-    component: "/login",
+    component: "/login/index",
   } as Route,
   // 动态路由页面
   APP_PAGE: [
