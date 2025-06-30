@@ -33,4 +33,8 @@ export default antfu({
     "react-hooks-extra/no-direct-set-state-in-use-effect": 0,
     "n/prefer-global/process": 0, // Allow process in browser context
   },
-}, ...tailwind.configs["flat/recommended"]);
+}, ...tailwind.configs["flat/recommended"], {
+  rules: {
+    "tailwindcss/no-custom-classname": ["off"],
+  },
+});
