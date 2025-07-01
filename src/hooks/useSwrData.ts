@@ -1,4 +1,5 @@
 import type { KeyedMutator, SWRConfiguration } from "swr";
+import { DEFAULT_PAGE } from "&src/config";
 import { useCallback, useMemo, useState } from "react";
 import useSwr from "swr";
 
@@ -6,11 +7,6 @@ interface PageInfo {
   pageNum: number;
   pageSize: number;
 }
-
-export const defaultPageInfo: PageInfo = {
-  pageNum: 1,
-  pageSize: 10,
-};
 
 interface UseSwrDataProps<P, R = any> {
   reqKey: string | any[];
@@ -60,7 +56,7 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R> & { paging?:
  * @returns {UseSwrData<R> | UseSwrPagIngDataPage<P, R>} - 如果启用了分页，则返回 SWR 数据和分页信息。
  */
 export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R>): UseSwrData<R> | UseSwrPagIngDataPage<P, R> {
-  const { reqKey, req, params, ready = true, paging = false, defaultSearch = {}, defaultPage = defaultPageInfo, swrConfig } = props;
+  const { reqKey, req, params, ready = true, paging = false, defaultSearch = {}, defaultPage = DEFAULT_PAGE, swrConfig } = props;
 
   const [pageInfo, setPage] = useState(defaultPage);
   const [searchInfo, setSearch] = useState<Partial<P>>(defaultSearch);
