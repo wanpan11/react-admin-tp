@@ -1,24 +1,27 @@
-import type { KeyedMutator, SWRConfiguration } from "swr";
+import type { Key, KeyedMutator, SWRConfiguration } from "swr";
 import { DEFAULT_PAGE } from "&src/config";
 import { useCallback, useMemo, useState } from "react";
 import useSwr from "swr";
 
+type SimpleKey = string | any[];
+type SearchType<P> = P extends object ? Partial<P> : P;
 interface PageInfo {
   pageNum: number;
   pageSize: number;
 }
 
-interface UseSwrDataProps<P, R = any> {
-  reqKey: string | any[];
-  req: (params: P) => Promise<AxiosRes<R>>;
+interface UseSwrDataProps<P = any, R = any> {
+  reqKey: SimpleKey; // 请求的 key 可以是字符串或数组
+  req: (params: P) => Promise<AxiosRes<R>>; // 请求函数 返回 Promise<AxiosRes<R>>
 
-  defaultPage?: PageInfo;
-  defaultSearch?: Partial<P>;
-  params?: Partial<P>;
-  paging?: boolean;
+  ready?: boolean; // 是否准备就绪，默认为 true
+  paging?: boolean; // 是否分页，默认为 false
 
-  ready?: boolean;
-  swrConfig?: SWRConfiguration;
+  params?: SearchType<P>; // 受控请求参数 受控
+  defaultPage?: PageInfo; // 默认分页信息 非受控
+  defaultSearch?: SearchType<P>; // 默认搜索信息 非受控
+
+  swrConfig?: SWRConfiguration; // swr 配置项
 }
 
 interface UseSwrData<R = any> {
@@ -27,82 +30,73 @@ interface UseSwrData<R = any> {
   isLoading: boolean;
   refresh: KeyedMutator<AxiosRes<R>>;
 }
-interface UseSwrPagIngDataPage<P, R = any> extends UseSwrData<R> {
+interface UseSwrPagIngDataPage<P = any, R = any> extends UseSwrData<R> {
   pageInfo: PageInfo;
-  searchInfo: Partial<P>;
-  onSearch: (value: AnyObject) => void;
+  searchInfo?: SearchType<P>;
+  onSearch: (value: SearchType<P>) => void;
   setPage: React.Dispatch<React.SetStateAction<PageInfo>>;
-  setSearch: React.Dispatch<React.SetStateAction<Partial<P>>>;
+  setSearch: React.Dispatch<React.SetStateAction<SearchType<P> | undefined>>;
 }
 
-export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R> & { paging: true }): UseSwrPagIngDataPage<P, R>;
-export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R> & { paging?: false }): UseSwrData<R>;
-/**
- * 使用 SWR（stale-while-revalidate）获取数据的自定义 Hook，支持可选的分页功能。
- *
- * @template R - 响应数据的类型。
- * @template P - 请求参数的类型。
- *
- * @param {UseSwrDataProps<P, R>} props - Hook 的属性。
- * @param {string | any[]} props.reqKey - SWR 请求的 key，用于缓存。
- * @param {(params: P) => Promise<R>} props.req - 用于获取数据的请求函数。
- * @param {P} [props.params] - 请求函数的参数 受控参数。
- * @param {boolean} [props.ready] - 标志请求是否准备好发送。
- * @param {boolean} [props.paging] - 标志是否启用分页。
- * @param {Partial<P>} [props.defaultSearch] - 默认的搜索参数 初始参数。
- * @param {PageInfo} [props.defaultPage] - 默认的分页信息。
- * @param {SWRConfiguration} [props.swrConfig] - SWR 配置选项。
- *
- * @returns {UseSwrData<R> | UseSwrPagIngDataPage<P, R>} - 如果启用了分页，则返回 SWR 数据和分页信息。
- */
-export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R>): UseSwrData<R> | UseSwrPagIngDataPage<P, R> {
-  const { reqKey, req, params, ready = true, paging = false, defaultSearch = {}, defaultPage = DEFAULT_PAGE, swrConfig } = props;
+export function useSwrData<R = any, P = any>(props: UseSwrDataProps<P, R> & { paging: true }): UseSwrPagIngDataPage<P, R>;
+export function useSwrData<R = any, P = any>(props: UseSwrDataProps<P, R> & { paging?: false }): UseSwrData<R>;
+export function useSwrData<R = any, P = any>(props: UseSwrDataProps<P, R>): UseSwrData<R> | UseSwrPagIngDataPage<P, R> {
+  const { reqKey, req, params, ready = true, paging = false, defaultSearch, defaultPage = DEFAULT_PAGE, swrConfig } = props;
 
   const [pageInfo, setPage] = useState(defaultPage);
-  const [searchInfo, setSearch] = useState<Partial<P>>(defaultSearch);
+  const [searchInfo, setSearch] = useState(defaultSearch);
 
-  // 合并参数生成 key
-  const key = useMemo(() => {
-    let mergeParams: any[] | Record<string, any> | string = reqKey;
-
-    if (paging) {
-      mergeParams = { key: mergeParams, ...pageInfo, ...searchInfo, ...params };
+  const mergeKey: Key = useMemo(() => {
+    if (ready === false) {
+      return null;
     }
-    else {
-      if (typeof params === "object" && params !== null) {
-        mergeParams = { key: mergeParams, ...params };
+
+    if (Array.isArray(reqKey)) {
+      if (paging) {
+        return [reqKey, params, pageInfo, searchInfo];
       }
       else {
-        mergeParams = [mergeParams, params];
+        return [reqKey, params];
       }
     }
+    else {
+      if (paging) {
+        return { key: reqKey, ...params, ...pageInfo, ...searchInfo };
+      }
+      else {
+        return { key: reqKey, ...params, ...pageInfo, ...searchInfo };
+      }
+    }
+  }, [pageInfo, paging, params, ready, reqKey, searchInfo]);
 
-    return mergeParams;
-  }, [pageInfo, paging, params, reqKey, searchInfo]);
-
-  // 发送请求
   const { data, isLoading, error, mutate } = useSwr(
-    ready ? key : null,
-    async (data: (P & { key?: string }) | P[]) => {
-      // 判断请求参数类型
+    mergeKey,
+    async (data: (P & { key?: SimpleKey }) | [SimpleKey, P]) => {
       if (Array.isArray(data)) {
-        const sendData = [...data.slice(1)] as [P];
-        return req(...sendData);
+        let sendData = {};
+        const paramsList = data.slice(1) as [P];
+        paramsList.forEach((item) => {
+          if (typeof item === "object" && item) {
+            sendData = { ...sendData, ...item, };
+          }
+        });
+
+        return req(sendData as P);
       }
       else {
         delete data.key;
         return req(data);
       }
     },
-    swrConfig || { revalidateOnFocus: false },
+    swrConfig || { revalidateOnFocus: false }
   );
 
   const onSearch = useCallback(
-    (value: AnyObject) => {
+    (value: SearchType<P>) => {
       setSearch(value);
       setPage(defaultPage);
     },
-    [defaultPage],
+    [defaultPage]
   );
 
   if (paging) {
@@ -118,11 +112,12 @@ export function useSwrData<R, P = any>(props: UseSwrDataProps<P, R>): UseSwrData
       setSearch,
     };
   }
-
-  return {
-    data: data?.data,
-    error,
-    isLoading,
-    refresh: mutate,
-  };
+  else {
+    return {
+      data: data?.data,
+      error,
+      isLoading,
+      refresh: mutate,
+    };
+  }
 }
