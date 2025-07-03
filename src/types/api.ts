@@ -1,4 +1,4 @@
-interface PageInfo<T> {
+export interface ResponseList<T> {
   pageNum: number;
   pageSize: number;
   total: number;
@@ -27,5 +27,5 @@ export namespace CompanyApi {
     name?: string;
   }
 
-  export type ListRes = PageInfo<InsertReq & { id: number; updateTime: string }>;
+  export type ListRes = ResponseList<InsertReq & { id: number; updateTime: string }>;
 }

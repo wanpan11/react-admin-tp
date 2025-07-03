@@ -3,24 +3,21 @@ import { DEFAULT_PAGE } from "&src/config";
 import { useCallback, useMemo, useState } from "react";
 import useSwr from "swr";
 
-type SimpleKey = string | any[];
-type SearchType<P> = P extends object ? Partial<P> : P;
-interface PageInfo {
+export type SimpleKey = string | any[];
+export type SearchType<P> = P extends object ? Partial<P> : P;
+interface PageType {
   pageNum: number;
   pageSize: number;
 }
 
-interface UseSwrDataProps<P = any, R = any> {
+export interface UseSwrDataProps<P = any, R = any> {
   reqKey: SimpleKey; // 请求的 key 可以是字符串或数组
   req: (params: P) => Promise<AxiosRes<R>>; // 请求函数 返回 Promise<AxiosRes<R>>
-
   ready?: boolean; // 是否准备就绪，默认为 true
   paging?: boolean; // 是否分页，默认为 false
-
   params?: SearchType<P>; // 受控请求参数 受控
-  defaultPage?: PageInfo; // 默认分页信息 非受控
+  defaultPage?: PageType; // 默认分页信息 非受控
   defaultSearch?: SearchType<P>; // 默认搜索信息 非受控
-
   swrConfig?: SWRConfiguration; // swr 配置项
 }
 
@@ -31,10 +28,10 @@ interface UseSwrData<R = any> {
   refresh: KeyedMutator<AxiosRes<R>>;
 }
 interface UseSwrPagIngDataPage<P = any, R = any> extends UseSwrData<R> {
-  pageInfo: PageInfo;
+  pageInfo: PageType;
   searchInfo?: SearchType<P>;
   onSearch: (value: SearchType<P>) => void;
-  setPage: React.Dispatch<React.SetStateAction<PageInfo>>;
+  setPage: React.Dispatch<React.SetStateAction<PageType>>;
   setSearch: React.Dispatch<React.SetStateAction<SearchType<P> | undefined>>;
 }
 
@@ -77,7 +74,7 @@ export function useSwrData<R = any, P = any>(props: UseSwrDataProps<P, R>): UseS
         const paramsList = data.slice(1) as [P];
         paramsList.forEach((item) => {
           if (typeof item === "object" && item) {
-            sendData = { ...sendData, ...item, };
+            sendData = { ...sendData, ...item };
           }
         });
 
