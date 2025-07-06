@@ -30,6 +30,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "swr": "^2.3.3",
+    "use-swr-data": "^0.0.2",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
