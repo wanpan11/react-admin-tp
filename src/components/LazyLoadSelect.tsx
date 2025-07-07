@@ -1,6 +1,6 @@
 import type { ResponseList } from "&src/types/api";
 import type { SelectProps } from "antd";
-import type { AnyObject, PagingSwrProps } from "use-swr-data/dist/interface";
+import type { AnyObject, PagingSwrProps } from "use-swr-data";
 
 import { Select, Spin } from "antd";
 import debounce from "lodash/debounce";
@@ -9,14 +9,16 @@ import useSwrData from "use-swr-data";
 
 interface LazyLoadSelectProps<P extends AnyObject, R extends ResponseList<any>> {
   value?: SelectProps["value"];
-  fieldNames?: SelectProps["fieldNames"];
   searchKey: string;
-  reqParams: PagingSwrProps<R, P>["params"];
   reqFunc: PagingSwrProps<R, P>["req"];
+  fieldNames?: SelectProps["fieldNames"];
+  reqParams?: PagingSwrProps<R, P>["params"];
   onChange?: SelectProps["onChange"];
 }
 
-export default function LazyLoadSelect<P extends AnyObject, R extends ResponseList<any>>({ value, fieldNames, searchKey = "name", reqParams, reqFunc, onChange }: LazyLoadSelectProps<P, R>) {
+export default function LazyLoadSelect<P extends AnyObject, R extends ResponseList<any>>(props: LazyLoadSelectProps<P, R>) {
+  const { value, fieldNames, searchKey = "name", reqParams, reqFunc, onChange } = props;
+
   const [list, setList] = useState<any[]>([]);
 
   const { data, pageInfo, onSearch, setPage } = useSwrData({
