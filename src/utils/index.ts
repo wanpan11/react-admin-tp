@@ -8,14 +8,13 @@ export function getFormData(obj: any) {
   return formData;
 }
 
-export function getParam(): Record<string, string>;
+export function getParam(): Record<string, string | undefined>;
 export function getParam(name: string): string;
 export function getParam(name?: string) {
   const query = window.location.search.substring(1);
-  const vars = query.split("&");
+  const vars = query ? query.split("&") : [];
 
   const value: any = {};
-
   for (let i = 0; i < vars.length; i++) {
     const pair = vars[i].split("=");
     value[pair[0]] = pair[1] + (pair[2] ? `=${pair[2]}` : "");
@@ -30,33 +29,7 @@ export function getParam(name?: string) {
 }
 
 export function getCookie(key: string) {
-  return (
-    decodeURIComponent(
-      document.cookie.replace(new RegExp(`(?:(?:^|.*;)\\s*${encodeURIComponent(key).replace(/[-.+*]/g, "\\$&")}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1"),
-    ) || ""
-  );
-}
-
-export function getRoutesPath(title: string, routes: Route[] = []): Route | null {
-  let info: Route | null = null;
-
-  function find(arr: Route[]) {
-    arr.some((e) => {
-      if (e.title === title) {
-        info = e;
-        return true;
-      }
-
-      if (e.childrenList?.length) {
-        return find(e.childrenList);
-      }
-
-      return false;
-    });
-  }
-  find(routes);
-
-  return info;
+  return decodeURIComponent(document.cookie.replace(new RegExp(`(?:(?:^|.*;)\\s*${encodeURIComponent(key).replace(/[-.+*]/g, "\\$&")}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1")) || "";
 }
 
 export function checkPhoneNum(num: string) {
@@ -86,6 +59,20 @@ export function downloadFile(url: string, fileName?: string) {
   document.body.removeChild(a);
 }
 
+export function downloadVideo(url: string, fileName?: string) {
+  fetch(url)
+    .then(async res => res.blob())
+    .then((blob) => {
+      const a = document.createElement("a");
+      const objectUrl = window.URL.createObjectURL(blob);
+      a.download = fileName ? "" : "";
+      a.href = objectUrl;
+      a.click();
+      window.URL.revokeObjectURL(objectUrl);
+      a.remove();
+    });
+}
+
 export function toLocaleString(num: number) {
   if (typeof num === "number") {
     return num.toLocaleString();
@@ -96,13 +83,10 @@ export function toLocaleString(num: number) {
 }
 
 export function number2Chn(num: number) {
-  if (!num)
+  if (num === undefined || num === null)
     return "-";
 
-  const param: { value: string | number; unit: string } = {
-    value: num,
-    unit: "",
-  };
+  const param: { value: string | number; unit: string } = { value: num, unit: "" };
   const k = 10000;
   const sizes = ["", "万", "亿", "万亿"];
   let i = 0;
@@ -119,7 +103,7 @@ export function number2Chn(num: number) {
   return param.value + param.unit;
 }
 
-export function tree2flat(tree: object[]) {
+export function tree2flat(tree: { id: string | number; children: any[] }[]) {
   const arr: any[] = [];
 
   const transform = (list: any[]) => {
@@ -182,4 +166,43 @@ export function getUrlName(url = "") {
 export function getLocalStorage(key: string, type?: "json") {
   const data = localStorage.getItem(key) || undefined;
   return data && type ? JSON.parse(data) : data;
+}
+
+export function videoPlay(ref: HTMLVideoElement | null) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // 元素进入可视区域
+        ref?.play();
+      }
+      else {
+        // 元素移出可视区域
+        ref?.pause();
+      }
+    });
+  });
+
+  ref && observer.observe(ref);
+}
+
+/**
+ * 隐藏字符串中间部分，保留首尾各visibleChars个字符，其余用*替换。
+ */
+export function hideMiddlePart(str: string, visibleChars = 4): string {
+  const strLength = str.length;
+  if (strLength <= 2 * visibleChars) {
+    // 如果字符串长度小于或等于两倍的可见字符数，直接返回原字符串
+    return str;
+  }
+
+  // 构建隐藏部分
+  const hiddenPart = "*".repeat(strLength - 2 * visibleChars);
+
+  // 返回处理后的字符串
+  return str.slice(0, visibleChars) + hiddenPart + str.slice(-visibleChars);
+}
+
+// 获取序号
+export function getSerialNumber(idx: number) {
+  return idx < 9 ? `0${idx + 1}` : idx + 1;
 }
