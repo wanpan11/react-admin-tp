@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const webpack = require("webpack");
 const baseConfig = require("./webpack.config.base.cjs");
