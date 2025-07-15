@@ -1,11 +1,11 @@
 import type { ResponseList } from "&src/types/api";
+import type { AnyObject, PagingSwrProps } from "@wanp/use-swr-data";
 import type { SelectProps } from "antd";
-import type { AnyObject, PagingSwrProps } from "use-swr-data";
 
+import useSwrData from "@wanp/use-swr-data";
 import { Select, Spin } from "antd";
 import debounce from "lodash/debounce";
 import { useEffect, useMemo, useState } from "react";
-import useSwrData from "use-swr-data";
 
 interface LazyLoadSelectProps<P extends AnyObject, R extends ResponseList<any>> {
   value?: SelectProps["value"];
