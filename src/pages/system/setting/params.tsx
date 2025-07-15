@@ -1,7 +1,7 @@
 import { Card, Skeleton } from "antd";
 import { Link } from "react-router-dom";
 
-function Params({ title }: PageProps) {
+function Params({ title }: RoutePageProps) {
   return (
     <Card title={title || "参数配置"}>
       <div>

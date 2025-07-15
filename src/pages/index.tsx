@@ -1,6 +1,6 @@
 import Layout from "&src/layout";
 
-function System({ children }: PageProps) {
+function System({ children }: RoutePageProps) {
   return <Layout>{children}</Layout>;
 }
 

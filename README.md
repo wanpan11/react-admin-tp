@@ -62,7 +62,7 @@ react-typescript 后台管理系统项目模版内置 动态路由、动态路�
 GLOBAL_ROUTERS.APP_PAGE;
 
 // 调用这方法设置你的动态路由配置
-const setDynamicRoutes = useRootStore((store) => store.setDynamicRoutes);
+const setDynamicRoutes = useRootStore(store => store.setDynamicRoutes);
 setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
 ```
 
