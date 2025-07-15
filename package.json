@@ -15,7 +15,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development rsbuild dev -c ./scripts/rsbuild.config.ts -m development",
     "build": "cross-env NODE_ENV=production rsbuild build -c ./scripts/rsbuild.config.ts -m production",
-    "dev:build": "cross-env NODE_ENV=development rsbuild build - ./scripts/rsbuild.config.ts -m development",
+    "dev:build": "cross-env NODE_ENV=development rsbuild build -c ./scripts/rsbuild.config.ts -m development",
     "lint": "eslint --fix && tsc --noEmit",
     "prepare": "husky install"
   },
@@ -24,11 +24,13 @@
     "antd": "^5.15.3",
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
+    "lodash": "^4.17.21",
     "nanoid": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "swr": "^2.3.3",
+    "use-swr-data": "^0.0.3",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
@@ -38,6 +40,7 @@
     "@rsbuild/plugin-less": "^1.1.1",
     "@rsbuild/plugin-react": "^1.1.1",
     "@rsdoctor/rspack-plugin": "^1.0.0",
+    "@types/lodash": "^4.17.20",
     "@types/mockjs": "^1.0.10",
     "@types/node": "^18.19.24",
     "@types/react": "^18.2.66",
