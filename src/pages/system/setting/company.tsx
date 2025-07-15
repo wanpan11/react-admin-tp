@@ -3,9 +3,9 @@ import { companyService } from "&src/api/setting";
 import FormFilter from "&src/components/FormFilter";
 import FormModal from "&src/components/FormModal";
 
+import useSwrData from "@wanp/use-swr-data";
 import { Button, Card, message, Table } from "antd";
 import { useState } from "react";
-import useSwrData from "use-swr-data";
 
 const filterInfo: FormItem[] = [{ name: "projectName", type: "input", label: "厂商名称" }];
 const itemInfo: FormItem[] = [
