@@ -62,7 +62,7 @@ export default function LazyLoadSelect<P extends AnyObject, R extends ResponseLi
       value: "loading",
     });
 
-    return list;
+    return newList;
   }, [list, data, pageInfo]);
 
   const onSearchData = debounce((value) => {

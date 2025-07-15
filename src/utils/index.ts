@@ -65,7 +65,7 @@ export function downloadVideo(url: string, fileName?: string) {
     .then((blob) => {
       const a = document.createElement("a");
       const objectUrl = window.URL.createObjectURL(blob);
-      a.download = fileName ? "" : "";
+      a.download = fileName || "";
       a.href = objectUrl;
       a.click();
       window.URL.revokeObjectURL(objectUrl);
@@ -204,5 +204,5 @@ export function hideMiddlePart(str: string, visibleChars = 4): string {
 
 // 获取序号
 export function getSerialNumber(idx: number) {
-  return idx < 9 ? `0${idx + 1}` : idx + 1;
+  return idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
 }
