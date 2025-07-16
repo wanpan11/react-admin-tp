@@ -1,12 +1,21 @@
-import { Card, Skeleton } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Card, Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function Params({ title }: RoutePageProps) {
+  const navigate = useNavigate();
+
   return (
     <Card title={title || "参数配置"}>
-      <div>
-        <Link to="/setting/detail">detail</Link>
-      </div>
+      <Button
+        type="primary"
+        className="mb-2"
+        onClick={() => {
+          navigate("/setting/detail");
+        }}
+      >
+        detail
+      </Button>
+
       <Skeleton active />
     </Card>
   );
