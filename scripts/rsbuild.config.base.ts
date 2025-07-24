@@ -29,11 +29,12 @@ async function getBaseConfig() {
       tags:
         process.env.NODE_ENV === "development"
           ? [
-              {
-                tag: "script",
-                append: false,
-                attrs: { crossOrigin: "anonymous", src: "https://unpkg.com/react-scan/dist/auto.global.js" },
-              },
+              // 国内 网速可能不太好 默认关闭
+              // {
+              //   tag: "script",
+              //   append: false,
+              //   attrs: { crossOrigin: "anonymous", src: "https://unpkg.com/react-scan/dist/auto.global.js" },
+              // },
             ]
           : undefined,
     },
