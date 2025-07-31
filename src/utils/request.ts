@@ -2,8 +2,6 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Inte
 import { notification } from "antd";
 import axios from "axios";
 
-export const BAD_REQ_CODE = 911;
-
 export class Request {
   instance: AxiosInstance;
   baseConfig: AxiosRequestConfig = {
@@ -16,11 +14,14 @@ export class Request {
 
     // 请求发送前
     this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+      if (config.url?.includes("http")) {
+        return config;
+      }
+
       // 代理标识
-      // const isHttp = config.url?.includes("http");
-      // if (process.env.PUBLIC_ENV === "DEV" && !isHttp) {
-      //   config.url = "/proxy" + config.url;
-      // }
+      if (process.env.NODE_ENV === "development") {
+        config.url = `/proxy${config.url}`;
+      }
 
       return config;
     });
@@ -31,9 +32,9 @@ export class Request {
         return res.data;
       },
       (err: AxiosError) => {
-        notification.error({ message: `请求异常 ===> ${err.message}` });
-        return { code: BAD_REQ_CODE, data: {} };
-      },
+        notification.error({ message: `网络连接弱，请检查网络环境` });
+        throw new Error(err.message);
+      }
     );
   }
 
