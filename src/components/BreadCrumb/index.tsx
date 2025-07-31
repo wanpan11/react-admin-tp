@@ -26,15 +26,13 @@ function BreadCrumb({ routerPath }: BreadCrumbProps) {
     <div className="flex h-14 items-center pl-2 text-neutral-400">
       {currentPath.split("/").map((e, i, arr) => {
         const text = e.trim();
-        const isLast = arr.length - 1 === i;
+        const last = arr.length - 1 === i;
         const path = pathMap[text];
 
         return (
           <span key={e}>
             <span
-              className={classNames({
-                "cursor-pointer text-primary": !isLast && path,
-              })}
+              className={classNames({ "cursor-pointer text-primary": !last && path })}
               onClick={() => {
                 navigate(path);
               }}
@@ -42,7 +40,7 @@ function BreadCrumb({ routerPath }: BreadCrumbProps) {
               {text}
             </span>
 
-            {isLast ? null : <span className="mx-2">/</span>}
+            {last ? null : <span className="mx-2">/</span>}
           </span>
         );
       })}
