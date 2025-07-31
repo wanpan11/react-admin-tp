@@ -33,7 +33,7 @@ export class Request {
       },
       (err: AxiosError) => {
         notification.error({ message: `网络连接弱，请检查网络环境` });
-        throw new Error(err.message);
+        throw err;
       }
     );
   }
