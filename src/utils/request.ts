@@ -9,7 +9,7 @@ export class Request {
     timeout: 30000,
   };
 
-  constructor(config: AxiosRequestConfig) {
+  constructor(config?: AxiosRequestConfig) {
     this.instance = axios.create(Object.assign(this.baseConfig, config));
 
     // 请求发送前
@@ -54,4 +54,4 @@ export class Request {
   }
 }
 
-export default new Request({});
+export default new Request();
