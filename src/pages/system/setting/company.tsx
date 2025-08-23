@@ -1,9 +1,9 @@
 import type { CompanyApi } from "&src/types/api";
 import { companyService } from "&src/api/setting";
-
 import FormFilter from "&src/components/FormFilter";
 import FormModal from "&src/components/FormModal";
-import { useSwrData } from "&src/hooks/useSwrData";
+
+import useSwrData from "@wanp/use-swr-data";
 import { Button, Card, message, Table } from "antd";
 import { useState } from "react";
 
@@ -115,7 +115,7 @@ function Company() {
 
   return (
     <div>
-      <FormFilter loading={isLoading} filterInfo={filterInfo} onOk={onSearch} reset />
+      <FormFilter reset loading={isLoading} filterInfo={filterInfo} onOk={onSearch} />
 
       <Card className="mt-1">
         <div className="mb-2">
@@ -133,7 +133,7 @@ function Company() {
           rowKey="id"
           columns={columns}
           loading={isLoading}
-          dataSource={data?.list}
+          dataSource={data?.data?.list}
           pagination={{
             onChange: (pageNum, pageSize) => {
               setPage({ pageNum, pageSize });

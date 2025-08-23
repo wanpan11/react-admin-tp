@@ -1,6 +1,6 @@
 import { Card, Skeleton } from "antd";
 
-function Detail({ title }: PageProps) {
+function Detail({ title }: RoutePageProps) {
   return (
     <Card title={title}>
       <Skeleton active />

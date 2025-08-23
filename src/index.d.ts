@@ -21,7 +21,7 @@ interface IndexRoute {
   childrenList?: Route[];
 }
 type Route = PathRoute | IndexRoute;
-interface PageProps {
+interface RoutePageProps {
   children: React.ReactNode;
   title: string;
 }
