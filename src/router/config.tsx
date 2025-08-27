@@ -109,7 +109,7 @@ const GLOBAL_ROUTERS = {
   NOT_FOUND_PAGE: {
     path: "*",
     redirect: "/login",
-  } as Route
+  } as Route,
 };
 
 /**
@@ -200,21 +200,26 @@ export function getRoute(routers: Route[] | Route) {
   return list.map((e) => {
     const { key = nanoid(), path, title, index, redirect, component: componentPath, childrenList = [] } = e;
 
-    let element: ReactNode = null;
-    if (redirect)
-      element = <Redirect redirect={redirect}></Redirect>;
+    let element: ReactNode = <></>;
+
     if (componentPath) {
       const Component = getLazyLoad(componentPath);
+
       element = (
         <Suspense fallback={<Loading full />}>
-          <Component title={title}>{childrenList.length ? <Outlet /> : null}</Component>
+          <Component title={title}>{childrenList.length ? <Outlet /> : undefined}</Component>
         </Suspense>
       );
+    }
+    else {
+      if (redirect) {
+        element = <Redirect redirect={redirect}></Redirect>;
+      }
     }
 
     const jsx = index
       ? (
-          <Route key={key} element={element} index></Route>
+          <Route key={key} element={element} index />
         )
       : (
           <Route key={key} element={element} path={path}>

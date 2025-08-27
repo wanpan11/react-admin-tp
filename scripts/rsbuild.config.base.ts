@@ -11,6 +11,7 @@ import pak from "../package.json";
 const rootDir = path.resolve(__dirname, "../");
 const sourceDir = path.resolve(rootDir, "./src");
 const envDir = path.resolve(rootDir, "./env");
+const now = new Date().toLocaleString();
 
 async function getBaseConfig() {
   const { entry, title, publicPath, outDir, devServer } = await import(`./${process.env.NODE_ENV}.config.ts`);
@@ -25,15 +26,16 @@ async function getBaseConfig() {
       title,
       template: path.resolve(rootDir, "./template/index.html"),
       favicon: path.resolve(rootDir, "./template/favicon.svg"),
-      meta: { version: pak.version },
+      meta: { version: `${pak.version}_${now}` },
       tags:
         process.env.NODE_ENV === "development"
           ? [
-              {
-                tag: "script",
-                append: false,
-                attrs: { crossOrigin: "anonymous", src: "https://unpkg.com/react-scan/dist/auto.global.js" },
-              },
+              // 国内 网速可能不太好 默认关闭
+              // {
+              //   tag: "script",
+              //   append: false,
+              //   attrs: { crossOrigin: "anonymous", src: "https://unpkg.com/react-scan/dist/auto.global.js" },
+              // },
             ]
           : undefined,
     },
