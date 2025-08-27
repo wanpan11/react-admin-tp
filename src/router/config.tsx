@@ -109,7 +109,7 @@ const GLOBAL_ROUTERS = {
   NOT_FOUND_PAGE: {
     path: "*",
     redirect: "/login",
-  } as Route
+  } as Route,
 };
 
 /**
@@ -200,7 +200,7 @@ export function getRoute(routers: Route[] | Route) {
   return list.map((e) => {
     const { key = nanoid(), path, title, index, redirect, component: componentPath, childrenList = [] } = e;
 
-    let element: ReactNode;
+    let element: ReactNode = <></>;
 
     if (componentPath) {
       const Component = getLazyLoad(componentPath);

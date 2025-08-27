@@ -14,7 +14,7 @@ export function detectBrowserEnv(): BrowserEnv {
     wechat: /micromessenger/i,
     ios: /iphone|ipad|ipod/i,
     android: /android/i,
-    mobile: /mobile|android|iphone|ipad|phone|tablet/i
+    mobile: /mobile|phone|tablet/i,
   };
 
   if (patterns.wechat.test(userAgent))
@@ -25,10 +25,8 @@ export function detectBrowserEnv(): BrowserEnv {
     return "android";
   if (patterns.mobile.test(userAgent))
     return "mobile";
-  if (!patterns.mobile.test(userAgent))
-    return "pc";
 
-  return "unknown";
+  return "pc";
 }
 
 interface DeviceInfo {
@@ -265,7 +263,7 @@ export function number2Chn(num: number): string {
   }
 
   const i = Math.min(Math.floor(Math.log(num) / Math.log(k)), sizes.length - 1);
-  const value = (num / (k ** i)).toFixed(2).replace(/\.?0+$/, "");
+  const value = (num / k ** i).toFixed(2).replace(/\.?0+$/, "");
 
   return value + sizes[i];
 }
