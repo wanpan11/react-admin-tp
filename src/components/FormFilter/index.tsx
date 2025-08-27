@@ -35,7 +35,7 @@ function FormFilter(props: FormFilterProps) {
   );
 
   return (
-    <Card classNames={{ body: className }}>
+    <Card classNames={{ body: className || "py-4" }}>
       <FormList
         colon={false}
         layout="inline"
