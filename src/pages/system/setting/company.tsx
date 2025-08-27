@@ -115,7 +115,7 @@ function Company() {
 
   return (
     <div>
-      <FormFilter loading={isLoading} filterInfo={filterInfo} onOk={onSearch} reset />
+      <FormFilter reset loading={isLoading} filterInfo={filterInfo} onOk={onSearch} />
 
       <Card className="mt-1">
         <div className="mb-2">

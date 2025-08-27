@@ -1,3 +1,4 @@
+import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import { useEffect, useMemo, useState } from "react";
 
@@ -30,10 +31,10 @@ function SiderCom({ menu, selectKey }: { menu: MenuItem[]; selectKey: string | n
     <Sider theme="light" width={160}>
       <Menu
         mode="inline"
-        items={menu}
+        className="mt-5"
         openKeys={keys}
         selectedKeys={[`${currentKay}`]}
-        className="mt-5"
+        items={menu as MenuProps["items"]}
         onOpenChange={(openKeys) => {
           setKeys(openKeys);
         }}
