@@ -15,7 +15,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve -c ./scripts/webpack.config.cjs --mode development",
     "build": "cross-env NODE_ENV=production webpack -c ./scripts/webpack.config.cjs --mode production",
-    "build:homepage": "cross-env NODE_ENV=homepage webpack -c ./scripts/webpack.config.cjs --mode production",
+    "build:homepage": "cross-env NODE_ENV=homepage webpack -c ./scripts/webpack.config.cjs --mode production && node ./scripts/copyIndex2404.cjs",
     "dev:build": "cross-env NODE_ENV=development webpack -c ./scripts/webpack.config.cjs --mode development",
     "lint": "eslint --fix && tsc --noEmit",
     "prepare": "husky install"
