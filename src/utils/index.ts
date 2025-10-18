@@ -1,35 +1,9 @@
 /**
  * 浏览器环境类型
  */
-export type BrowserEnv = "pc" | "mobile" | "ios" | "android" | "wechat" | "unknown";
+type BrowserEnv = "pc" | "mobile" | "ios" | "android" | "wechat" | "unknown";
 
-/**
- * 检测浏览器环境
- * @returns {BrowserEnv} 当前浏览器环境
- */
-export function detectBrowserEnv(): BrowserEnv {
-  const userAgent = navigator.userAgent.toLowerCase();
-
-  const patterns = {
-    wechat: /micromessenger/i,
-    ios: /iphone|ipad|ipod/i,
-    android: /android/i,
-    mobile: /mobile|phone|tablet/i,
-  };
-
-  if (patterns.wechat.test(userAgent))
-    return "wechat";
-  if (patterns.ios.test(userAgent))
-    return "ios";
-  if (patterns.android.test(userAgent))
-    return "android";
-  if (patterns.mobile.test(userAgent))
-    return "mobile";
-
-  return "pc";
-}
-
-interface DeviceInfo {
+export interface DeviceInfo {
   userAgent: string;
   browserEnv: BrowserEnv;
   isPC: boolean;
@@ -41,6 +15,35 @@ interface DeviceInfo {
   screenHeight: number;
   viewportWidth: number;
   viewportHeight: number;
+}
+
+/**
+ * 检测浏览器环境
+ * @returns {BrowserEnv} 当前浏览器环境
+ */
+export function detectBrowserEnv(): BrowserEnv {
+  const userAgent = navigator.userAgent.toLowerCase();
+
+  const patterns = {
+    wechat: /micromessenger/i,
+    mac: /macintosh/i,
+    ios: /iphone|ipad|ipod/i,
+    android: /android/i,
+    mobile: /mobile|android|iphone|ipad|phone|tablet/i,
+  };
+
+  if (patterns.wechat.test(userAgent))
+    return "wechat";
+  if (patterns.ios.test(userAgent))
+    return "ios";
+  if (patterns.android.test(userAgent))
+    return "android";
+  if (patterns.mobile.test(userAgent))
+    return "mobile";
+  if (!patterns.mobile.test(userAgent))
+    return "pc";
+
+  return "unknown";
 }
 
 /**
@@ -64,6 +67,85 @@ export function getDeviceInfo(): DeviceInfo {
     viewportWidth: window.innerWidth,
     viewportHeight: window.innerHeight,
   };
+}
+
+/**
+ * 根据长宽比判断是否为移动端设备
+ * @param {number} [threshold] - 长宽比阈值，默认为1.3
+ * @returns {boolean} 是否为移动端设备
+ */
+export function isMobileByAspectRatio(threshold = 1.3): boolean {
+  try {
+    /**
+     * 这里不适用 screen.width 和 screen.height 是因为
+     * 某些设备（ios safari）在横屏时会导致误判
+     */
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    if (!width || !height) {
+      console.warn("无法获取屏幕尺寸");
+      return false;
+    }
+
+    // 计算长宽比（高度/宽度）
+    const aspectRatio = height / width;
+
+    // 当长宽比大于阈值时认为是移动端（竖屏）
+    return aspectRatio > threshold;
+  }
+  catch (e) {
+    console.warn("检测长宽比时出错:", e);
+    return false;
+  }
+}
+
+/**
+ * 综合判断是否为移动端设备（结合 User Agent 和长宽比）
+ * @param {object} [options] - 配置选项
+ * @param {number} [options.aspectRatioThreshold] - 长宽比阈值，默认为1.3
+ * @param {boolean} [options.useUserAgent] - 是否使用 User Agent 检测，默认为true
+ * @param {boolean} [options.useAspectRatio] - 是否使用长宽比检测，默认为true
+ * @returns {boolean} 是否为移动端设备
+ */
+export function isMobileDevice(
+  options: {
+    aspectRatioThreshold?: number;
+    useUserAgent?: boolean;
+    useAspectRatio?: boolean;
+  } = {}
+): boolean {
+  const { aspectRatioThreshold = 1.3, useUserAgent = true, useAspectRatio = true } = options;
+
+  let isMobileByUA = false;
+  let isMobileByAR = false;
+
+  // 基于 User Agent 的检测
+  if (useUserAgent) {
+    const browserEnv = detectBrowserEnv();
+    isMobileByUA = ["mobile", "ios", "android", "wechat"].includes(browserEnv);
+  }
+
+  // 基于长宽比的检测
+  if (useAspectRatio) {
+    isMobileByAR = isMobileByAspectRatio(aspectRatioThreshold);
+  }
+
+  // 当两种检测方式都启用时，需要都满足条件
+  if (useUserAgent && useAspectRatio) {
+    return isMobileByUA || isMobileByAR;
+  }
+
+  // 只启用一种检测方式时，返回对应结果
+  if (useUserAgent) {
+    return isMobileByUA;
+  }
+
+  if (useAspectRatio) {
+    return isMobileByAR;
+  }
+
+  return false;
 }
 
 /**
@@ -382,9 +464,35 @@ export function getLocalStorage(key: string, type?: "json"): any {
  * @param {number} idx - 索引
  * @returns {string | number} 格式化后的序号
  */
-export function getSerialNumber(idx: number): string | number {
+export function getSerialNumber(idx: number, length: number, zeroStart?: boolean): string | number {
   if (typeof idx !== "number" || Number.isNaN(idx) || idx < 0) {
     return "00";
   }
-  return idx < 9 ? `0${idx + 1}` : idx + 1;
+
+  let newNum: number;
+  if (zeroStart) {
+    newNum = idx;
+  }
+  else {
+    newNum = idx + 1;
+  }
+
+  return newNum.toString().padStart(length, "0");
+}
+
+/**
+ * 隐藏字符串中间部分，保留首尾各visibleChars个字符，其余用*替换。
+ */
+export function hideMiddlePart(str: string, visibleChars = 4): string {
+  const strLength = str.length;
+  if (strLength <= 2 * visibleChars) {
+    // 如果字符串长度小于或等于两倍的可见字符数，直接返回原字符串
+    return str;
+  }
+
+  // 构建隐藏部分
+  const hiddenPart = "*".repeat(strLength - 2 * visibleChars);
+
+  // 返回处理后的字符串
+  return str.slice(0, visibleChars) + hiddenPart + str.slice(-visibleChars);
 }

@@ -8,6 +8,7 @@
     "rsbuild",
     "rsdoctor",
     "rspack",
+    "Sider",
     "tailwindcss",
     "unocss"
   ]
