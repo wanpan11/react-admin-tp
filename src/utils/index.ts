@@ -1,16 +1,17 @@
-/**
- * 浏览器环境类型
- */
-type BrowserEnv = "pc" | "mobile" | "ios" | "android" | "wechat" | "unknown";
-
-export interface DeviceInfo {
-  userAgent: string;
-  browserEnv: BrowserEnv;
-  isPC: boolean;
-  isIOS: boolean;
-  isAndroid: boolean;
+interface BrowserEnv {
   isWeChat: boolean;
+  isIOS: boolean;
+  isiPad: boolean;
+  isiPhone: boolean;
+  isAndroid: boolean;
   isMobile: boolean;
+  isMac: boolean;
+  isPC: boolean;
+  platform: string;
+}
+
+export interface DeviceInfo extends BrowserEnv {
+  userAgent: string;
   screenWidth: number;
   screenHeight: number;
   viewportWidth: number;
@@ -18,50 +19,49 @@ export interface DeviceInfo {
 }
 
 /**
- * 检测浏览器环境
- * @returns {BrowserEnv} 当前浏览器环境
+ * 检测浏览器环境（使用 navigator.platform）
  */
 export function detectBrowserEnv(): BrowserEnv {
-  const userAgent = navigator.userAgent.toLowerCase();
+  const ua = navigator.userAgent.toLowerCase();
+  const platform = navigator.platform.toLowerCase();
 
-  const patterns = {
-    wechat: /micromessenger/i,
-    mac: /macintosh/i,
-    ios: /iphone|ipad|ipod/i,
-    android: /android/i,
-    mobile: /mobile|android|iphone|ipad|phone|tablet/i,
+  const isWeChat = /micromessenger/i.test(ua);
+
+  const isiPhone = /iphone/i.test(ua);
+  const isiPad = /ipad/i.test(ua) || (platform === "macintel" && navigator.maxTouchPoints > 1); // iPadOS 13+
+  const isIOS = isiPhone || isiPad;
+
+  const isAndroid = /android/i.test(ua);
+
+  const isMobile = /mobile|android|iphone|ipad|phone|tablet/i.test(ua) || isIOS || isAndroid;
+
+  const isMac = platform.includes("mac") && !(platform === "macintel" && navigator.maxTouchPoints > 1);
+  const isPC = isMac || platform.includes("win") || platform.includes("linux");
+
+  return {
+    isWeChat,
+    isIOS,
+    isiPad,
+    isiPhone,
+    isAndroid,
+    isMobile,
+    isMac,
+    isPC: !isMobile && isPC,
+    platform
   };
-
-  if (patterns.wechat.test(userAgent))
-    return "wechat";
-  if (patterns.ios.test(userAgent))
-    return "ios";
-  if (patterns.android.test(userAgent))
-    return "android";
-  if (patterns.mobile.test(userAgent))
-    return "mobile";
-  if (!patterns.mobile.test(userAgent))
-    return "pc";
-
-  return "unknown";
 }
 
 /**
  * 获取设备详细信息
- * @returns {DeviceInfo} 设备信息对象
  */
 export function getDeviceInfo(): DeviceInfo {
-  const userAgent = navigator.userAgent;
+  const ua = navigator.userAgent.toLowerCase();
+
   const browserEnv = detectBrowserEnv();
 
   return {
-    userAgent,
-    browserEnv,
-    isPC: browserEnv === "pc",
-    isIOS: browserEnv === "ios",
-    isAndroid: browserEnv === "android",
-    isWeChat: browserEnv === "wechat",
-    isMobile: ["mobile", "ios", "android", "wechat"].includes(browserEnv),
+    ...browserEnv,
+    userAgent: ua,
     screenWidth: window.screen.width,
     screenHeight: window.screen.height,
     viewportWidth: window.innerWidth,
@@ -74,7 +74,7 @@ export function getDeviceInfo(): DeviceInfo {
  * @param {number} [threshold] - 长宽比阈值，默认为1.3
  * @returns {boolean} 是否为移动端设备
  */
-export function isMobileByAspectRatio(threshold = 1.3): boolean {
+export function isMobileByAspectRatio(threshold: number = 1.3): boolean {
   try {
     /**
      * 这里不适用 screen.width 和 screen.height 是因为
@@ -98,54 +98,6 @@ export function isMobileByAspectRatio(threshold = 1.3): boolean {
     console.warn("检测长宽比时出错:", e);
     return false;
   }
-}
-
-/**
- * 综合判断是否为移动端设备（结合 User Agent 和长宽比）
- * @param {object} [options] - 配置选项
- * @param {number} [options.aspectRatioThreshold] - 长宽比阈值，默认为1.3
- * @param {boolean} [options.useUserAgent] - 是否使用 User Agent 检测，默认为true
- * @param {boolean} [options.useAspectRatio] - 是否使用长宽比检测，默认为true
- * @returns {boolean} 是否为移动端设备
- */
-export function isMobileDevice(
-  options: {
-    aspectRatioThreshold?: number;
-    useUserAgent?: boolean;
-    useAspectRatio?: boolean;
-  } = {}
-): boolean {
-  const { aspectRatioThreshold = 1.3, useUserAgent = true, useAspectRatio = true } = options;
-
-  let isMobileByUA = false;
-  let isMobileByAR = false;
-
-  // 基于 User Agent 的检测
-  if (useUserAgent) {
-    const browserEnv = detectBrowserEnv();
-    isMobileByUA = ["mobile", "ios", "android", "wechat"].includes(browserEnv);
-  }
-
-  // 基于长宽比的检测
-  if (useAspectRatio) {
-    isMobileByAR = isMobileByAspectRatio(aspectRatioThreshold);
-  }
-
-  // 当两种检测方式都启用时，需要都满足条件
-  if (useUserAgent && useAspectRatio) {
-    return isMobileByUA || isMobileByAR;
-  }
-
-  // 只启用一种检测方式时，返回对应结果
-  if (useUserAgent) {
-    return isMobileByUA;
-  }
-
-  if (useAspectRatio) {
-    return isMobileByAR;
-  }
-
-  return false;
 }
 
 /**
@@ -436,7 +388,7 @@ export function convertMinutesToHoursMinutesAndDays(minutes: number): TimeConver
  * @param {string} url - URL 地址
  * @returns {string} 文件名
  */
-export function getUrlName(url = ""): string {
+export function getUrlName(url: string = ""): string {
   return url.split("/").pop() || "";
 }
 
