@@ -43,6 +43,7 @@ async function getBaseConfig() {
       assetPrefix: publicPath,
       cleanDistPath: true,
       distPath: { root: path.resolve(rootDir, outDir) },
+      sourceMap: process.env.NODE_ENV === "development",
     },
     server: {
       port: devServer?.port,

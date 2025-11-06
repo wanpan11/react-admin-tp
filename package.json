@@ -13,9 +13,9 @@
   ],
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development rsbuild dev -c ./scripts/rsbuild.config.ts -m development",
-    "build": "cross-env NODE_ENV=production rsbuild build -c ./scripts/rsbuild.config.ts -m production",
-    "dev:build": "cross-env NODE_ENV=development rsbuild build -c ./scripts/rsbuild.config.ts -m development",
+    "start": "cross-env rsbuild dev -c ./scripts/rsbuild.config.ts",
+    "build": "cross-env rsbuild build -c ./scripts/rsbuild.config.ts",
+    "dev:build": "cross-env NODE_ENV=development RSDOCTOR=true DEBUG=rsbuild rsbuild build -c ./scripts/rsbuild.config.ts -m development",
     "lint": "eslint --fix && tsc --noEmit",
     "prepare": "husky install"
   },
