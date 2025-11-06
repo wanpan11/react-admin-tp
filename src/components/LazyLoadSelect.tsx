@@ -1,28 +1,24 @@
 import type { ResponseList } from "&src/types/api";
-import type { AnyObject, PagingSwrProps } from "@wanp/use-swr-data";
+import type { PagingSwrProps } from "@wanp/use-swr-data";
 import type { SelectProps } from "antd";
-
 import useSwrData from "@wanp/use-swr-data";
 import { Select, Spin } from "antd";
 import debounce from "lodash/debounce";
 import { useEffect, useMemo, useState } from "react";
 
-interface LazyLoadSelectProps<P extends AnyObject, R extends ResponseList<any>> {
-  value?: SelectProps["value"];
-  searchKey: string;
+interface LazyLoadSelectProps<P extends AnyObject, R extends ResponseList<any>> extends Pick<SelectProps, "fieldNames" | "onChange" | "value" | "disabled"> {
+  reqKey: string;
   reqFunc: PagingSwrProps<R, P>["req"];
-  fieldNames?: SelectProps["fieldNames"];
   reqParams?: PagingSwrProps<R, P>["params"];
-  onChange?: SelectProps["onChange"];
+  searchKey?: string;
 }
 
 export default function LazyLoadSelect<P extends AnyObject, R extends ResponseList<any>>(props: LazyLoadSelectProps<P, R>) {
-  const { value, fieldNames, searchKey = "name", reqParams, reqFunc, onChange } = props;
-
+  const { reqKey, reqFunc, reqParams, searchKey, onChange, ...reset } = props;
   const [list, setList] = useState<any[]>([]);
 
   const { data, pageInfo, onSearch, setPage } = useSwrData({
-    reqKey: reqFunc.name,
+    reqKey,
     req: reqFunc,
     params: reqParams,
     paging: true,
@@ -66,6 +62,9 @@ export default function LazyLoadSelect<P extends AnyObject, R extends ResponseLi
   }, [list, data, pageInfo]);
 
   const onSearchData = debounce((value) => {
+    if (!searchKey)
+      return;
+
     onSearch({ [searchKey]: value } as PagingSwrProps["defaultSearch"]);
     setList([]);
   }, 500);
@@ -75,13 +74,11 @@ export default function LazyLoadSelect<P extends AnyObject, R extends ResponseLi
 
   return (
     <Select
-      showSearch
       allowClear
-      value={value}
       filterOption={false}
       options={displayList}
-      fieldNames={fieldNames}
-      onSearch={onSearchData}
+      showSearch={!!searchKey}
+      onSearch={searchKey ? onSearchData : undefined}
       onPopupScroll={(e) => {
         const container = e.target as HTMLDivElement;
         const scrollTop = container?.scrollTop;
@@ -91,9 +88,10 @@ export default function LazyLoadSelect<P extends AnyObject, R extends ResponseLi
           onloadData();
       }}
       onChange={(value) => {
-        onSearch({ [searchKey]: "" } as PagingSwrProps["defaultSearch"]);
+        onSearch({});
         onChange?.(value);
       }}
+      {...reset}
     />
   );
 }
