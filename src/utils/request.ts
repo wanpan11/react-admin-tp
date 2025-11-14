@@ -18,10 +18,10 @@ export class Request {
         return config;
       }
 
-      // 代理标识
-      // if (process.env.NODE_ENV === "development") {
-      //   config.url = `/proxy${config.url}`;
-      // }
+      // 代理标识;
+      if (process.env.NODE_ENV === "development") {
+        config.url = `/proxy${config.url}`;
+      }
 
       return config;
     });
