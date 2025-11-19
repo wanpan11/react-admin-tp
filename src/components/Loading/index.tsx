@@ -1,4 +1,4 @@
-import { Layout, Spin } from "antd";
+import { Spin } from "antd";
 import classnames from "classnames";
 import { memo } from "react";
 
@@ -11,15 +11,10 @@ interface LoadingProps {
 
 function Loading({ full, text, size, className }: LoadingProps) {
   return (
-    <Layout
-      className={classnames(className, "flex items-center justify-center", {
-        "h-screen": full,
-        "bg-transparent": !full,
-      })}
-    >
+    <div className={classnames({ "size-full": full }, "flex items-center justify-center", className)}>
       <Spin size={size} />
       <div className="mt-3 text-primary">{text}</div>
-    </Layout>
+    </div>
   );
 }
 
