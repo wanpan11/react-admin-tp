@@ -40,7 +40,13 @@ export default defineConfig(async ({ command, mode }) => {
       "import.meta.env.HTML_TITLE": JSON.stringify(entryConfig.title),
       "import.meta.env.BUILD_VERSION": JSON.stringify(`${pak.version}_${new Date().getTime()}`),
     },
-    plugins: [react()]
+    plugins: [
+      react({
+        babel: {
+          plugins: [["babel-plugin-react-compiler"]],
+        },
+      }),
+    ],
   };
 
   if (command === "serve") {

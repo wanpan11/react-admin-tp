@@ -50,11 +50,11 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
   };
 
   return (
-    <Header className={`relative z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch ${darkMode ? "bg-slate-900" : "bg-white"} `}>
+    <Header className={`z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch ${darkMode ? "bg-slate-900" : "bg-white"}`}>
       <div className="flex items-center">
         <h1 className="mr-28 flex items-center text-lg">
           <img alt="logo" className="mr-2 w-8" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-          管理系统
+          <span>管理系统</span>
         </h1>
 
         {tabList.map((e) => {
@@ -81,9 +81,9 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
           {darkMode
             ? (
                 <img
+                  alt="暗黑模式"
                   src="/dark.svg"
                   className="w-full"
-                  alt="暗黑模式"
                   onClick={() => {
                     setDarkMode(false);
                   }}
@@ -91,9 +91,9 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
               )
             : (
                 <img
+                  alt="明亮模式"
                   src="/light.svg"
                   className="w-full"
-                  alt="明亮模式"
                   onClick={() => {
                     setDarkMode(true);
                   }}
@@ -102,8 +102,8 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
         </div>
 
         <Dropdown menu={{ items }} placement="bottomRight" className="cursor-pointer" arrow={{ pointAtCenter: false }}>
-          <div className="flex items-center leading-[32px]">
-            <div className="mr-3">{userInfo?.account}</div>
+          <div className="flex h-8 items-center gap-3">
+            <div>{userInfo?.account}</div>
 
             <Avatar icon={<UserOutlined />} />
           </div>
