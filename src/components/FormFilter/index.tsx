@@ -29,7 +29,7 @@ function FormFilter(props: FormFilterProps) {
       {reset ? <Button htmlType="reset">重置</Button> : null}
 
       {onRefresh && (
-        <Button className="ml-6" htmlType="submit" loading={loading} onClick={onRefresh}>
+        <Button className="ml-6" htmlType="button" loading={loading} onClick={onRefresh}>
           刷新
         </Button>
       )}
