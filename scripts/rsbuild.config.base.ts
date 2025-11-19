@@ -1,6 +1,7 @@
 import type { RsbuildConfig } from "@rsbuild/core";
 import path from "node:path";
 import { loadEnv } from "@rsbuild/core";
+import { pluginBabel } from "@rsbuild/plugin-babel";
 import { pluginLess } from "@rsbuild/plugin-less";
 import { pluginReact } from "@rsbuild/plugin-react";
 import { RsdoctorRspackPlugin } from "@rsdoctor/rspack-plugin";
@@ -17,7 +18,15 @@ async function getBaseConfig() {
   const { entry, title, publicPath, outDir, devServer } = await import(`./${process.env.NODE_ENV}.config.ts`);
 
   const config: RsbuildConfig = {
-    plugins: [pluginLess(), pluginReact()],
+    plugins: [
+      pluginBabel({
+        babelLoaderOptions: {
+          plugins: [["babel-plugin-react-compiler"]],
+        },
+      }),
+      pluginLess(),
+      pluginReact(),
+    ],
     source: {
       entry: { index: path.resolve(sourceDir, entry) },
       define: loadEnv({ cwd: envDir }).publicVars,
