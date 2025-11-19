@@ -21,4 +21,8 @@ function AppRouter() {
   );
 }
 
+if (process.env.PUBLIC_ENV === "development") {
+  AppRouter.displayName = "AppRouter";
+}
+
 export default AppRouter;

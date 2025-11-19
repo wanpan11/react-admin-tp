@@ -1,30 +1,20 @@
-import { LOCAL_DYNAMIC_ROUTER, LOCAL_TOKEN, LOCAL_USER_INFO } from "&src/config";
+import type { RouteSlice } from "./route.slice";
+import type { UiSlice } from "./ui.slice";
+import type { UserSlice } from "./user.slice";
 import { getPathRecord, transformRouter } from "&src/router/config";
-import { getLocalStorage } from "&src/utils";
-
 import { useMemo } from "react";
 import { create } from "zustand";
 import { useShallow } from "zustand/react/shallow";
+import { createRouteSlice } from "./route.slice";
+import { createUiSlice } from "./ui.slice";
+import { createUserSlice } from "./user.slice";
 
-interface RootStore {
-  darkMode: boolean; // 是否开启暗黑模式
-  isLogin: boolean; // 是否登录
-  userInfo: Record<string, any>; // 用户信息
-  dynamicRoutes: Route[]; // 动态路由配置
+export type RootStore = UiSlice & UserSlice & RouteSlice;
 
-  setDarkMode: (boolean: boolean) => void; // 设置暗黑模式
-  setLogin: (params: { login: boolean; userInfo?: Record<string, any> }) => void; // 设置登录状态和用户信息
-  setDynamicRoutes: (routes: Route[]) => void; // 设置动态路由
-}
-
-const useRootStore = create<RootStore>()(set => ({
-  darkMode: false,
-  isLogin: !!getLocalStorage(LOCAL_TOKEN),
-  userInfo: getLocalStorage(LOCAL_USER_INFO, "json"),
-  dynamicRoutes: getLocalStorage(LOCAL_DYNAMIC_ROUTER, "json") || [],
-  setDarkMode: (darkMode: boolean) => set(() => ({ darkMode })),
-  setLogin: ({ login, userInfo }) => set(() => ({ isLogin: login, userInfo })),
-  setDynamicRoutes: (dynamicRoutes: Route[]) => set(() => ({ dynamicRoutes })),
+const useRootStore = create<RootStore>()((...api) => ({
+  ...createUiSlice(...api),
+  ...createUserSlice(...api),
+  ...createRouteSlice(...api),
 }));
 
 export function useGetRouterConfig() {

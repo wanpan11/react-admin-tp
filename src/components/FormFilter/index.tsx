@@ -1,7 +1,6 @@
 import type { FormInstance } from "antd";
 import type { FormListProps } from "../FormList";
 import { Button, Card } from "antd";
-
 import { memo, useRef } from "react";
 import FormList from "../FormList";
 
@@ -12,10 +11,11 @@ export interface FormFilterProps extends Pick<FormListProps, "form" | "onOk" | "
   loading?: boolean;
   compact?: boolean;
   searchBtn?: boolean;
+  onRefresh?: () => void;
 }
 
 function FormFilter(props: FormFilterProps) {
-  const { className, filterInfo, reset, loading, compact = false, searchBtn = true, onForm, ...resetProps } = props;
+  const { className, filterInfo, reset, loading, compact = false, searchBtn = true, onForm, onRefresh, ...resetProps } = props;
 
   const formInstance = useRef<FormInstance<any> | null>(null);
 
@@ -27,6 +27,12 @@ function FormFilter(props: FormFilterProps) {
   const getBtn = () => (
     <div className={compact ? "ml-10" : "absolute bottom-0 right-0"}>
       {reset ? <Button htmlType="reset">重置</Button> : null}
+
+      {onRefresh && (
+        <Button className="ml-6" loading={loading} onClick={onRefresh}>
+          刷新
+        </Button>
+      )}
 
       <Button className="ml-6" htmlType="submit" type="primary" loading={loading}>
         查询

@@ -1,42 +1,17 @@
-/**
- * 浏览器环境类型
- */
-export type BrowserEnv = "pc" | "mobile" | "ios" | "android" | "wechat" | "unknown";
-
-/**
- * 检测浏览器环境
- * @returns {BrowserEnv} 当前浏览器环境
- */
-export function detectBrowserEnv(): BrowserEnv {
-  const userAgent = navigator.userAgent.toLowerCase();
-
-  const patterns = {
-    wechat: /micromessenger/i,
-    ios: /iphone|ipad|ipod/i,
-    android: /android/i,
-    mobile: /mobile|phone|tablet/i,
-  };
-
-  if (patterns.wechat.test(userAgent))
-    return "wechat";
-  if (patterns.ios.test(userAgent))
-    return "ios";
-  if (patterns.android.test(userAgent))
-    return "android";
-  if (patterns.mobile.test(userAgent))
-    return "mobile";
-
-  return "pc";
+interface BrowserEnv {
+  isWeChat: boolean;
+  isIOS: boolean;
+  isiPad: boolean;
+  isiPhone: boolean;
+  isAndroid: boolean;
+  isMobile: boolean;
+  isMac: boolean;
+  isPC: boolean;
+  platform: string;
 }
 
-interface DeviceInfo {
+export interface DeviceInfo extends BrowserEnv {
   userAgent: string;
-  browserEnv: BrowserEnv;
-  isPC: boolean;
-  isIOS: boolean;
-  isAndroid: boolean;
-  isWeChat: boolean;
-  isMobile: boolean;
   screenWidth: number;
   screenHeight: number;
   viewportWidth: number;
@@ -44,26 +19,85 @@ interface DeviceInfo {
 }
 
 /**
+ * 检测浏览器环境（使用 navigator.platform）
+ */
+export function detectBrowserEnv(): BrowserEnv {
+  const ua = navigator.userAgent.toLowerCase();
+  const platform = navigator.platform.toLowerCase();
+
+  const isWeChat = /micromessenger/i.test(ua);
+
+  const isiPhone = /iphone/i.test(ua);
+  const isiPad = /ipad/i.test(ua) || (platform === "macintel" && navigator.maxTouchPoints > 1); // iPadOS 13+
+  const isIOS = isiPhone || isiPad;
+
+  const isAndroid = /android/i.test(ua);
+
+  const isMobile = /mobile|android|iphone|ipad|phone|tablet/i.test(ua) || isIOS || isAndroid;
+
+  const isMac = platform.includes("mac") && !(platform === "macintel" && navigator.maxTouchPoints > 1);
+  const isPC = isMac || platform.includes("win") || platform.includes("linux");
+
+  return {
+    isWeChat,
+    isIOS,
+    isiPad,
+    isiPhone,
+    isAndroid,
+    isMobile,
+    isMac,
+    isPC: !isMobile && isPC,
+    platform
+  };
+}
+
+/**
  * 获取设备详细信息
- * @returns {DeviceInfo} 设备信息对象
  */
 export function getDeviceInfo(): DeviceInfo {
-  const userAgent = navigator.userAgent;
+  const ua = navigator.userAgent.toLowerCase();
+
   const browserEnv = detectBrowserEnv();
 
   return {
-    userAgent,
-    browserEnv,
-    isPC: browserEnv === "pc",
-    isIOS: browserEnv === "ios",
-    isAndroid: browserEnv === "android",
-    isWeChat: browserEnv === "wechat",
-    isMobile: ["mobile", "ios", "android", "wechat"].includes(browserEnv),
+    ...browserEnv,
+    userAgent: ua,
     screenWidth: window.screen.width,
     screenHeight: window.screen.height,
     viewportWidth: window.innerWidth,
     viewportHeight: window.innerHeight,
   };
+}
+
+/**
+ * 根据长宽比判断是否为移动端设备
+ * @param {number} [threshold] - 长宽比阈值，默认为1.3
+ * @returns {boolean} 是否为移动端设备
+ */
+export function isMobileByAspectRatio(threshold: number = 1.3): boolean {
+  try {
+    /**
+     * 这里不适用 screen.width 和 screen.height 是因为
+     * 某些设备（ios safari）在横屏时会导致误判
+     */
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    if (!width || !height) {
+      console.warn("无法获取屏幕尺寸");
+      return false;
+    }
+
+    // 计算长宽比（高度/宽度）
+    const aspectRatio = height / width;
+
+    // 当长宽比大于阈值时认为是移动端（竖屏）
+    return aspectRatio > threshold;
+  }
+  catch (e) {
+    console.warn("检测长宽比时出错:", e);
+    return false;
+  }
 }
 
 /**
@@ -354,7 +388,7 @@ export function convertMinutesToHoursMinutesAndDays(minutes: number): TimeConver
  * @param {string} url - URL 地址
  * @returns {string} 文件名
  */
-export function getUrlName(url = ""): string {
+export function getUrlName(url: string = ""): string {
   return url.split("/").pop() || "";
 }
 
@@ -382,9 +416,35 @@ export function getLocalStorage(key: string, type?: "json"): any {
  * @param {number} idx - 索引
  * @returns {string | number} 格式化后的序号
  */
-export function getSerialNumber(idx: number): string | number {
+export function getSerialNumber(idx: number, length: number, zeroStart?: boolean): string | number {
   if (typeof idx !== "number" || Number.isNaN(idx) || idx < 0) {
     return "00";
   }
-  return idx < 9 ? `0${idx + 1}` : idx + 1;
+
+  let newNum: number;
+  if (zeroStart) {
+    newNum = idx;
+  }
+  else {
+    newNum = idx + 1;
+  }
+
+  return newNum.toString().padStart(length, "0");
+}
+
+/**
+ * 隐藏字符串中间部分，保留首尾各visibleChars个字符，其余用*替换。
+ */
+export function hideMiddlePart(str: string, visibleChars = 4): string {
+  const strLength = str.length;
+  if (strLength <= 2 * visibleChars) {
+    // 如果字符串长度小于或等于两倍的可见字符数，直接返回原字符串
+    return str;
+  }
+
+  // 构建隐藏部分
+  const hiddenPart = "*".repeat(strLength - 2 * visibleChars);
+
+  // 返回处理后的字符串
+  return str.slice(0, visibleChars) + hiddenPart + str.slice(-visibleChars);
 }

@@ -3,19 +3,20 @@ import dark_img from "&src/assets/images/dark.svg";
 import light_img from "&src/assets/images/light.svg";
 import useRootStore from "&src/store";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Dropdown, Layout } from "antd";
+import { Avatar, Dropdown } from "antd";
 
 import classnames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 import lessStyle from "./index.module.less";
 
-const { Header } = Layout;
-
 interface MenuHeaderProps {
   tabId: string;
   tabList: MenuItem[];
 }
+
+const headClass = "z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch";
+const tabItemClass = "relative mx-4 h-14 cursor-pointer select-none px-3 text-base leading-[3.5rem]";
 
 function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
   const navigate = useNavigate();
@@ -52,40 +53,40 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
   };
 
   return (
-    <Header className={`relative z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch ${darkMode ? "bg-slate-900" : "bg-white"} `}>
+    <div className={classnames(headClass, darkMode ? "bg-slate-900 text-white" : "bg-white")}>
       <div className="flex items-center">
         <h1 className="mr-28 flex items-center text-lg">
           <img alt="logo" className="mr-2 w-8" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-          管理系统
+          <span>管理系统</span>
         </h1>
 
         {tabList.map((e) => {
           return (
-            <div
+            <ul
               key={e.key}
               onClick={() => {
                 itemClick(e.path);
               }}
-              className={classnames("relative mx-4 h-14 cursor-pointer select-none px-3 text-base leading-[56px]", {
+              className={classnames(tabItemClass, {
                 [`${lessStyle.tabItem_active} text-primary`]: e.key === tabId,
               })}
             >
-              {e.label}
+              <li>{e.label}</li>
 
               <div className={lessStyle.line}></div>
-            </div>
+            </ul>
           );
         })}
       </div>
 
-      <div className="flex items-center">
-        <div className="mr-10 flex w-5 cursor-pointer items-center">
+      <div className="flex items-center gap-10">
+        <div className="flex w-5 cursor-pointer items-center">
           {darkMode
             ? (
                 <img
+                  alt="暗黑模式"
                   src={dark_img}
                   className="w-full"
-                  alt="暗黑模式"
                   onClick={() => {
                     setDarkMode(false);
                   }}
@@ -93,9 +94,9 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
               )
             : (
                 <img
+                  alt="明亮模式"
                   src={light_img}
                   className="w-full"
-                  alt="明亮模式"
                   onClick={() => {
                     setDarkMode(true);
                   }}
@@ -103,15 +104,15 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
               )}
         </div>
 
-        <Dropdown menu={{ items }} placement="bottomRight" className="cursor-pointer" arrow={{ pointAtCenter: false }}>
-          <div className="flex items-center leading-[32px]">
-            <div className="mr-3">{userInfo?.account}</div>
+        <Dropdown menu={{ items }} placement="bottomRight" arrow={{ pointAtCenter: false }}>
+          <div className="flex h-8 cursor-pointer items-center gap-3">
+            <div>{userInfo?.account}</div>
 
             <Avatar icon={<UserOutlined />} />
           </div>
         </Dropdown>
       </div>
-    </Header>
+    </div>
   );
 }
 

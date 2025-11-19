@@ -18,6 +18,5 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "skipLibCheck": true
-  },
-  "include": ["src", "scripts"]
+  }
 }

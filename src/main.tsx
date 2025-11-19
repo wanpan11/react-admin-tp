@@ -12,5 +12,5 @@ const root = createRoot(dom);
 root.render(
   <StrictMode>
     <AppRouter />
-  </StrictMode>
+  </StrictMode>,
 );

@@ -99,7 +99,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
             {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
 
             <Layout>
-              <Content className="m-3 my-0">
+              <Content className="mx-3">
                 <BreadCrumb routerPath={routerPathMapping} />
 
                 <div className="h-[calc(100%-4.5rem)] overflow-auto">{children}</div>
@@ -110,6 +110,10 @@ function AppLayout({ children }: { children: React.ReactNode }) {
       </ConfigProvider>
     </div>
   );
+}
+
+if (process.env.PUBLIC_ENV === "development") {
+  AppLayout.displayName = "AppLayout";
 }
 
 export default AppLayout;

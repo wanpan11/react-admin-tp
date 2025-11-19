@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import { Checkbox, DatePicker, Input, InputNumber, Radio, Select, Switch, TreeSelect } from "antd";
 
 const { RangePicker } = DatePicker;
 
-export function getFormElement(type: FormItem["type"], info: FormItem) {
+export function getFormElement(type: FormItem["type"], info: FormItem): ReactNode {
   switch (type) {
     case "radio":
       return (
@@ -35,11 +36,11 @@ export function getFormElement(type: FormItem["type"], info: FormItem) {
         <Select
           showSearch
           allowClear
+          className="min-w-36"
           mode={info.otherOptions?.mode}
           placeholder={info.placeholder}
           disabled={info.disable}
           options={info.options as { value: string }[]}
-          className="min-w-[150px]"
           filterOption={(input, option: any) => {
             if (typeof option.label === "string") {
               return option.label.includes(input);
@@ -82,5 +83,8 @@ export function getFormElement(type: FormItem["type"], info: FormItem) {
           {...info.otherOptions}
         />
       );
+
+    default:
+      return null;
   }
 }

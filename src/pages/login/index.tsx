@@ -13,29 +13,40 @@ import lessStyle from "./index.module.less";
 
 function Login() {
   const navigate = useNavigate();
-  const { setLogin, setDynamicRoutes } = useRootStore(useShallow(store => ({ setLogin: store.setLogin, setDynamicRoutes: store.setDynamicRoutes })));
+  const { setLogin, setDynamicRoutes } = useRootStore(
+    useShallow(store => ({
+      setLogin: store.setLogin,
+      setDynamicRoutes: store.setDynamicRoutes,
+    }))
+  );
 
-  const [loading, loadingHandle] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const onFinish = async (values: AccountApi.Login) => {
-    loadingHandle(true);
-    const res = await loginReq(values);
-    localStorage.setItem(LOCAL_TOKEN, res.data.token);
-    localStorage.setItem(LOCAL_USER_INFO, JSON.stringify(res.data.userInfo));
-    localStorage.setItem(LOCAL_DYNAMIC_ROUTER, JSON.stringify(GLOBAL_ROUTERS.APP_PAGE));
+    try {
+      setLoading(true);
+      const res = await loginReq(values);
+      localStorage.setItem(LOCAL_TOKEN, res.data.token);
+      localStorage.setItem(LOCAL_USER_INFO, JSON.stringify(res.data.userInfo));
+      localStorage.setItem(LOCAL_DYNAMIC_ROUTER, JSON.stringify(GLOBAL_ROUTERS.APP_PAGE));
 
-    // 设置登录态 用户信息 动态路由配置
-    setLogin({ login: true, userInfo: res.data.userInfo });
-    setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
-    loadingHandle(false);
-    navigate("/");
+      // 设置登录态 用户信息 动态路由配置
+      setLogin({ login: true, userInfo: res.data.userInfo });
+      setDynamicRoutes(GLOBAL_ROUTERS.APP_PAGE);
+      setLoading(false);
+      navigate("/");
+    }
+    catch {
+      setLoading(false);
+    }
   };
 
+  // 已登录则跳转到首页
   useEffect(() => {
     if (getLocalStorage(LOCAL_TOKEN)) {
       navigate("/");
     }
-  }, [navigate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout className={lessStyle.content}>
@@ -44,7 +55,14 @@ function Login() {
 
         <h1 className="mb-9 text-center text-2xl">欢迎登录</h1>
 
-        <Form name="basic" layout="vertical" onFinish={onFinish} requiredMark="optional" initialValues={{ account: "管理小明", password: "123" }} className="w-80">
+        <Form
+          name="basic"
+          className="w-80"
+          layout="vertical"
+          onFinish={onFinish}
+          requiredMark="optional"
+          initialValues={{ account: "管理小明", password: "123" }}
+        >
           <Form.Item label="账号" name="account" rules={[{ required: true, message: "请输入你的账号!" }]}>
             <Input className={lessStyle.login_input} placeholder="请输入你的账号" />
           </Form.Item>
