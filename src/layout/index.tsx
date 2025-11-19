@@ -112,7 +112,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-if (import.meta.env.MODE === "development") {
+if (process.env.PUBLIC_ENV === "development") {
   AppLayout.displayName = "AppLayout";
 }
 

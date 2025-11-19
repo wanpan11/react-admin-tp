@@ -52,7 +52,7 @@ function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
   };
 
   return (
-    <Header className={`z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch ${darkMode ? "bg-slate-900" : "bg-white"}`}>
+    <Header className={`relative z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch ${darkMode ? "bg-slate-900" : "bg-white"}`}>
       <div className="flex items-center">
         <h1 className="mr-28 flex items-center text-lg">
           <img alt="logo" className="mr-2 w-8" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />

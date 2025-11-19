@@ -21,7 +21,7 @@ function AppRouter() {
   );
 }
 
-if (import.meta.env.MODE === "development") {
+if (process.env.PUBLIC_ENV === "development") {
   AppRouter.displayName = "AppRouter";
 }
 
