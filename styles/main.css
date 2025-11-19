@@ -553,20 +553,17 @@ video {
 .z-\[999\] {
   z-index: 999;
 }
-.m-3 {
-  margin: 0.75rem;
-}
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
-}
-.my-0 {
-  margin-top: 0px;
-  margin-bottom: 0px;
 }
 .my-2 {
   margin-top: 0.5rem;
@@ -590,17 +587,11 @@ video {
 .ml-8 {
   margin-left: 2rem;
 }
-.mr-10 {
-  margin-right: 2.5rem;
-}
 .mr-2 {
   margin-right: 0.5rem;
 }
 .mr-28 {
   margin-right: 7rem;
-}
-.mr-3 {
-  margin-right: 0.75rem;
 }
 .mt-1 {
   margin-top: 0.25rem;
@@ -632,6 +623,10 @@ video {
 .hidden {
   display: none;
 }
+.size-full {
+  width: 100%;
+  height: 100%;
+}
 .h-1\/2 {
   height: 50%;
 }
@@ -640,6 +635,9 @@ video {
 }
 .h-40 {
   height: 10rem;
+}
+.h-8 {
+  height: 2rem;
 }
 .h-\[calc\(100\%-4\.5rem\)\] {
   height: calc(100% - 4.5rem);
@@ -665,8 +663,8 @@ video {
 .w-screen {
   width: 100vw;
 }
-.min-w-\[150px\] {
-  min-width: 150px;
+.min-w-36 {
+  min-width: 9rem;
 }
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -694,6 +692,12 @@ video {
 .justify-between {
   justify-content: space-between;
 }
+.gap-10 {
+  gap: 2.5rem;
+}
+.gap-3 {
+  gap: 0.75rem;
+}
 .overflow-auto {
   overflow: auto;
 }
@@ -710,9 +714,6 @@ video {
 .bg-slate-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(15 23 42 / var(--tw-bg-opacity, 1));
-}
-.bg-transparent {
-  background-color: transparent;
 }
 .bg-white {
   --tw-bg-opacity: 1;
@@ -776,11 +777,8 @@ video {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
-.leading-\[32px\] {
-  line-height: 32px;
-}
-.leading-\[56px\] {
-  line-height: 56px;
+.leading-\[3\.5rem\] {
+  line-height: 3.5rem;
 }
 .text-neutral-400 {
   --tw-text-opacity: 1;
@@ -789,6 +787,10 @@ video {
 .text-primary {
   --tw-text-opacity: 1;
   color: rgb(64 150 255 / var(--tw-text-opacity, 1));
+}
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 .shadow-ch {
   --tw-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
