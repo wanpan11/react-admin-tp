@@ -21,4 +21,8 @@ function AppRouter() {
   );
 }
 
+if (import.meta.env.MODE === "development") {
+  AppRouter.displayName = "AppRouter";
+}
+
 export default AppRouter;

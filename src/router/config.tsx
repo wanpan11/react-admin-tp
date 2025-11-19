@@ -2,8 +2,8 @@ import type { ComponentType, ReactNode } from "react";
 import Loading from "&src/components/Loading";
 import Redirect from "&src/components/Redirect";
 import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
-import { nanoid } from "nanoid";
 
+import { nanoid } from "nanoid";
 import { lazy, Suspense } from "react";
 import { Outlet, Route } from "react-router-dom";
 
@@ -149,16 +149,17 @@ export function transformRouter(routers: Route[]) {
       };
 
       router.push(routeObj);
-      if (!notMenu)
+      if (!notMenu) {
         menu.push(menuObj);
+      }
 
       if (childrenList?.length) {
         transform(childrenList, routeObj.childrenList!, menuObj.children!, newPath);
       }
     });
   }
-  transform(routers, router, routerMenu);
 
+  transform(routers, router, routerMenu);
   return { router, routerMenu: routerMenu[0]?.children as MenuItem[] };
 }
 
@@ -205,7 +206,6 @@ export function getRoute(routers: Route[] | Route) {
 
     if (componentPath) {
       const Component = getLazyLoad(componentPath);
-
       element = (
         <Suspense fallback={<Loading full />}>
           <Component title={title}>{childrenList.length ? <Outlet /> : undefined}</Component>
