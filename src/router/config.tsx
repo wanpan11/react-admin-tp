@@ -1,9 +1,10 @@
 import type { ComponentType, ReactNode } from "react";
+import Loading from "&src/components/Loading";
 import Redirect from "&src/components/Redirect";
 import { BarChartOutlined, BoxPlotOutlined, OneToOneOutlined, RadarChartOutlined } from "@ant-design/icons";
-import { nanoid } from "nanoid";
 
-import { lazy } from "react";
+import { nanoid } from "nanoid";
+import { lazy, Suspense } from "react";
 import { Outlet, Route } from "react-router-dom";
 
 const modules = import.meta.glob<{ default: ComponentType<any> }>("../pages/**/*.tsx");
@@ -205,7 +206,11 @@ export function getRoute(routers: Route[] | Route) {
 
     if (componentPath) {
       const Component = getLazyLoad(componentPath);
-      element = <Component title={title}>{childrenList.length ? <Outlet /> : undefined}</Component>;
+      element = (
+        <Suspense fallback={<Loading full />}>
+          <Component title={title}>{childrenList.length ? <Outlet /> : undefined}</Component>
+        </Suspense>
+      );
     }
     else {
       if (redirect) {
