@@ -28,6 +28,12 @@ function FormFilter(props: FormFilterProps) {
     <div className={compact ? "ml-10" : "absolute bottom-0 right-0"}>
       {reset ? <Button htmlType="reset">重置</Button> : null}
 
+      {onRefresh && (
+        <Button className="ml-6" htmlType="submit" loading={loading} onClick={onRefresh}>
+          刷新
+        </Button>
+      )}
+
       <Button className="ml-6" htmlType="submit" type="primary" loading={loading}>
         查询
       </Button>
