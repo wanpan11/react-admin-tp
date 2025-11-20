@@ -90,25 +90,23 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className={darkMode ? "dark" : ""}>
-      <ConfigProvider theme={currentThem}>
-        <Layout>
-          <MenuHeader tabId={tabId} tabList={routerMenu} />
+    <ConfigProvider theme={currentThem}>
+      <Layout className={darkMode ? "dark" : ""}>
+        <MenuHeader tabId={tabId} tabList={routerMenu} />
 
-          <Layout className="h-[calc(100vh-3.5rem)] overflow-hidden">
-            {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
+        <Layout className="h-[calc(100vh-3.5rem)] overflow-hidden">
+          {sideMenu.length ? <SiderCom selectKey={menuId} menu={sideMenu} /> : null}
 
-            <Layout>
-              <Content className="mx-3">
-                <BreadCrumb routerPath={routerPathMapping} />
+          <Layout>
+            <Content className="mx-3">
+              <BreadCrumb routerPath={routerPathMapping} />
 
-                <div className="h-[calc(100%-4.5rem)] overflow-auto">{children}</div>
-              </Content>
-            </Layout>
+              <div className="h-[calc(100%-4.5rem)] overflow-auto">{children}</div>
+            </Content>
           </Layout>
         </Layout>
-      </ConfigProvider>
-    </div>
+      </Layout>
+    </ConfigProvider>
   );
 }
 

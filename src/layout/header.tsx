@@ -14,7 +14,7 @@ interface MenuHeaderProps {
 }
 
 const headClass = "z-[999] box-border flex h-14 items-center justify-between p-7 py-3 shadow-ch";
-const tabItemClass = "relative mx-4 h-14 cursor-pointer select-none px-3 text-base leading-[3.5rem]";
+const tabItemClass = "relative mx-4 h-14 cursor-pointer select-none px-3 text-base leading-[3.5rem] hover:text-primary";
 
 function MenuHeader({ tabId, tabList }: MenuHeaderProps) {
   const navigate = useNavigate();
