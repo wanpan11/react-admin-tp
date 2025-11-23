@@ -1,7 +1,6 @@
 import BreadCrumb from "&src/components/BreadCrumb";
 import { COLOR_PRIMARY, SPLIT_FLAG } from "&src/config";
 import useRootStore, { useGetRouterConfig } from "&src/store";
-
 import { ConfigProvider, Layout, theme } from "antd";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";

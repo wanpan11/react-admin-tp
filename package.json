@@ -20,9 +20,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.6.1",
+    "@ant-design/icons": "^6.1.0",
     "@wanp/use-swr-data": "^1.0.6",
-    "antd": "^5.29.1",
+    "antd": "^6.0.0",
     "axios": "^1.13.2",
     "classnames": "^2.5.1",
     "lodash": "^4.17.21",
@@ -34,8 +34,8 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.19.0",
-    "@eslint-react/eslint-plugin": "^1.53.1",
+    "@antfu/eslint-config": "^6.2.0",
+    "@eslint-react/eslint-plugin": "^2.3.7",
     "@types/lodash": "^4.17.20",
     "@types/mockjs": "^1.0.10",
     "@types/node": "^18.19.130",
@@ -44,8 +44,8 @@
     "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.22",
     "babel-plugin-react-compiler": "^1.0.0",
-    "cross-env": "^7.0.3",
-    "cssnano": "^6.1.2",
+    "cross-env": "^10.1.0",
+    "cssnano": "^7.1.2",
     "eslint": "^9.39.1",
     "eslint-plugin-format": "^1.0.2",
     "eslint-plugin-react-hooks": "^5.2.0",
