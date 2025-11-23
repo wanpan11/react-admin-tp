@@ -48,7 +48,10 @@ function FormModal(props: FormModalProps) {
       okButtonProps={okButtonProps}
       closable={!!noFooter}
       footer={noFooter ? null : undefined}
-      classNames={classNames || { body: "pt-6" }}
+      classNames={classNames || {
+        body: "pt-6",
+        header: "border-b border-black/10 border-solid pb-3",
+      }}
       afterClose={() => {
         formInstance.current && formInstance.current.resetFields();
       }}
