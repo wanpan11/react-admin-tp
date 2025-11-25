@@ -1,4 +1,9 @@
-@tailwind base;
+@layer tailwind-base, antd;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
 @tailwind components;
 @tailwind utilities;
 
@@ -7,18 +12,4 @@ body,
 #root {
   height: 100%;
   width: 100%;
-}
-
-body,
-ul,
-li {
-  margin: 0;
-  padding: 0;
-}
-
-*,
-::before,
-::after {
-  border-width: 0;
-  border-style: solid;
 }

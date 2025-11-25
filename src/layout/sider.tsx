@@ -24,6 +24,7 @@ function SiderCom({ menu, selectKey }: { menu: MenuItem[]; selectKey: string | n
       }
     });
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setKeys(arr);
   }, [menu]);
 

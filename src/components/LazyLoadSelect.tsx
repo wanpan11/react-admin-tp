@@ -35,6 +35,7 @@ export default function LazyLoadSelect<P extends AnyObject, R extends ResponseLi
       return;
 
     if (data?.pageNum > 1) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setList(draft => [...draft, ...data.list]);
     }
     else {
