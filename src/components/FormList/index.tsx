@@ -1,7 +1,7 @@
 import type { FormInstance, FormProps } from "antd";
 import type { ReactElement } from "react";
 import { Button, Form } from "antd";
-import { memo, useEffect, useMemo } from "react";
+import { Fragment, memo, useEffect, useMemo } from "react";
 
 import { getFormElement } from "../tools";
 
@@ -111,7 +111,7 @@ function FormList(props: FormListProps) {
         }
 
         if (e.type === "blockNode") {
-          return <span key={key}>{e.label}</span>;
+          return <Fragment key={key}>{e.label}</Fragment>;
         }
 
         return (

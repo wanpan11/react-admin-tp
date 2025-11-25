@@ -19,8 +19,8 @@ export function getFormElement(type: FormItem["type"], info: FormItem): ReactNod
     case "checkbox":
       return <Checkbox.Group style={{ width: "100%" }} options={info.options || []} {...info.otherOptions} />;
 
-    case "node":
-      return info.rightNode;
+    case "inputNode":
+      return info.inputNode;
 
     case "switch":
       return <Switch size="small" disabled={info.disable} {...info.otherOptions} />;
