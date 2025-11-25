@@ -50,7 +50,7 @@ function FormModal(props: FormModalProps) {
       footer={noFooter ? null : undefined}
       classNames={classNames || {
         body: "pt-6",
-        header: "border-b border-black/10 border-solid pb-3",
+        header: "border-b border-black/10 border-solid pb-3 dark:border-white/20",
       }}
       afterClose={() => {
         formInstance.current && formInstance.current.resetFields();
