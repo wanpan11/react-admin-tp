@@ -22,7 +22,7 @@
   "dependencies": {
     "@ant-design/cssinjs": "^2.0.1",
     "@ant-design/icons": "^6.1.0",
-    "@wanp/use-swr-data": "^1.0.6",
+    "@wanp/use-swr-data": "^1.2.0",
     "antd": "^6.0.0",
     "axios": "^1.13.2",
     "classnames": "^2.5.1",
