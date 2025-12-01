@@ -48,7 +48,7 @@ const itemInfo: FormItem[] = [
 ];
 
 function Company() {
-  const { data, isLoading, onSearch, setPage } = useSwrData({
+  const { data, isValidating, onSearch, setPage } = useSwrData({
     reqKey: "companyService.list",
     req: companyService.list,
     paging: true,
@@ -115,9 +115,12 @@ function Company() {
 
   return (
     <div>
-      <FormFilter reset loading={isLoading} filterInfo={filterInfo} onOk={onSearch} />
+      <FormFilter reset loading={isValidating} filterInfo={filterInfo} onOk={onSearch} />
 
-      <Card className="mt-1">
+      <Card
+        className="mt-1"
+        classNames={{ body: "pb-0" }}
+      >
         <div className="mb-2">
           <Button
             type="primary"
@@ -132,7 +135,7 @@ function Company() {
         <Table
           rowKey="id"
           columns={columns}
-          loading={isLoading}
+          loading={isValidating}
           dataSource={data?.data?.list}
           pagination={{
             onChange: (pageNum, pageSize) => {

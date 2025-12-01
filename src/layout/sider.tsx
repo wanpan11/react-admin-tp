@@ -5,17 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 const { Sider } = Layout;
 
 function SiderCom({ menu, selectKey }: { menu: MenuItem[]; selectKey: string | null }) {
-  const [keys, setKeys] = useState<string[]>([]);
-
-  const currentKay = useMemo(() => {
-    if (!selectKey) {
-      return menu[0].children ? menu[0].children[0]?.key : menu[0].key;
-    }
-
-    return selectKey;
-  }, [menu, selectKey]);
-
-  useEffect(() => {
+  const defaultOpenKeys = useMemo(() => {
     const arr: string[] = [];
 
     menu.forEach((e) => {
@@ -24,21 +14,32 @@ function SiderCom({ menu, selectKey }: { menu: MenuItem[]; selectKey: string | n
       }
     });
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setKeys(arr);
+    return arr;
   }, [menu]);
+
+  const [openKeys, setOpenKeys] = useState<string[]>(defaultOpenKeys);
+
+  useEffect(() => {
+    setOpenKeys(defaultOpenKeys);
+  }, [defaultOpenKeys]);
+
+  const currentSelectKey = useMemo(() => {
+    if (!selectKey) {
+      return menu[0].children ? menu[0].children[0]?.key : menu[0].key;
+    }
+
+    return selectKey;
+  }, [menu, selectKey]);
 
   return (
     <Sider theme="light" width={160}>
       <Menu
         mode="inline"
         className="mt-5"
-        openKeys={keys}
-        selectedKeys={[`${currentKay}`]}
+        openKeys={openKeys}
+        selectedKeys={[`${currentSelectKey}`]}
         items={menu as MenuProps["items"]}
-        onOpenChange={(openKeys) => {
-          setKeys(openKeys);
-        }}
+        onOpenChange={setOpenKeys}
       />
     </Sider>
   );
