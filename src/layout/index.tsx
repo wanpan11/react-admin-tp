@@ -1,3 +1,4 @@
+import type { ThemeConfig } from "antd";
 import BreadCrumb from "&src/components/BreadCrumb";
 import { COLOR_PRIMARY, SPLIT_FLAG } from "&src/config";
 import useRootStore, { useGetRouterConfig } from "&src/store";
@@ -83,7 +84,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     return menuHandle(routerMenu, pathname);
   }, [pathname, routerMenu]);
 
-  const currentThem = {
+  const currentThem: ThemeConfig = {
     algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
     token: { colorPrimary: COLOR_PRIMARY },
   };

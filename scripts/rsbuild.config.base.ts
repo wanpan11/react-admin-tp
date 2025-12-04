@@ -65,7 +65,13 @@ async function getBaseConfig() {
     tools: {
       rspack(config, { appendPlugins }) {
         if (process.env.RSDOCTOR === "true") {
-          appendPlugins(new RsdoctorRspackPlugin({}));
+          appendPlugins(new RsdoctorRspackPlugin({
+            supports: {
+              banner: true,
+              parseBundle: true,
+              generateTileGraph: true,
+            },
+          }));
         }
         appendPlugins(new CompressionPlugin({}));
       },
