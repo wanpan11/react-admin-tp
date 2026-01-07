@@ -1,8 +1,9 @@
+import type { ThemeConfig } from "antd";
 import BreadCrumb from "&src/components/BreadCrumb";
 import { COLOR_PRIMARY, SPLIT_FLAG } from "&src/config";
 import useRootStore, { useGetRouterConfig } from "&src/store";
 import { ConfigProvider, Layout, theme } from "antd";
-import { useLayoutEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MenuHeader from "./header";
 import SiderCom from "./sider";
@@ -83,20 +84,10 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     return menuHandle(routerMenu, pathname);
   }, [pathname, routerMenu]);
 
-  const currentThem = {
+  const currentThem: ThemeConfig = {
     algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
     token: { colorPrimary: COLOR_PRIMARY },
   };
-
-  // 设置 body 的 className 以应用暗黑模式样式
-  useLayoutEffect(() => {
-    if (darkMode) {
-      document.body.className = "dark";
-    }
-    else {
-      document.body.className = "";
-    }
-  }, [darkMode]);
 
   return (
     <ConfigProvider theme={currentThem}>
