@@ -27,7 +27,7 @@
     "axios": "^1.13.2",
     "classnames": "^2.5.1",
     "lodash": "^4.17.21",
-    "nanoid": "^4.0.2",
+    "nanoid": "^5.0.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^6.30.2",
