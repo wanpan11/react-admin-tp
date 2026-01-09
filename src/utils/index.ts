@@ -349,15 +349,6 @@ export function getRandomNumber(min: number, max: number): number {
 }
 
 /**
- * 时间转换结果接口
- */
-interface TimeConversion {
-  days: number;
-  hours: number;
-  minutes: number;
-}
-
-/**
  * 处理 AVIF 图片 URL
  * @param {string} url - 图片 URL
  * @returns {string} 处理后的 URL
@@ -366,21 +357,50 @@ export function proxyImgPreview(url: string): string {
   return url.includes(".avif") ? `/api/market/seo/select/img?url=${url}` : url;
 }
 
-/**
- * 将分钟转换为天、小时、分钟
- * @param {number} minutes - 分钟数
- * @returns {TimeConversion} 转换结果
- */
-export function convertMinutesToHoursMinutesAndDays(minutes: number): TimeConversion {
-  if (!Number.isFinite(minutes) || minutes < 0) {
-    return { days: 0, hours: 0, minutes: 0 };
+// 将分钟转换为天、小时、分钟、秒的格式
+export function minutesToDuration(minutes: number): { days: number; hours: number; minutes: number };
+export function minutesToDuration(minutes: number, includeSeconds: true): { days: number; hours: number; minutes: number; seconds: number };
+export function minutesToDuration(minutes: number, includeSeconds = false) {
+  if (Number.isNaN(minutes) || minutes < 0) {
+    return includeSeconds
+      ? {
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        }
+      : {
+          days: 0,
+          hours: 0,
+          minutes: 0,
+        };
   }
 
-  const days = Math.floor(minutes / (60 * 24));
-  const hours = Math.floor((minutes % (60 * 24)) / 60);
-  const remainingMinutes = Math.floor(minutes % 60);
+  // 保持现有逻辑对整数分钟的处理；若传入小数分钟且 includeSeconds 为 true，会以小数部分换算秒数
+  const totalMinutes = minutes;
+  const flooredMinutes = Math.floor(totalMinutes);
 
-  return { days, hours, minutes: remainingMinutes };
+  const days = Math.floor(flooredMinutes / (60 * 24));
+  const hours = Math.floor((flooredMinutes % (60 * 24)) / 60);
+  const remainingMinutes = Math.floor(flooredMinutes % 60);
+
+  if (includeSeconds) {
+    const fractional = totalMinutes - flooredMinutes;
+    const seconds = Math.floor(fractional * 60);
+
+    return {
+      days,
+      hours,
+      minutes: remainingMinutes,
+      seconds,
+    };
+  }
+
+  return {
+    days,
+    hours,
+    minutes: remainingMinutes,
+  };
 }
 
 /**
