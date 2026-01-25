@@ -47,7 +47,7 @@ export function detectBrowserEnv(): BrowserEnv {
     isMobile,
     isMac,
     isPC: !isMobile && isPC,
-    platform
+    platform,
   };
 }
 

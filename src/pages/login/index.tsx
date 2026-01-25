@@ -17,7 +17,7 @@ function Login() {
     useShallow(store => ({
       setLogin: store.setLogin,
       setDynamicRoutes: store.setDynamicRoutes,
-    }))
+    })),
   );
 
   const [loading, setLoading] = useState(false);

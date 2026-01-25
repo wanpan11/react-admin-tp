@@ -19,7 +19,7 @@ export default antfu(
        * Supports Prettier and dprint
        * By default uses Prettier
        */
-      markdown: "prettier"
+      markdown: "prettier",
     },
     react: true,
     ignores: ["**/*.md"],
@@ -30,11 +30,8 @@ export default antfu(
       process: true,
     },
     stylistic: {
-      quotes: "double", // or 'double'
+      quotes: "double", // or 'single'
       semi: true,
-      overrides: {
-        "style/comma-dangle": "off",
-      },
     },
     rules: {
       "no-console": "warn",
@@ -57,5 +54,5 @@ export default antfu(
     rules: {
       "tailwindcss/no-custom-classname": ["off"],
     },
-  }
+  },
 );
